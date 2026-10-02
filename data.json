@@ -22,6 +22,15 @@
       "time": "10:00 م",
       "status": "لم تبدأ",
       "live": false
+    },
+    {
+      "id": 3,
+      "league": "الدوري السعودي",
+      "team1": "الفريق الخامس",
+      "team2": "الفريق السادس",
+      "time": "09:30 م",
+      "status": "لم تبدأ",
+      "live": false
     }
   ],
 
@@ -36,7 +45,6 @@
       "type": "hls",
       "enabled": true
     },
-
     {
       "id": 2,
       "name": "قناة رياضية 2",
@@ -47,7 +55,6 @@
       "type": "hls",
       "enabled": true
     },
-
     {
       "id": 3,
       "name": "قناة خليجية 1",
@@ -58,12 +65,21 @@
       "type": "hls",
       "enabled": true
     },
-
     {
       "id": 4,
       "name": "قناة عراقية رياضية",
       "category": "عراقية",
       "quality": "HD",
+      "logo": "",
+      "url": "",
+      "type": "hls",
+      "enabled": true
+    },
+    {
+      "id": 5,
+      "name": "قناة عالمية رياضية",
+      "category": "عالمية",
+      "quality": "FHD",
       "logo": "",
       "url": "",
       "type": "hls",
