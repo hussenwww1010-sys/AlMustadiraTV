@@ -2,34 +2,33 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#070912">
-<meta name="description" content="المستديرة - كل الرياضة بمكان واحد">
-<title>المستديرة | كل الرياضة بمكان واحد</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>المستديرة</title>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <style>
-:root{
-    --bg:#060810;
-    --bg2:#0b0f1b;
-    --card:#101522;
-    --card2:#151b2a;
-    --line:rgba(255,255,255,.08);
-    --text:#fff;
-    --muted:#8d96a8;
-    --green:#19e68c;
-    --blue:#4da3ff;
-    --red:#ff4655;
-    --gold:#ffc857;
-    --radius:22px;
-}
-
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
-    -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+    --bg:#070912;
+    --bg2:#0c101b;
+    --card:#111624;
+    --card2:#151b2a;
+    --line:rgba(255,255,255,.08);
+    --text:#f7f8fc;
+    --muted:#8d96aa;
+    --accent:#16e0b0;
+    --accent2:#00b8ff;
+    --danger:#ff405c;
+    --warning:#ffc857;
+    --radius:20px;
 }
 
 html{
@@ -39,17 +38,11 @@ html{
 body{
     min-height:100vh;
     background:
-        radial-gradient(circle at 80% 0%,rgba(77,163,255,.12),transparent 30%),
-        radial-gradient(circle at 10% 30%,rgba(25,230,140,.06),transparent 28%),
+        radial-gradient(circle at 85% 0%,rgba(0,184,255,.10),transparent 28%),
+        radial-gradient(circle at 10% 25%,rgba(22,224,176,.07),transparent 25%),
         var(--bg);
     color:var(--text);
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Tahoma,
-        Arial,
-        sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
     overflow-x:hidden;
 }
 
@@ -63,18 +56,12 @@ button{
     cursor:pointer;
 }
 
-img{
-    max-width:100%;
-    display:block;
+a{
+    color:inherit;
+    text-decoration:none;
 }
 
-.hidden{
-    display:none!important;
-}
-
-/* =========================
-   HEADER
-========================= */
+/* ================= HEADER ================= */
 
 .header{
     position:sticky;
@@ -84,763 +71,787 @@ img{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 28px;
-    background:rgba(6,8,16,.86);
+    padding:0 5%;
+    background:rgba(7,9,18,.86);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
     border-bottom:1px solid var(--line);
-    backdrop-filter:blur(18px);
 }
 
-.brand{
+.logo{
     display:flex;
     align-items:center;
     gap:12px;
-    cursor:pointer;
+    font-weight:900;
+    font-size:23px;
+    white-space:nowrap;
 }
 
-.logoMark{
-    width:44px;
-    height:44px;
-    border-radius:14px;
+.logo-mark{
+    width:40px;
+    height:40px;
+    border-radius:13px;
     display:grid;
     place-items:center;
-    background:
-        linear-gradient(145deg,#182437,#0c111d);
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 8px 30px rgba(0,0,0,.25);
-    position:relative;
-    overflow:hidden;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#04100e;
+    font-weight:1000;
+    box-shadow:0 8px 30px rgba(22,224,176,.18);
 }
 
-.logoMark::before{
-    content:"";
-    width:21px;
-    height:21px;
-    border:3px solid var(--green);
-    border-radius:50%;
-    position:absolute;
-}
-
-.logoMark::after{
-    content:"";
-    width:34px;
-    height:13px;
-    border:2px solid rgba(77,163,255,.9);
-    border-radius:50%;
-    transform:rotate(-35deg);
-}
-
-.brandText{
-    line-height:1.1;
-}
-
-.brandName{
-    font-size:20px;
-    font-weight:900;
-    letter-spacing:-.5px;
-}
-
-.brandSub{
-    font-size:10px;
+.logo small{
+    display:block;
     color:var(--muted);
-    margin-top:4px;
+    font-size:9px;
+    font-weight:700;
+    margin-top:-2px;
+    letter-spacing:1px;
 }
 
-.desktopNav{
+.nav{
     display:flex;
     align-items:center;
-    gap:5px;
+    gap:7px;
 }
 
-.navBtn{
-    color:#aeb7c8;
+.nav button{
     background:transparent;
-    padding:11px 16px;
+    color:var(--muted);
+    padding:10px 16px;
     border-radius:12px;
-    transition:.2s;
+    transition:.25s;
 }
 
-.navBtn:hover,
-.navBtn.active{
+.nav button:hover,
+.nav button.active{
     color:#fff;
     background:rgba(255,255,255,.07);
 }
 
-.navBtn.active{
-    box-shadow:inset 0 -2px var(--green);
-}
-
-.headerSearch{
+.header-search{
     width:240px;
     position:relative;
 }
 
-.headerSearch input{
+.header-search input{
     width:100%;
     height:42px;
-    background:rgba(255,255,255,.05);
+    padding:0 42px 0 15px;
     border:1px solid var(--line);
-    border-radius:13px;
-    color:#fff;
-    padding:0 42px 0 14px;
+    border-radius:14px;
     outline:none;
+    color:#fff;
+    background:rgba(255,255,255,.055);
 }
 
-.headerSearch span{
+.header-search span{
     position:absolute;
     right:14px;
-    top:50%;
-    transform:translateY(-50%);
+    top:10px;
     color:var(--muted);
 }
 
-/* =========================
-   MAIN
-========================= */
+/* ================= APP ================= */
 
 main{
-    width:min(1400px,calc(100% - 32px));
+    width:min(1400px,92%);
     margin:auto;
-    padding:28px 0 110px;
+    padding:30px 0 100px;
 }
 
 .page{
     display:none;
+    animation:pageIn .35s ease;
 }
 
 .page.active{
     display:block;
 }
 
-/* =========================
-   HERO
-========================= */
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+/* ================= HERO ================= */
 
 .hero{
-    min-height:330px;
+    position:relative;
+    min-height:340px;
     border:1px solid var(--line);
     border-radius:30px;
+    overflow:hidden;
     padding:42px;
     display:flex;
-    align-items:center;
-    position:relative;
-    overflow:hidden;
+    align-items:flex-end;
     background:
-        radial-gradient(circle at 85% 35%,rgba(77,163,255,.23),transparent 25%),
-        radial-gradient(circle at 70% 100%,rgba(25,230,140,.1),transparent 30%),
-        linear-gradient(120deg,#0c111c,#111827 55%,#0a101c);
+        radial-gradient(circle at 80% 30%,rgba(0,184,255,.18),transparent 25%),
+        radial-gradient(circle at 70% 80%,rgba(22,224,176,.12),transparent 28%),
+        linear-gradient(120deg,#101522,#090c15);
 }
 
-.hero::before{
-    content:"";
+.hero-grid{
     position:absolute;
-    width:330px;
-    height:330px;
-    border:1px solid rgba(255,255,255,.05);
-    border-radius:50%;
-    left:-90px;
-    top:-100px;
+    inset:0;
+    opacity:.18;
+    background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+    background-size:45px 45px;
+    mask-image:linear-gradient(to bottom,black,transparent);
 }
 
-.hero::after{
-    content:"";
-    position:absolute;
-    width:460px;
-    height:460px;
-    border:1px solid rgba(77,163,255,.08);
-    border-radius:50%;
-    right:-180px;
-    top:-60px;
-}
-
-.heroContent{
+.hero-content{
     position:relative;
-    z-index:2;
-    max-width:680px;
+    max-width:720px;
 }
 
-.heroBadge{
+.hero-kicker{
     display:inline-flex;
     align-items:center;
-    gap:7px;
-    background:rgba(25,230,140,.09);
-    border:1px solid rgba(25,230,140,.2);
-    color:var(--green);
+    gap:8px;
     padding:7px 12px;
     border-radius:30px;
+    background:rgba(255,64,92,.1);
+    border:1px solid rgba(255,64,92,.25);
+    color:#ff6378;
     font-size:12px;
-    margin-bottom:18px;
+    font-weight:800;
+    margin-bottom:16px;
 }
 
-.liveDot{
+.live-dot{
     width:7px;
     height:7px;
-    background:var(--green);
     border-radius:50%;
-    box-shadow:0 0 12px var(--green);
+    background:var(--danger);
+    box-shadow:0 0 0 5px rgba(255,64,92,.12);
 }
 
 .hero h1{
-    font-size:clamp(34px,6vw,66px);
+    font-size:clamp(34px,5vw,65px);
     line-height:1;
     letter-spacing:-2px;
-    margin-bottom:18px;
+    margin-bottom:16px;
 }
 
 .hero h1 span{
-    color:var(--green);
+    color:var(--accent);
 }
 
 .hero p{
-    color:#9da7b8;
+    color:var(--muted);
     font-size:16px;
     line-height:1.8;
-    max-width:560px;
+    max-width:620px;
 }
 
-.heroActions{
+.hero-actions{
     display:flex;
     gap:10px;
     margin-top:25px;
     flex-wrap:wrap;
 }
 
-.primaryBtn,
-.secondaryBtn{
+.primary-btn,
+.secondary-btn{
     min-height:46px;
-    padding:0 19px;
-    border-radius:13px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    font-weight:700;
+    padding:0 20px;
+    border-radius:14px;
+    font-weight:800;
 }
 
-.primaryBtn{
-    background:var(--green);
-    color:#03130c;
+.primary-btn{
+    color:#03110e;
+    background:linear-gradient(135deg,var(--accent),#11cda2);
 }
 
-.secondaryBtn{
-    background:rgba(255,255,255,.06);
+.secondary-btn{
     color:#fff;
+    background:rgba(255,255,255,.07);
     border:1px solid var(--line);
 }
 
-/* =========================
-   SECTION
-========================= */
+/* ================= SECTION ================= */
 
 .section{
-    margin-top:32px;
+    margin-top:38px;
 }
 
-.sectionHeader{
+.section-head{
     display:flex;
-    align-items:center;
+    align-items:end;
     justify-content:space-between;
     gap:15px;
-    margin-bottom:16px;
-}
-
-.sectionTitle{
-    font-size:22px;
-    font-weight:900;
-}
-
-.sectionTitle small{
-    display:block;
-    color:var(--muted);
-    font-size:12px;
-    font-weight:400;
-    margin-top:5px;
-}
-
-.viewAll{
-    color:var(--green);
-    background:transparent;
-    font-size:13px;
-}
-
-/* =========================
-   MATCHES
-========================= */
-
-.matchesGrid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.matchCard{
-    background:linear-gradient(145deg,var(--card2),var(--card));
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:18px;
-    cursor:pointer;
-    transition:.25s;
-    position:relative;
-    overflow:hidden;
-}
-
-.matchCard:hover{
-    transform:translateY(-3px);
-    border-color:rgba(25,230,140,.28);
-}
-
-.matchTop{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-    margin-bottom:20px;
-}
-
-.leagueInfo{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    min-width:0;
-}
-
-.leagueLogo{
-    width:27px;
-    height:27px;
-    object-fit:contain;
-    border-radius:7px;
-}
-
-.leagueLogoFallback{
-    width:27px;
-    height:27px;
-    display:grid;
-    place-items:center;
-    background:rgba(255,255,255,.07);
-    border-radius:7px;
-    font-size:14px;
-}
-
-.leagueName{
-    color:#aab3c3;
-    font-size:11px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.matchStatus{
-    font-size:10px;
-    padding:5px 8px;
-    border-radius:20px;
-    background:rgba(255,255,255,.06);
-    color:#aab3c3;
-    white-space:nowrap;
-}
-
-.matchStatus.live{
-    color:#fff;
-    background:rgba(255,70,85,.13);
-    border:1px solid rgba(255,70,85,.18);
-}
-
-.matchStatus.live::before{
-    content:"";
-    display:inline-block;
-    width:6px;
-    height:6px;
-    margin-left:5px;
-    background:var(--red);
-    border-radius:50%;
-    box-shadow:0 0 9px var(--red);
-}
-
-.teams{
-    display:grid;
-    grid-template-columns:1fr 70px 1fr;
-    align-items:center;
-    text-align:center;
-    gap:8px;
-}
-
-.team{
-    min-width:0;
-}
-
-.teamLogo{
-    width:58px;
-    height:58px;
-    margin:0 auto 9px;
-    border-radius:16px;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.06);
-    display:grid;
-    place-items:center;
-    overflow:hidden;
-    font-size:24px;
-}
-
-.teamLogo img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    padding:7px;
-}
-
-.teamName{
-    font-size:12px;
-    font-weight:700;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.matchTime{
-    text-align:center;
-}
-
-.matchTime strong{
-    display:block;
-    font-size:17px;
-}
-
-.matchTime span{
-    display:block;
-    color:var(--muted);
-    font-size:10px;
-    margin-top:4px;
-}
-
-.matchFooter{
-    border-top:1px solid var(--line);
-    margin-top:17px;
-    padding-top:13px;
-    color:var(--muted);
-    font-size:10px;
-    display:flex;
-    justify-content:space-between;
-}
-
-/* =========================
-   CHANNELS
-========================= */
-
-.channelTools{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
     margin-bottom:18px;
 }
 
-.channelSearch{
-    flex:1;
-    min-width:220px;
-    height:47px;
-    position:relative;
+.section-title{
+    font-size:25px;
+    font-weight:900;
 }
 
-.channelSearch input{
-    width:100%;
-    height:100%;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:14px;
-    color:#fff;
-    outline:none;
-    padding:0 43px 0 14px;
-}
-
-.channelSearch span{
-    position:absolute;
-    right:14px;
-    top:50%;
-    transform:translateY(-50%);
+.section-sub{
     color:var(--muted);
+    font-size:13px;
+    margin-top:4px;
 }
 
-.categories{
+.see-all{
+    color:var(--accent);
+    background:none;
+    font-size:13px;
+    font-weight:800;
+}
+
+/* ================= LIVE STRIP ================= */
+
+.live-strip{
     display:flex;
-    gap:7px;
+    gap:14px;
     overflow-x:auto;
+    padding:4px 2px 8px;
     scrollbar-width:none;
 }
 
-.categories::-webkit-scrollbar{
+.live-strip::-webkit-scrollbar{
     display:none;
 }
 
-.category{
-    white-space:nowrap;
+.live-card{
+    flex:0 0 330px;
+    min-height:175px;
+    padding:18px;
+    border-radius:22px;
+    background:
+        linear-gradient(145deg,rgba(255,64,92,.08),rgba(255,255,255,.025)),
+        var(--card);
+    border:1px solid rgba(255,64,92,.18);
+    position:relative;
+    overflow:hidden;
+}
+
+.live-card::after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:rgba(255,64,92,.07);
+    left:-40px;
+    bottom:-60px;
+}
+
+.live-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.live-badge{
+    color:#ff6c80;
+    font-size:11px;
+    font-weight:900;
+}
+
+.league-name{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.live-teams{
+    display:grid;
+    grid-template-columns:1fr 55px 1fr;
+    align-items:center;
+    text-align:center;
+    gap:8px;
+}
+
+.team-name{
+    font-weight:800;
+    font-size:13px;
+    line-height:1.4;
+}
+
+.team-logo{
+    width:43px;
+    height:43px;
+    object-fit:contain;
+    margin:0 auto 7px;
+}
+
+.score{
+    font-size:24px;
+    font-weight:1000;
+}
+
+.live-card .score{
+    color:#fff;
+}
+
+.card-action{
+    position:absolute;
+    left:16px;
+    bottom:15px;
+    color:var(--accent);
+    font-size:11px;
+    font-weight:900;
+}
+
+/* ================= DATE TABS ================= */
+
+.date-tabs{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding-bottom:5px;
+}
+
+.date-tabs::-webkit-scrollbar{
+    display:none;
+}
+
+.date-tab{
+    min-width:90px;
+    height:66px;
+    padding:8px;
+    border-radius:16px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--muted);
+    text-align:center;
+    transition:.25s;
+}
+
+.date-tab strong{
+    display:block;
+    color:inherit;
+    font-size:14px;
+}
+
+.date-tab small{
+    display:block;
+    margin-top:4px;
+    font-size:10px;
+}
+
+.date-tab.active{
+    color:#03110e;
+    background:var(--accent);
+    border-color:var(--accent);
+}
+
+/* ================= FILTERS ================= */
+
+.filters{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding-bottom:4px;
+}
+
+.filters::-webkit-scrollbar{
+    display:none;
+}
+
+.filter{
+    flex:0 0 auto;
+    padding:9px 15px;
+    border-radius:30px;
     background:var(--card);
     border:1px solid var(--line);
-    color:#9fa9ba;
-    border-radius:13px;
-    padding:0 15px;
-    height:44px;
-}
-
-.category.active{
-    color:#04120b;
-    background:var(--green);
-    border-color:var(--green);
-    font-weight:800;
-}
-
-.channelsGrid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:13px;
-}
-
-.channelCard{
-    background:linear-gradient(145deg,#121827,#0d121d);
-    border:1px solid var(--line);
-    border-radius:19px;
-    padding:15px;
-    cursor:pointer;
-    transition:.25s;
-    position:relative;
-}
-
-.channelCard:hover{
-    transform:translateY(-3px);
-    border-color:rgba(77,163,255,.3);
-}
-
-.channelCard.selected{
-    border-color:rgba(25,230,140,.55);
-    box-shadow:0 0 0 1px rgba(25,230,140,.08);
-}
-
-.channelLive{
-    position:absolute;
-    top:11px;
-    right:11px;
-    font-size:9px;
-    color:var(--green);
-}
-
-.channelLogo{
-    width:75px;
-    height:75px;
-    margin:8px auto 13px;
-    display:grid;
-    place-items:center;
-    border-radius:20px;
-    background:rgba(255,255,255,.05);
-    overflow:hidden;
-    font-size:28px;
-}
-
-.channelLogo img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    padding:9px;
-}
-
-.channelName{
-    text-align:center;
+    color:var(--muted);
     font-size:12px;
     font-weight:800;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
 }
 
-.channelMeta{
+.filter.active{
+    color:#03110e;
+    background:var(--accent);
+    border-color:var(--accent);
+}
+
+/* ================= MATCH LIST ================= */
+
+.match-list{
+    display:grid;
+    gap:12px;
+}
+
+.league-block{
+    margin-top:24px;
+}
+
+.league-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 2px;
+    margin-bottom:8px;
+}
+
+.league-header-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.league-icon{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    background:rgba(255,255,255,.06);
+    object-fit:contain;
+    padding:5px;
+}
+
+.league-header strong{
+    font-size:14px;
+}
+
+.league-header small{
+    color:var(--muted);
+    display:block;
+    margin-top:2px;
+    font-size:10px;
+}
+
+.match-card{
+    position:relative;
+    display:grid;
+    grid-template-columns:100px 1fr 120px;
+    align-items:center;
+    gap:15px;
+    min-height:108px;
+    padding:17px;
+    background:linear-gradient(120deg,var(--card),rgba(255,255,255,.025));
+    border:1px solid var(--line);
+    border-radius:18px;
+    transition:.25s;
+}
+
+.match-card:hover{
+    transform:translateY(-2px);
+    border-color:rgba(22,224,176,.25);
+    background:var(--card2);
+}
+
+.match-time{
+    text-align:center;
+}
+
+.match-time strong{
+    display:block;
+    font-size:18px;
+}
+
+.match-time span{
+    display:inline-block;
+    margin-top:7px;
+    color:var(--muted);
+    font-size:10px;
+}
+
+.match-live{
+    color:#ff6176 !important;
+}
+
+.match-teams{
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:7px;
-    margin-top:9px;
+    gap:25px;
 }
 
-.channelCategory{
+.match-team{
+    min-width:100px;
+    text-align:center;
+}
+
+.match-team img{
+    width:40px;
+    height:40px;
+    object-fit:contain;
+    display:block;
+    margin:0 auto 6px;
+}
+
+.match-team div{
+    font-size:12px;
+    font-weight:800;
+}
+
+.vs{
     color:var(--muted);
-    font-size:9px;
+    font-size:11px;
+    font-weight:900;
+}
+
+.match-meta{
+    text-align:left;
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 10px;
+    border-radius:10px;
+    background:rgba(255,255,255,.055);
+    color:var(--muted);
+    font-size:10px;
+    font-weight:800;
+}
+
+.status.live{
+    color:#ff6378;
+    background:rgba(255,64,92,.1);
+}
+
+.details-btn{
+    display:block;
+    margin-top:9px;
+    color:var(--accent);
+    background:none;
+    font-size:10px;
+    font-weight:900;
+}
+
+/* ================= CHANNELS ================= */
+
+.channel-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+}
+
+.channel-card{
+    min-height:180px;
+    position:relative;
+    padding:17px;
+    border-radius:20px;
+    background:linear-gradient(145deg,var(--card),rgba(255,255,255,.025));
+    border:1px solid var(--line);
+    transition:.25s;
+    cursor:pointer;
+    overflow:hidden;
+}
+
+.channel-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(0,184,255,.3);
+}
+
+.channel-logo{
+    width:75px;
+    height:75px;
+    object-fit:contain;
+    display:block;
+    margin:5px auto 13px;
+}
+
+.logo-placeholder{
+    width:75px;
+    height:75px;
+    display:grid;
+    place-items:center;
+    margin:5px auto 13px;
+    border-radius:20px;
+    background:linear-gradient(135deg,rgba(22,224,176,.12),rgba(0,184,255,.12));
+    color:#fff;
+    font-size:25px;
+    font-weight:1000;
+}
+
+.channel-name{
+    text-align:center;
+    font-size:13px;
+    font-weight:900;
+}
+
+.channel-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:13px;
+}
+
+.channel-category{
+    color:var(--muted);
+    font-size:10px;
 }
 
 .quality{
-    color:#77b9ff;
-    background:rgba(77,163,255,.1);
-    border:1px solid rgba(77,163,255,.15);
-    border-radius:6px;
-    padding:3px 5px;
-    font-size:8px;
+    padding:4px 7px;
+    border-radius:7px;
+    background:rgba(22,224,176,.1);
+    color:var(--accent);
+    font-size:9px;
+    font-weight:1000;
 }
 
-/* =========================
-   NEWS
-========================= */
+/* ================= NEWS ================= */
 
-.newsGrid{
+.news-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:15px;
 }
 
-.newsCard{
-    background:var(--card);
-    border:1px solid var(--line);
+.news-card{
     border-radius:20px;
     overflow:hidden;
+    background:var(--card);
+    border:1px solid var(--line);
 }
 
-.newsImage{
-    height:170px;
-    background:
-        radial-gradient(circle at 30% 30%,rgba(25,230,140,.18),transparent 30%),
-        linear-gradient(135deg,#101827,#080c14);
+.news-image{
+    height:155px;
     display:grid;
     place-items:center;
-    color:#30394a;
-    font-size:40px;
-    overflow:hidden;
+    background:
+        radial-gradient(circle at 30% 20%,rgba(0,184,255,.2),transparent 35%),
+        linear-gradient(135deg,#121827,#090c14);
+    color:rgba(255,255,255,.25);
+    font-size:35px;
+    font-weight:1000;
 }
 
-.newsImage img{
+.news-image img{
     width:100%;
     height:100%;
     object-fit:cover;
 }
 
-.newsBody{
+.news-body{
     padding:17px;
 }
 
-.newsBody h3{
+.news-body h3{
     font-size:15px;
+    line-height:1.5;
+}
+
+.news-body p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.8;
+    margin-top:7px;
+}
+
+/* ================= PAGE HEAD ================= */
+
+.page-head{
+    margin-bottom:25px;
+}
+
+.page-head h1{
+    font-size:35px;
     margin-bottom:8px;
 }
 
-.newsBody p{
+.page-head p{
     color:var(--muted);
-    font-size:11px;
-    line-height:1.7;
 }
 
-/* =========================
-   PLAYER
-========================= */
+/* ================= PLAYER ================= */
 
-.playerOverlay{
+.player-overlay,
+.modal-overlay{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.9);
-    z-index:1000;
+    z-index:500;
     display:none;
     align-items:center;
     justify-content:center;
     padding:20px;
+    background:rgba(0,0,0,.86);
+    backdrop-filter:blur(12px);
 }
 
-.playerOverlay.open{
+.player-overlay.show,
+.modal-overlay.show{
     display:flex;
 }
 
-.playerBox{
+.player-box{
     width:min(1100px,100%);
     background:#080b12;
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:24px;
+    border:1px solid var(--line);
+    border-radius:22px;
     overflow:hidden;
-    box-shadow:0 30px 100px rgba(0,0,0,.7);
+    box-shadow:0 30px 100px rgba(0,0,0,.6);
 }
 
-.playerTop{
-    min-height:60px;
-    padding:10px 15px;
+.player-head{
+    height:58px;
+    padding:0 15px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:12px;
     border-bottom:1px solid var(--line);
 }
 
-.playerChannelInfo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    min-width:0;
+.player-title{
+    font-weight:900;
 }
 
-.playerChannelLogo{
-    width:40px;
-    height:40px;
-    border-radius:11px;
-    background:#111722;
-    display:grid;
-    place-items:center;
-    overflow:hidden;
-}
-
-.playerChannelLogo img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    padding:5px;
-}
-
-.playerChannelText{
-    min-width:0;
-}
-
-.playerChannelText strong{
-    display:block;
-    font-size:14px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.playerChannelText span{
-    display:block;
-    color:var(--green);
-    font-size:9px;
-    margin-top:3px;
-}
-
-.closePlayer{
+.close-btn{
     width:38px;
     height:38px;
-    border-radius:11px;
-    background:rgba(255,255,255,.06);
+    border-radius:12px;
+    background:rgba(255,255,255,.07);
     color:#fff;
     font-size:20px;
 }
 
-.videoWrap{
+.video-wrap{
     position:relative;
     aspect-ratio:16/9;
     background:#000;
 }
 
-video{
+.video-wrap video{
     width:100%;
     height:100%;
     display:block;
     background:#000;
-    object-fit:contain;
 }
 
-.playerLoading{
+.player-loading,
+.player-error{
     position:absolute;
     inset:0;
-    z-index:3;
-    display:flex;
-    flex-direction:column;
+    display:none;
     align-items:center;
     justify-content:center;
-    background:rgba(0,0,0,.55);
-    backdrop-filter:blur(4px);
+    flex-direction:column;
+    gap:13px;
+    background:rgba(0,0,0,.65);
+    text-align:center;
+    padding:20px;
+}
+
+.player-loading.show,
+.player-error.show{
+    display:flex;
 }
 
 .spinner{
-    width:40px;
-    height:40px;
-    border:3px solid rgba(255,255,255,.15);
-    border-top-color:var(--green);
+    width:38px;
+    height:38px;
     border-radius:50%;
+    border:3px solid rgba(255,255,255,.15);
+    border-top-color:var(--accent);
     animation:spin .8s linear infinite;
 }
 
@@ -848,753 +859,626 @@ video{
     to{transform:rotate(360deg)}
 }
 
-.playerLoading p{
-    margin-top:12px;
-    color:#adb6c5;
-    font-size:12px;
-}
-
-.playerError{
-    position:absolute;
-    inset:0;
-    z-index:4;
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:20px;
-    background:rgba(0,0,0,.8);
-}
-
-.playerError.show{
-    display:flex;
-}
-
-.playerError h3{
-    margin-bottom:7px;
-}
-
-.playerError p{
-    color:var(--muted);
-    font-size:11px;
-    margin-bottom:15px;
-}
-
-.playerBottom{
-    padding:12px 15px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-}
-
-.playerHint{
-    color:var(--muted);
-    font-size:10px;
-}
-
-.playerActions{
-    display:flex;
-    gap:7px;
-}
-
-.playerAction{
-    background:rgba(255,255,255,.06);
+.player-error p{
     color:#fff;
-    border:1px solid var(--line);
-    padding:8px 11px;
-    border-radius:9px;
-    font-size:10px;
 }
 
-/* =========================
-   MATCH DETAIL
-========================= */
-
-.detailOverlay{
-    position:fixed;
-    inset:0;
-    z-index:900;
-    background:rgba(0,0,0,.86);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
+.player-error small{
+    color:var(--muted);
+    max-width:450px;
+    line-height:1.7;
 }
 
-.detailOverlay.open{
+.player-controls{
     display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    padding:12px;
 }
 
-.detailBox{
-    width:min(700px,100%);
+.player-controls button{
+    padding:9px 13px;
+    border-radius:10px;
+    color:#fff;
+    background:rgba(255,255,255,.07);
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    width:min(620px,100%);
     max-height:90vh;
     overflow:auto;
-    background:#0c111c;
+    border-radius:24px;
+    background:#0c1019;
     border:1px solid var(--line);
-    border-radius:25px;
-    padding:22px;
 }
 
-.detailHeader{
+.modal-head{
+    padding:18px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    margin-bottom:25px;
+    border-bottom:1px solid var(--line);
 }
 
-.detailHeader h2{
-    font-size:20px;
+.modal-body{
+    padding:25px;
 }
 
-.detailClose{
-    width:38px;
-    height:38px;
-    border-radius:11px;
-    background:rgba(255,255,255,.06);
-    color:#fff;
-    font-size:20px;
-}
-
-.detailLeague{
-    text-align:center;
-    color:var(--muted);
+.detail-league{
+    color:var(--accent);
     font-size:12px;
-    margin-bottom:25px;
+    font-weight:900;
+    text-align:center;
 }
 
-.detailTeams{
+.detail-teams{
     display:grid;
-    grid-template-columns:1fr 100px 1fr;
+    grid-template-columns:1fr 80px 1fr;
     align-items:center;
     text-align:center;
+    margin:30px 0;
 }
 
-.detailTeamLogo{
-    width:90px;
-    height:90px;
-    margin:0 auto 12px;
-    border-radius:22px;
-    background:rgba(255,255,255,.06);
-    display:grid;
-    place-items:center;
-    font-size:36px;
-    overflow:hidden;
-}
-
-.detailTeamLogo img{
-    width:100%;
-    height:100%;
+.detail-team img{
+    width:70px;
+    height:70px;
     object-fit:contain;
-    padding:10px;
+    margin-bottom:10px;
 }
 
-.detailTeamName{
-    font-size:14px;
-    font-weight:800;
-}
-
-.detailTime strong{
+.detail-team strong{
     display:block;
+    font-size:14px;
+}
+
+.detail-vs{
     font-size:25px;
-}
-
-.detailTime span{
+    font-weight:1000;
     color:var(--muted);
-    font-size:10px;
 }
 
-.detailInfo{
+.detail-info{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:10px;
-    margin-top:30px;
 }
 
-.infoItem{
+.info-box{
     padding:15px;
-    border-radius:14px;
-    background:rgba(255,255,255,.04);
-    border:1px solid var(--line);
+    border-radius:15px;
+    background:rgba(255,255,255,.045);
 }
 
-.infoItem span{
-    display:block;
+.info-box small{
     color:var(--muted);
-    font-size:10px;
+    display:block;
     margin-bottom:5px;
 }
 
-.infoItem strong{
-    font-size:12px;
+.info-box strong{
+    font-size:13px;
 }
 
+/* ================= MOBILE NAV ================= */
+
+.mobile-nav{
+    display:none;
+    position:fixed;
+    z-index:200;
+    bottom:0;
+    right:0;
+    left:0;
+    height:72px;
+    padding:7px 10px calc(7px + env(safe-area-inset-bottom));
+    background:rgba(8,11,18,.94);
+    backdrop-filter:blur(20px);
+    border-top:1px solid var(--line);
+}
+
+.mobile-nav button{
+    flex:1;
+    color:var(--muted);
+    background:none;
+    font-size:10px;
+}
+
+.mobile-nav button span{
+    display:block;
+    font-size:19px;
+    margin-bottom:3px;
+}
+
+.mobile-nav button.active{
+    color:var(--accent);
+}
+
+/* ================= EMPTY ================= */
+
 .empty{
-    padding:45px 20px;
+    padding:50px 20px;
     text-align:center;
-    background:var(--card);
-    border:1px solid var(--line);
+    border:1px dashed var(--line);
     border-radius:20px;
     color:var(--muted);
 }
 
-/* =========================
-   BOTTOM NAV
-========================= */
-
-.mobileNav{
-    display:none;
+.empty strong{
+    color:#fff;
+    display:block;
+    margin-bottom:7px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* ================= RESPONSIVE ================= */
 
 @media(max-width:1100px){
-
-    .channelsGrid{
-        grid-template-columns:repeat(4,1fr);
-    }
-
-}
-
-@media(max-width:850px){
-
-    .desktopNav{
-        display:none;
-    }
-
-    .header{
-        padding:0 15px;
-    }
-
-    .headerSearch{
-        width:170px;
-    }
-
-    main{
-        width:min(100% - 20px,700px);
-        padding-top:15px;
-    }
-
-    .hero{
-        min-height:300px;
-        padding:28px 23px;
-        border-radius:24px;
-    }
-
-    .matchesGrid{
-        grid-template-columns:1fr;
-    }
-
-    .channelsGrid{
+    .channel-grid{
         grid-template-columns:repeat(3,1fr);
     }
 
-    .newsGrid{
-        grid-template-columns:1fr;
+    .header-search{
+        width:190px;
     }
-
-    .mobileNav{
-        position:fixed;
-        z-index:500;
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        left:10px;
-        right:10px;
-        bottom:10px;
-        height:66px;
-        background:rgba(12,16,26,.92);
-        border:1px solid rgba(255,255,255,.1);
-        border-radius:20px;
-        backdrop-filter:blur(18px);
-        box-shadow:0 15px 50px rgba(0,0,0,.5);
-    }
-
-    .mobileNav button{
-        background:transparent;
-        color:#7f899a;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
-        gap:4px;
-        font-size:10px;
-    }
-
-    .mobileNav button span:first-child{
-        font-size:18px;
-    }
-
-    .mobileNav button.active{
-        color:var(--green);
-    }
-
 }
 
-@media(max-width:600px){
-
+@media(max-width:800px){
     .header{
         height:65px;
+        padding:0 4%;
     }
 
-    .brandMark{
-        width:40px;
-        height:40px;
+    .nav{
+        display:none;
     }
 
-    .brandName{
-        font-size:17px;
-    }
-
-    .brandSub{
-        font-size:8px;
-    }
-
-    .headerSearch{
+    .header-search{
         width:145px;
     }
 
-    .headerSearch input{
-        height:38px;
-        font-size:11px;
+    .header-search input{
+        height:39px;
+    }
+
+    main{
+        width:94%;
+        padding-top:18px;
+        padding-bottom:100px;
     }
 
     .hero{
-        min-height:285px;
-        padding:24px 19px;
+        min-height:310px;
+        padding:27px;
+        border-radius:24px;
     }
 
     .hero h1{
-        font-size:40px;
-        letter-spacing:-1.5px;
+        letter-spacing:-1px;
+    }
+
+    .channel-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .news-grid{
+        grid-template-columns:1fr;
+    }
+
+    .news-card{
+        display:grid;
+        grid-template-columns:120px 1fr;
+    }
+
+    .news-image{
+        height:100%;
+        min-height:120px;
+    }
+
+    .match-card{
+        grid-template-columns:75px 1fr;
+    }
+
+    .match-meta{
+        display:none;
+    }
+
+    .match-teams{
+        gap:10px;
+    }
+
+    .match-team{
+        min-width:75px;
+    }
+
+    .mobile-nav{
+        display:flex;
+    }
+}
+
+@media(max-width:520px){
+    .logo{
+        font-size:18px;
+    }
+
+    .logo-mark{
+        width:35px;
+        height:35px;
+    }
+
+    .header-search{
+        width:130px;
+    }
+
+    .header-search input{
+        font-size:11px;
+        padding-right:35px;
+    }
+
+    .hero{
+        min-height:360px;
     }
 
     .hero p{
         font-size:13px;
     }
 
-    .section{
-        margin-top:25px;
+    .section-title{
+        font-size:21px;
     }
 
-    .sectionTitle{
-        font-size:19px;
+    .live-card{
+        flex-basis:285px;
     }
 
-    .channelsGrid{
-        grid-template-columns:repeat(2,1fr);
-        gap:9px;
+    .channel-card{
+        min-height:165px;
     }
 
-    .channelCard{
-        padding:12px 8px;
+    .channel-logo,
+    .logo-placeholder{
+        width:62px;
+        height:62px;
     }
 
-    .channelLogo{
-        width:65px;
-        height:65px;
+    .match-card{
+        padding:13px 10px;
+        min-height:100px;
     }
 
-    .channelName{
-        font-size:11px;
+    .match-time strong{
+        font-size:15px;
     }
 
-    .teamLogo{
-        width:50px;
-        height:50px;
+    .match-team div{
+        font-size:10px;
     }
 
-    .detailTeams{
-        grid-template-columns:1fr 75px 1fr;
+    .match-team img{
+        width:34px;
+        height:34px;
     }
 
-    .detailTeamLogo{
-        width:70px;
-        height:70px;
+    .detail-teams{
+        grid-template-columns:1fr 55px 1fr;
     }
 
-    .detailTeamName{
-        font-size:12px;
+    .detail-team img{
+        width:55px;
+        height:55px;
     }
-
-    .playerOverlay{
-        padding:0;
-    }
-
-    .playerBox{
-        width:100%;
-        border-radius:0;
-    }
-
-}
-
-@media(max-width:380px){
-
-    .headerSearch{
-        width:125px;
-    }
-
-    .brandSub{
-        display:none;
-    }
-
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
-
 <header class="header">
 
-    <div class="brand" onclick="navigate('home')">
-        <div class="logoMark"></div>
+    <button class="logo" onclick="navigate('home')">
+        <span class="logo-mark">م</span>
+        <span>
+            المستديرة
+            <small>SPORTS PLATFORM</small>
+        </span>
+    </button>
 
-        <div class="brandText">
-            <div class="brandName">المستديرة</div>
-            <div class="brandSub">كل الرياضة بمكان واحد</div>
-        </div>
-    </div>
-
-    <nav class="desktopNav">
-        <button class="navBtn active" data-page="home" onclick="navigate('home')">
-            الرئيسية
-        </button>
-
-        <button class="navBtn" data-page="matches" onclick="navigate('matches')">
-            المباريات
-        </button>
-
-        <button class="navBtn" data-page="live" onclick="navigate('live')">
-            البث المباشر
-        </button>
-
-        <button class="navBtn" data-page="news" onclick="navigate('news')">
-            الأخبار
-        </button>
+    <nav class="nav">
+        <button data-page="home" onclick="navigate('home')">الرئيسية</button>
+        <button data-page="matches" onclick="navigate('matches')">المباريات</button>
+        <button data-page="live" onclick="navigate('live')">البث المباشر</button>
+        <button data-page="news" onclick="navigate('news')">الأخبار</button>
     </nav>
 
-    <div class="headerSearch">
+    <div class="header-search">
         <span>⌕</span>
-        <input
-            id="globalSearch"
-            type="search"
-            placeholder="ابحث..."
-            oninput="globalSearch(this.value)"
-        >
+        <input id="globalSearch" type="search" placeholder="ابحث..." oninput="globalSearch(this.value)">
     </div>
 
 </header>
 
-
 <main>
 
-<!-- =========================
-     HOME
-========================= -->
+    <!-- ================= HOME ================= -->
 
-<section id="page-home" class="page active">
+    <section id="page-home" class="page active">
 
-    <div class="hero">
+        <div class="hero">
 
-        <div class="heroContent">
+            <div class="hero-grid"></div>
 
-            <div class="heroBadge">
-                <span class="liveDot"></span>
-                عالم الرياضة بين إيديك
+            <div class="hero-content">
+
+                <div class="hero-kicker">
+                    <span class="live-dot"></span>
+                    منصة الرياضة الجديدة
+                </div>
+
+                <h1>
+                    كل الرياضة<br>
+                    <span>بمكان واحد.</span>
+                </h1>
+
+                <p>
+                    تابع المباريات، القنوات الرياضية، البطولات والأخبار
+                    من واجهة واحدة مصممة للسرعة وسهولة الاستخدام.
+                </p>
+
+                <div class="hero-actions">
+                    <button class="primary-btn" onclick="navigate('matches')">
+                        مشاهدة المباريات
+                    </button>
+
+                    <button class="secondary-btn" onclick="navigate('live')">
+                        البث المباشر
+                    </button>
+                </div>
+
             </div>
 
-            <h1>
-                كل الرياضة<br>
-                <span>بمكان واحد.</span>
-            </h1>
+        </div>
 
-            <p>
-                تابع المباريات، البث المباشر، الأخبار والقنوات الرياضية
-                من واجهة واحدة مصممة لعشاق الرياضة.
-            </p>
 
-            <div class="heroActions">
+        <!-- LIVE -->
 
-                <button class="primaryBtn" onclick="navigate('matches')">
-                    ⚽ المباريات
+        <section class="section">
+
+            <div class="section-head">
+                <div>
+                    <div class="section-title">مباشر الآن</div>
+                    <div class="section-sub">المباريات التي بدأت حالياً</div>
+                </div>
+
+                <button class="see-all" onclick="navigate('matches')">
+                    كل المباريات
                 </button>
+            </div>
 
-                <button class="secondaryBtn" onclick="navigate('live')">
-                    ▶ البث المباشر
+            <div id="homeLive" class="live-strip"></div>
+
+        </section>
+
+
+        <!-- MATCHES -->
+
+        <section class="section">
+
+            <div class="section-head">
+                <div>
+                    <div class="section-title">المباريات</div>
+                    <div class="section-sub">أهم مواجهات اليوم</div>
+                </div>
+
+                <button class="see-all" onclick="navigate('matches')">
+                    عرض الكل
                 </button>
-
             </div>
 
+            <div id="homeMatches"></div>
+
+        </section>
+
+
+        <!-- CHANNELS -->
+
+        <section class="section">
+
+            <div class="section-head">
+                <div>
+                    <div class="section-title">القنوات الرياضية</div>
+                    <div class="section-sub">شاهد البث المباشر</div>
+                </div>
+
+                <button class="see-all" onclick="navigate('live')">
+                    كل القنوات
+                </button>
+            </div>
+
+            <div id="homeChannels" class="channel-grid"></div>
+
+        </section>
+
+
+        <!-- NEWS -->
+
+        <section class="section">
+
+            <div class="section-head">
+                <div>
+                    <div class="section-title">آخر الأخبار</div>
+                    <div class="section-sub">المستجدات الرياضية</div>
+                </div>
+
+                <button class="see-all" onclick="navigate('news')">
+                    كل الأخبار
+                </button>
+            </div>
+
+            <div id="homeNews" class="news-grid"></div>
+
+        </section>
+
+    </section>
+
+
+    <!-- ================= MATCHES ================= -->
+
+    <section id="page-matches" class="page">
+
+        <div class="page-head">
+            <h1>المباريات</h1>
+            <p>تابع جدول المباريات وحالة كل مواجهة.</p>
         </div>
 
-    </div>
+        <div class="date-tabs" id="dateTabs"></div>
 
-
-    <div class="section">
-
-        <div class="sectionHeader">
-
-            <div class="sectionTitle">
-                مباريات اليوم
-                <small>أهم المواجهات</small>
-            </div>
-
-            <button class="viewAll" onclick="navigate('matches')">
-                عرض الكل
+        <div class="filters" style="margin-top:15px">
+            <button class="filter active" data-match-filter="all" onclick="setMatchFilter('all',this)">
+                الكل
             </button>
 
-        </div>
-
-        <div id="homeMatches" class="matchesGrid"></div>
-
-    </div>
-
-
-    <div class="section">
-
-        <div class="sectionHeader">
-
-            <div class="sectionTitle">
-                البث المباشر
-                <small>القنوات المتاحة الآن</small>
-            </div>
-
-            <button class="viewAll" onclick="navigate('live')">
-                جميع القنوات
+            <button class="filter" data-match-filter="live" onclick="setMatchFilter('live',this)">
+                🔴 مباشر
             </button>
 
-        </div>
-
-        <div id="homeChannels" class="channelsGrid"></div>
-
-    </div>
-
-
-    <div class="section">
-
-        <div class="sectionHeader">
-
-            <div class="sectionTitle">
-                آخر الأخبار
-                <small>أحدث المستجدات الرياضية</small>
-            </div>
-
-            <button class="viewAll" onclick="navigate('news')">
-                كل الأخبار
+            <button class="filter" data-match-filter="upcoming" onclick="setMatchFilter('upcoming',this)">
+                قريباً
             </button>
 
+            <button class="filter" data-match-filter="finished" onclick="setMatchFilter('finished',this)">
+                انتهت
+            </button>
         </div>
 
-        <div id="homeNews" class="newsGrid"></div>
+        <div id="matchesPage" style="margin-top:15px"></div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =========================
-     MATCHES
-========================= -->
+    <!-- ================= LIVE ================= -->
 
-<section id="page-matches" class="page">
+    <section id="page-live" class="page">
 
-    <div class="sectionHeader">
-
-        <div class="sectionTitle">
-            المباريات
-            <small>جميع المباريات والمواجهات</small>
+        <div class="page-head">
+            <h1>البث المباشر</h1>
+            <p>القنوات الرياضية المتوفرة للمشاهدة.</p>
         </div>
 
-    </div>
+        <div class="filters" id="channelCategories"></div>
 
-    <div class="categories" style="margin-bottom:18px">
-
-        <button class="category active" onclick="filterMatches('all',this)">
-            الكل
-        </button>
-
-        <button class="category" onclick="filterMatches('live',this)">
-            🔴 مباشر
-        </button>
-
-        <button class="category" onclick="filterMatches('soon',this)">
-            قريباً
-        </button>
-
-        <button class="category" onclick="filterMatches('ended',this)">
-            انتهت
-        </button>
-
-    </div>
-
-    <div id="matchesList" class="matchesGrid"></div>
-
-</section>
-
-
-<!-- =========================
-     LIVE
-========================= -->
-
-<section id="page-live" class="page">
-
-    <div class="sectionHeader">
-
-        <div class="sectionTitle">
-            البث المباشر
-            <small>شاهد القنوات الرياضية</small>
-        </div>
-
-        <div id="channelCount" style="color:var(--muted);font-size:11px"></div>
-
-    </div>
-
-    <div class="channelTools">
-
-        <div class="channelSearch">
-            <span>⌕</span>
+        <div style="margin-top:15px">
             <input
                 id="channelSearch"
                 type="search"
                 placeholder="ابحث عن قناة..."
-                oninput="renderChannels()"
+                oninput="renderChannels(this.value)"
+                style="
+                    width:100%;
+                    height:48px;
+                    padding:0 16px;
+                    border-radius:15px;
+                    border:1px solid var(--line);
+                    outline:none;
+                    color:#fff;
+                    background:var(--card);
+                "
             >
         </div>
 
-    </div>
+        <div id="channelsPage" class="channel-grid" style="margin-top:18px"></div>
 
-    <div id="categories" class="categories" style="margin-bottom:18px">
-
-        <button
-            class="category active"
-            data-category="الكل"
-            onclick="setCategory('الكل',this)"
-        >
-            الكل
-        </button>
-
-    </div>
-
-    <div id="channelsList" class="channelsGrid"></div>
-
-</section>
+    </section>
 
 
-<!-- =========================
-     NEWS
-========================= -->
+    <!-- ================= NEWS ================= -->
 
-<section id="page-news" class="page">
+    <section id="page-news" class="page">
 
-    <div class="sectionHeader">
-
-        <div class="sectionTitle">
-            الأخبار
-            <small>آخر الأخبار الرياضية</small>
+        <div class="page-head">
+            <h1>الأخبار</h1>
+            <p>آخر المستجدات الرياضية.</p>
         </div>
 
-    </div>
+        <div id="newsPage" class="news-grid"></div>
 
-    <div id="newsList" class="newsGrid"></div>
-
-</section>
+    </section>
 
 </main>
 
 
-<!-- =========================
-     MOBILE NAV
-========================= -->
+<!-- ================= MOBILE NAV ================= -->
 
-<nav class="mobileNav">
+<nav class="mobile-nav">
 
-    <button class="active" data-page="home" onclick="navigate('home')">
+    <button data-page="home" onclick="navigate('home')">
         <span>⌂</span>
-        <span>الرئيسية</span>
+        الرئيسية
     </button>
 
     <button data-page="matches" onclick="navigate('matches')">
-        <span>⚽</span>
-        <span>المباريات</span>
+        <span>◉</span>
+        المباريات
     </button>
 
     <button data-page="live" onclick="navigate('live')">
         <span>▶</span>
-        <span>البث</span>
+        مباشر
     </button>
 
     <button data-page="news" onclick="navigate('news')">
         <span>▤</span>
-        <span>الأخبار</span>
+        الأخبار
     </button>
 
 </nav>
 
 
-<!-- =========================
-     PLAYER
-========================= -->
+<!-- ================= PLAYER ================= -->
 
-<div id="playerOverlay" class="playerOverlay">
+<div id="playerOverlay" class="player-overlay" onclick="outsidePlayer(event)">
 
-    <div class="playerBox">
+    <div class="player-box">
 
-        <div class="playerTop">
+        <div class="player-head">
 
-            <div class="playerChannelInfo">
-
-                <div id="playerChannelLogo" class="playerChannelLogo">
-                    📺
-                </div>
-
-                <div class="playerChannelText">
-                    <strong id="playerTitle">البث المباشر</strong>
-                    <span>● مباشر</span>
-                </div>
-
+            <div id="playerTitle" class="player-title">
+                البث المباشر
             </div>
 
-            <button class="closePlayer" onclick="closePlayer()">
+            <button class="close-btn" onclick="closePlayer()">
                 ×
             </button>
 
         </div>
 
-
-        <div class="videoWrap">
+        <div class="video-wrap">
 
             <video
                 id="video"
                 controls
                 playsinline
-                preload="metadata"
-            ></video>
+                preload="metadata">
+            </video>
 
-            <div id="playerLoading" class="playerLoading">
+            <div id="playerLoading" class="player-loading">
 
                 <div class="spinner"></div>
 
-                <p id="loadingText">
-                    جاري تشغيل البث...
-                </p>
+                <strong>جاري تشغيل البث...</strong>
 
             </div>
 
-            <div id="playerError" class="playerError">
+            <div id="playerError" class="player-error">
 
-                <h3>تعذر تشغيل البث</h3>
+                <strong>تعذر تشغيل البث</strong>
 
-                <p id="errorText">
-                    حدث خطأ أثناء الاتصال بالقناة.
+                <p id="playerErrorText">
+                    حدث خطأ أثناء الاتصال بالبث.
                 </p>
 
-                <button class="primaryBtn" onclick="retryPlayer()">
+                <small>
+                    تأكد من أن رابط البث يعمل وأن القناة متاحة حالياً.
+                </small>
+
+                <button class="primary-btn" onclick="retryPlayer()">
                     إعادة المحاولة
                 </button>
 
@@ -1602,24 +1486,11 @@ video{
 
         </div>
 
+        <div class="player-controls">
 
-        <div class="playerBottom">
-
-            <div class="playerHint">
-                استخدم أزرار الفيديو للتحكم بالبث
-            </div>
-
-            <div class="playerActions">
-
-                <button class="playerAction" onclick="retryPlayer()">
-                    ↻ إعادة
-                </button>
-
-                <button class="playerAction" onclick="fullscreenPlayer()">
-                    ⛶ ملء الشاشة
-                </button>
-
-            </div>
+            <button onclick="fullscreenPlayer()">
+                ⛶ ملء الشاشة
+            </button>
 
         </div>
 
@@ -1628,25 +1499,23 @@ video{
 </div>
 
 
-<!-- =========================
-     MATCH DETAIL
-========================= -->
+<!-- ================= MATCH DETAIL ================= -->
 
-<div id="detailOverlay" class="detailOverlay">
+<div id="detailOverlay" class="modal-overlay" onclick="outsideDetail(event)">
 
-    <div class="detailBox">
+    <div class="modal">
 
-        <div class="detailHeader">
+        <div class="modal-head">
 
-            <h2>تفاصيل المباراة</h2>
+            <strong>تفاصيل المباراة</strong>
 
-            <button class="detailClose" onclick="closeMatchDetail()">
+            <button class="close-btn" onclick="closeDetail()">
                 ×
             </button>
 
         </div>
 
-        <div id="matchDetailContent"></div>
+        <div id="detailBody" class="modal-body"></div>
 
     </div>
 
@@ -1654,9 +1523,6 @@ video{
 
 
 <script>
-/* =====================================================
-   GLOBAL DATA
-===================================================== */
 
 let DATA = {
     site:{},
@@ -1666,16 +1532,80 @@ let DATA = {
 };
 
 let currentPage = "home";
-let currentCategory = "الكل";
+let matchFilter = "all";
+let channelCategory = "الكل";
 
-let hls = null;
 let currentChannel = null;
-let retryTimer = null;
+let currentStreamUrl = "";
+let globalHls = null;
 
 
-/* =====================================================
-   LOAD DATA.JSON
-===================================================== */
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function esc(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function imageOrPlaceholder(url,name,className){
+
+    if(url){
+
+        return `
+            <img
+                class="${className}"
+                src="${esc(url)}"
+                alt="${esc(name)}"
+                loading="lazy"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"
+            >
+            <div class="logo-placeholder" style="display:none">
+                ${esc((name || "?").charAt(0))}
+            </div>
+        `;
+
+    }
+
+    return `
+        <div class="logo-placeholder">
+            ${esc((name || "?").charAt(0))}
+        </div>
+    `;
+}
+
+
+function getStatus(match){
+
+    if(match.live === true){
+        return "مباشر";
+    }
+
+    const status = String(match.status || "").toLowerCase();
+
+    if(
+        status.includes("انته") ||
+        status.includes("finished") ||
+        status.includes("منته")
+    ){
+        return "انتهت";
+    }
+
+    return "لم تبدأ";
+}
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
 
 async function loadData(){
 
@@ -1686,22 +1616,19 @@ async function loadData(){
         });
 
         if(!response.ok){
-            throw new Error("تعذر تحميل data.json");
+            throw new Error("HTTP " + response.status);
         }
 
-        DATA = await response.json();
+        const json = await response.json();
 
-        DATA.matches = Array.isArray(DATA.matches)
-            ? DATA.matches
-            : [];
-
-        DATA.channels = Array.isArray(DATA.channels)
-            ? DATA.channels
-            : [];
-
-        DATA.news = Array.isArray(DATA.news)
-            ? DATA.news
-            : [];
+        DATA = {
+            site:json.site || {},
+            matches:Array.isArray(json.matches) ? json.matches : [],
+            channels:Array.isArray(json.channels)
+                ? json.channels.filter(c => c.enabled !== false)
+                : [],
+            news:Array.isArray(json.news) ? json.news : []
+        };
 
         renderAll();
 
@@ -1709,35 +1636,21 @@ async function loadData(){
 
         console.error(error);
 
-        showDataError();
+        document.getElementById("homeLive").innerHTML = `
+            <div class="empty">
+                <strong>تعذر تحميل البيانات</strong>
+                تأكد من وجود ملف data.json في نفس المجلد.
+            </div>
+        `;
 
     }
 
 }
 
 
-/* =====================================================
-   RENDER ALL
-===================================================== */
-
-function renderAll(){
-
-    renderHomeMatches();
-    renderHomeChannels();
-    renderHomeNews();
-
-    renderMatches();
-    buildCategories();
-    renderChannels();
-
-    renderNews();
-
-}
-
-
-/* =====================================================
+/* =========================================================
    NAVIGATION
-===================================================== */
+========================================================= */
 
 function navigate(page){
 
@@ -1753,14 +1666,7 @@ function navigate(page){
         target.classList.add("active");
     }
 
-    document.querySelectorAll(".navBtn").forEach(btn=>{
-        btn.classList.toggle(
-            "active",
-            btn.dataset.page === page
-        );
-    });
-
-    document.querySelectorAll(".mobileNav button").forEach(btn=>{
+    document.querySelectorAll("[data-page]").forEach(btn=>{
         btn.classList.toggle(
             "active",
             btn.dataset.page === page
@@ -1772,499 +1678,396 @@ function navigate(page){
         behavior:"smooth"
     });
 
-    if(page === "live"){
-        renderChannels();
-    }
+}
+
+
+function renderAll(){
+
+    renderHomeLive();
+    renderHomeMatches();
+    renderHomeChannels();
+    renderHomeNews();
+
+    buildDateTabs();
+    renderMatches();
+
+    buildCategories();
+    renderChannels();
+
+    renderNews();
 
 }
 
 
-/* =====================================================
-   MATCH STATUS
-===================================================== */
+/* =========================================================
+   HOME LIVE
+========================================================= */
 
-function getMatchStatus(match){
+function renderHomeLive(){
 
-    if(match.live === true){
-        return {
-            text:"مباشر",
-            className:"live"
-        };
-    }
+    const box = document.getElementById("homeLive");
 
-    const status = String(match.status || "").toLowerCase();
+    const live = DATA.matches.filter(m => m.live === true);
 
-    if(
-        status.includes("انته") ||
-        status.includes("ended")
-    ){
-        return {
-            text:"انتهت",
-            className:"ended"
-        };
-    }
+    if(!live.length){
 
-    return {
-        text:match.status || "لم تبدأ",
-        className:"soon"
-    };
-
-}
-
-
-/* =====================================================
-   IMAGE HELPERS
-===================================================== */
-
-function imageOrFallback(url, fallback){
-
-    if(url && String(url).trim()){
-
-        return `
-            <img
-                src="${escapeHtml(url)}"
-                alt=""
-                loading="lazy"
-                onerror="this.parentElement.innerHTML='${fallback}'"
-            >
+        box.innerHTML = `
+            <div class="empty" style="min-width:100%">
+                <strong>لا توجد مباريات مباشرة الآن</strong>
+                عند بدء أي مباراة مباشرة ستظهر هنا.
+            </div>
         `;
 
+        return;
     }
 
-    return fallback;
+    box.innerHTML = live.map(match => `
 
-}
+        <article class="live-card" onclick="openMatchDetail(${Number(match.id)})">
 
+            <div class="live-top">
 
-/* =====================================================
-   MATCH CARD
-===================================================== */
+                <span class="live-badge">
+                    🔴 مباشر
+                </span>
 
-function createMatchCard(match){
-
-    const status = getMatchStatus(match);
-
-    const leagueLogo = match.leagueLogo
-        ? `
-            <img
-                class="leagueLogo"
-                src="${escapeHtml(match.leagueLogo)}"
-                alt=""
-                loading="lazy"
-            >
-          `
-        : `
-            <div class="leagueLogoFallback">🏆</div>
-          `;
-
-    const team1Logo = imageOrFallback(
-        match.team1Logo,
-        "⚽"
-    );
-
-    const team2Logo = imageOrFallback(
-        match.team2Logo,
-        "⚽"
-    );
-
-    return `
-
-        <article
-            class="matchCard"
-            onclick="openMatchDetail(${Number(match.id)})"
-        >
-
-            <div class="matchTop">
-
-                <div class="leagueInfo">
-
-                    ${leagueLogo}
-
-                    <span class="leagueName">
-                        ${escapeHtml(match.league || "مباراة")}
-                    </span>
-
-                </div>
-
-                <span class="matchStatus ${status.className}">
-                    ${escapeHtml(status.text)}
+                <span class="league-name">
+                    ${esc(match.league || "بطولة")}
                 </span>
 
             </div>
 
+            <div class="live-teams">
 
-            <div class="teams">
+                <div>
+                    ${match.team1Logo
+                        ? `<img class="team-logo" src="${esc(match.team1Logo)}" alt="">`
+                        : `<div class="team-logo"></div>`
+                    }
 
-                <div class="team">
-
-                    <div class="teamLogo">
-                        ${team1Logo}
+                    <div class="team-name">
+                        ${esc(match.team1)}
                     </div>
-
-                    <div class="teamName">
-                        ${escapeHtml(match.team1 || "الفريق الأول")}
-                    </div>
-
                 </div>
 
-
-                <div class="matchTime">
-
-                    <strong>
-                        ${escapeHtml(match.time || "--:--")}
-                    </strong>
-
-                    <span>
-                        VS
-                    </span>
-
+                <div class="score">
+                    VS
                 </div>
 
+                <div>
+                    ${match.team2Logo
+                        ? `<img class="team-logo" src="${esc(match.team2Logo)}" alt="">`
+                        : `<div class="team-logo"></div>`
+                    }
 
-                <div class="team">
-
-                    <div class="teamLogo">
-                        ${team2Logo}
+                    <div class="team-name">
+                        ${esc(match.team2)}
                     </div>
-
-                    <div class="teamName">
-                        ${escapeHtml(match.team2 || "الفريق الثاني")}
-                    </div>
-
                 </div>
 
             </div>
 
-
-            <div class="matchFooter">
-
-                <span>
-                    ${match.live ? "🔴 البث متاح" : "موعد المباراة"}
-                </span>
-
-                <span>
-                    اضغط للتفاصيل
-                </span>
-
+            <div class="card-action">
+                تفاصيل المباراة ←
             </div>
 
         </article>
 
-    `;
+    `).join("");
 
 }
 
 
-/* =====================================================
+/* =========================================================
    HOME MATCHES
-===================================================== */
+========================================================= */
 
 function renderHomeMatches(){
 
     const box = document.getElementById("homeMatches");
 
-    if(!box) return;
-
-    const matches = DATA.matches.slice(0,3);
+    const matches = DATA.matches.slice(0,6);
 
     if(!matches.length){
 
         box.innerHTML = `
             <div class="empty">
-                لا توجد مباريات حالياً
+                <strong>لا توجد مباريات</strong>
+                أضف المباريات من ملف data.json.
             </div>
         `;
 
         return;
     }
 
-    box.innerHTML = matches
-        .map(createMatchCard)
-        .join("");
-
-}
-
-
-/* =====================================================
-   MATCHES PAGE
-===================================================== */
-
-function renderMatches(filter="all"){
-
-    const box = document.getElementById("matchesList");
-
-    if(!box) return;
-
-    let matches = DATA.matches;
-
-    if(filter === "live"){
-
-        matches = matches.filter(
-            match => match.live === true
-        );
-
-    }
-
-    else if(filter === "ended"){
-
-        matches = matches.filter(match=>{
-
-            const status = String(
-                match.status || ""
-            ).toLowerCase();
-
-            return (
-                status.includes("انته") ||
-                status.includes("ended")
-            );
-
-        });
-
-    }
-
-    else if(filter === "soon"){
-
-        matches = matches.filter(match=>{
-            return !match.live;
-        });
-
-    }
-
-
-    if(!matches.length){
-
-        box.innerHTML = `
-            <div class="empty">
-                لا توجد مباريات بهذا التصنيف.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    box.innerHTML = matches
-        .map(createMatchCard)
-        .join("");
-
-}
-
-
-function filterMatches(filter,button){
-
-    document.querySelectorAll("#page-matches .category")
-        .forEach(btn=>{
-            btn.classList.remove("active");
-        });
-
-    button.classList.add("active");
-
-    renderMatches(filter);
-
-}
-
-
-/* =====================================================
-   MATCH DETAIL
-===================================================== */
-
-function openMatchDetail(id){
-
-    const match = DATA.matches.find(
-        item => Number(item.id) === Number(id)
-    );
-
-    if(!match) return;
-
-    const status = getMatchStatus(match);
-
-    const team1Logo = imageOrFallback(
-        match.team1Logo,
-        "⚽"
-    );
-
-    const team2Logo = imageOrFallback(
-        match.team2Logo,
-        "⚽"
-    );
-
-    const content = document.getElementById(
-        "matchDetailContent"
-    );
-
-    content.innerHTML = `
-
-        <div class="detailLeague">
-            ${escapeHtml(match.league || "مباراة رياضية")}
+    box.innerHTML = `
+        <div class="match-list">
+            ${matches.map(createMatchCard).join("")}
         </div>
+    `;
+
+}
 
 
-        <div class="detailTeams">
+/* =========================================================
+   MATCH CARD
+========================================================= */
 
-            <div>
+function createMatchCard(match){
 
-                <div class="detailTeamLogo">
-                    ${team1Logo}
-                </div>
+    const status = getStatus(match);
+    const isLive = status === "مباشر";
 
-                <div class="detailTeamName">
-                    ${escapeHtml(match.team1 || "الفريق الأول")}
-                </div>
+    return `
 
-            </div>
+        <article class="match-card">
 
+            <div class="match-time">
 
-            <div class="detailTime">
-
-                <strong>
-                    ${escapeHtml(match.time || "--:--")}
+                <strong class="${isLive ? "match-live" : ""}">
+                    ${esc(match.time || "--:--")}
                 </strong>
 
                 <span>
-                    ${escapeHtml(status.text)}
+                    ${esc(match.status || "لم تبدأ")}
                 </span>
 
             </div>
 
+            <div class="match-teams">
 
-            <div>
+                <div class="match-team">
 
-                <div class="detailTeamLogo">
-                    ${team2Logo}
-                </div>
-
-                <div class="detailTeamName">
-                    ${escapeHtml(match.team2 || "الفريق الثاني")}
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="detailInfo">
-
-            <div class="infoItem">
-
-                <span>البطولة</span>
-
-                <strong>
-                    ${escapeHtml(match.league || "غير محدد")}
-                </strong>
-
-            </div>
-
-
-            <div class="infoItem">
-
-                <span>الحالة</span>
-
-                <strong>
-                    ${escapeHtml(status.text)}
-                </strong>
-
-            </div>
-
-
-            <div class="infoItem">
-
-                <span>وقت البداية</span>
-
-                <strong>
-                    ${escapeHtml(match.time || "--:--")}
-                </strong>
-
-            </div>
-
-
-            <div class="infoItem">
-
-                <span>البث</span>
-
-                <strong>
-                    ${
-                        match.live
-                        ? "متاح الآن"
-                        : "سيظهر عند توفره"
+                    ${match.team1Logo
+                        ? `<img src="${esc(match.team1Logo)}" alt="">`
+                        : ""
                     }
-                </strong>
+
+                    <div>
+                        ${esc(match.team1 || "الفريق الأول")}
+                    </div>
+
+                </div>
+
+                <span class="vs">
+                    ${isLive ? "LIVE" : "VS"}
+                </span>
+
+                <div class="match-team">
+
+                    ${match.team2Logo
+                        ? `<img src="${esc(match.team2Logo)}" alt="">`
+                        : ""
+                    }
+
+                    <div>
+                        ${esc(match.team2 || "الفريق الثاني")}
+                    </div>
+
+                </div>
 
             </div>
 
-        </div>
+            <div class="match-meta">
 
+                <span class="status ${isLive ? "live" : ""}">
+                    ${isLive ? "🔴" : "●"}
+                    ${esc(status)}
+                </span>
+
+                <button
+                    class="details-btn"
+                    onclick="openMatchDetail(${Number(match.id)})"
+                >
+                    التفاصيل
+                </button>
+
+            </div>
+
+        </article>
     `;
+}
 
-    document
-        .getElementById("detailOverlay")
-        .classList.add("open");
+
+/* =========================================================
+   MATCHES PAGE
+========================================================= */
+
+function buildDateTabs(){
+
+    const box = document.getElementById("dateTabs");
+
+    const dates = [
+        {key:"yesterday",name:"أمس",sub:"سابقاً"},
+        {key:"today",name:"اليوم",sub:"الآن"},
+        {key:"tomorrow",name:"غداً",sub:"قريباً"},
+        {key:"after",name:"بعد غد",sub:"لاحقاً"}
+    ];
+
+    box.innerHTML = dates.map((d,i)=>`
+
+        <button
+            class="date-tab ${i === 1 ? "active" : ""}"
+            onclick="selectDateTab(this)"
+        >
+            <strong>${d.name}</strong>
+            <small>${d.sub}</small>
+        </button>
+
+    `).join("");
 
 }
 
 
-function closeMatchDetail(){
+function selectDateTab(button){
 
-    document
-        .getElementById("detailOverlay")
-        .classList.remove("open");
+    document.querySelectorAll(".date-tab").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
 
 }
 
 
-/* =====================================================
-   CHANNEL CATEGORIES
-===================================================== */
+function setMatchFilter(filter,button){
+
+    matchFilter = filter;
+
+    document.querySelectorAll("[data-match-filter]").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    renderMatches();
+
+}
+
+
+function renderMatches(){
+
+    const box = document.getElementById("matchesPage");
+
+    let matches = [...DATA.matches];
+
+    if(matchFilter === "live"){
+        matches = matches.filter(m => m.live === true);
+    }
+
+    if(matchFilter === "upcoming"){
+        matches = matches.filter(m => getStatus(m) === "لم تبدأ");
+    }
+
+    if(matchFilter === "finished"){
+        matches = matches.filter(m => getStatus(m) === "انتهت");
+    }
+
+    if(!matches.length){
+
+        box.innerHTML = `
+            <div class="empty">
+                <strong>ماكو مباريات بهذا التصنيف</strong>
+                جرّب تصنيف آخر.
+            </div>
+        `;
+
+        return;
+    }
+
+    const groups = {};
+
+    matches.forEach(match=>{
+
+        const league = match.league || "بطولات أخرى";
+
+        if(!groups[league]){
+            groups[league] = [];
+        }
+
+        groups[league].push(match);
+
+    });
+
+    box.innerHTML = Object.entries(groups).map(([league,matches])=>{
+
+        const first = matches[0];
+
+        return `
+
+            <div class="league-block">
+
+                <div class="league-header">
+
+                    <div class="league-header-left">
+
+                        ${
+                            first.leagueLogo
+                            ? `<img class="league-icon" src="${esc(first.leagueLogo)}" alt="">`
+                            : `<div class="league-icon">⚽</div>`
+                        }
+
+                        <div>
+                            <strong>${esc(league)}</strong>
+                            <small>${matches.length} مباراة</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="match-list">
+
+                    ${matches.map(createMatchCard).join("")}
+
+                </div>
+
+            </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   CHANNELS
+========================================================= */
 
 function buildCategories(){
 
-    const box = document.getElementById("categories");
-
-    if(!box) return;
+    const box = document.getElementById("channelCategories");
 
     const categories = [
+        "الكل",
         ...new Set(
             DATA.channels
-                .filter(channel=>channel.enabled !== false)
-                .map(channel=>channel.category)
+                .map(c=>c.category)
                 .filter(Boolean)
         )
     ];
 
-    box.innerHTML = `
+    box.innerHTML = categories.map(category=>`
 
         <button
-            class="category active"
-            data-category="الكل"
-            onclick="setCategory('الكل',this)"
+            class="filter ${category === "الكل" ? "active" : ""}"
+            onclick="setChannelCategory('${esc(category).replace(/'/g,"\\'")}',this)"
         >
-            الكل
+            ${esc(category)}
         </button>
 
-        ${categories.map(category=>`
-
-            <button
-                class="category"
-                data-category="${escapeHtml(category)}"
-                onclick="setCategory('${escapeJs(category)}',this)"
-            >
-                ${escapeHtml(category)}
-            </button>
-
-        `).join("")}
-
-    `;
+    `).join("");
 
 }
 
 
-function setCategory(category,button){
+function setChannelCategory(category,button){
 
-    currentCategory = category;
+    channelCategory = category;
 
-    document.querySelectorAll("#categories .category")
-        .forEach(btn=>{
-            btn.classList.remove("active");
-        });
+    document.querySelectorAll("#channelCategories .filter")
+        .forEach(btn=>btn.classList.remove("active"));
 
     button.classList.add("active");
 
@@ -2273,143 +2076,22 @@ function setCategory(category,button){
 }
 
 
-/* =====================================================
-   CHANNEL CARD
-===================================================== */
+function renderHomeChannels(){
 
-function createChannelCard(channel){
+    const box = document.getElementById("homeChannels");
 
-    const logo = channel.logo
-        ? `
-            <img
-                src="${escapeHtml(channel.logo)}"
-                alt=""
-                loading="lazy"
-                onerror="this.parentElement.innerHTML='📺'"
-            >
-          `
-        : "📺";
-
-    const selected =
-        currentChannel &&
-        Number(currentChannel.id) === Number(channel.id)
-        ? "selected"
-        : "";
-
-    return `
-
-        <article
-            class="channelCard ${selected}"
-            onclick="playChannel(${Number(channel.id)})"
-        >
-
-            <div class="channelLive">
-                ● LIVE
-            </div>
-
-            <div class="channelLogo">
-                ${logo}
-            </div>
-
-            <div class="channelName">
-                ${escapeHtml(channel.name || "قناة")}
-            </div>
-
-            <div class="channelMeta">
-
-                <span class="channelCategory">
-                    ${escapeHtml(channel.category || "رياضية")}
-                </span>
-
-                ${
-                    channel.quality
-                    ? `
-                        <span class="quality">
-                            ${escapeHtml(channel.quality)}
-                        </span>
-                      `
-                    : ""
-                }
-
-            </div>
-
-        </article>
-
-    `;
-
-}
-
-
-/* =====================================================
-   RENDER CHANNELS
-===================================================== */
-
-function renderChannels(){
-
-    const box = document.getElementById("channelsList");
-
-    if(!box) return;
-
-    const search =
-        (document.getElementById("channelSearch")?.value || "")
-        .trim()
-        .toLowerCase();
-
-    let channels = DATA.channels.filter(
-        channel => channel.enabled !== false
-    );
-
-
-    if(currentCategory !== "الكل"){
-
-        channels = channels.filter(
-            channel =>
-                channel.category === currentCategory
-        );
-
-    }
-
-
-    if(search){
-
-        channels = channels.filter(channel=>{
-
-            const name =
-                String(channel.name || "").toLowerCase();
-
-            const category =
-                String(channel.category || "").toLowerCase();
-
-            return (
-                name.includes(search) ||
-                category.includes(search)
-            );
-
-        });
-
-    }
-
-
-    const count =
-        document.getElementById("channelCount");
-
-    if(count){
-        count.textContent =
-            channels.length + " قناة";
-    }
-
+    const channels = DATA.channels.slice(0,8);
 
     if(!channels.length){
 
         box.innerHTML = `
-            <div class="empty">
-                لا توجد قنوات مطابقة للبحث.
+            <div class="empty" style="grid-column:1/-1">
+                <strong>لا توجد قنوات</strong>
             </div>
         `;
 
         return;
     }
-
 
     box.innerHTML = channels
         .map(createChannelCard)
@@ -2418,443 +2100,125 @@ function renderChannels(){
 }
 
 
-/* =====================================================
-   HOME CHANNELS
-===================================================== */
+function createChannelCard(channel){
 
-function renderHomeChannels(){
+    return `
 
-    const box =
-        document.getElementById("homeChannels");
+        <article
+            class="channel-card"
+            onclick="playChannel(${Number(channel.id)})"
+        >
 
-    if(!box) return;
+            ${
+                channel.logo
+                ? `
+                    <img
+                        class="channel-logo"
+                        src="${esc(channel.logo)}"
+                        alt="${esc(channel.name)}"
+                        loading="lazy"
+                    >
+                `
+                : `
+                    <div class="logo-placeholder">
+                        ▶
+                    </div>
+                `
+            }
 
-    const channels = DATA.channels
-        .filter(channel=>channel.enabled !== false)
-        .slice(0,5);
+            <div class="channel-name">
+                ${esc(channel.name || "قناة رياضية")}
+            </div>
+
+            <div class="channel-bottom">
+
+                <span class="channel-category">
+                    ${esc(channel.category || "رياضية")}
+                </span>
+
+                <span class="quality">
+                    ${esc(channel.quality || "HD")}
+                </span>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+function renderChannels(searchText=""){
+
+    const box = document.getElementById("channelsPage");
+
+    const query = String(searchText || "")
+        .trim()
+        .toLowerCase();
+
+    let channels = DATA.channels.filter(channel=>{
+
+        const categoryOk =
+            channelCategory === "الكل" ||
+            channel.category === channelCategory;
+
+        const searchOk =
+            !query ||
+            String(channel.name || "").toLowerCase().includes(query) ||
+            String(channel.category || "").toLowerCase().includes(query);
+
+        return categoryOk && searchOk;
+
+    });
 
     if(!channels.length){
 
         box.innerHTML = `
-            <div class="empty">
-                لا توجد قنوات متاحة حالياً.
+            <div class="empty" style="grid-column:1/-1">
+                <strong>ما لكينا قنوات</strong>
+                جرّب كلمة بحث ثانية أو تصنيف آخر.
             </div>
         `;
 
         return;
     }
 
-    box.innerHTML =
-        channels.map(createChannelCard).join("");
+    box.innerHTML = channels
+        .map(createChannelCard)
+        .join("");
 
 }
 
 
-/* =====================================================
-   PLAYER
-===================================================== */
-
-function playChannel(id){
-
-    const channel = DATA.channels.find(
-        item => Number(item.id) === Number(id)
-    );
-
-    if(!channel) return;
-
-    if(!channel.url){
-
-        alert(
-            "هذه القناة لا تحتوي على رابط بث حالياً."
-        );
-
-        return;
-    }
-
-
-    currentChannel = channel;
-
-    document
-        .getElementById("playerOverlay")
-        .classList.add("open");
-
-
-    document.getElementById("playerTitle").textContent =
-        channel.name || "البث المباشر";
-
-
-    const logoBox =
-        document.getElementById("playerChannelLogo");
-
-
-    if(channel.logo){
-
-        logoBox.innerHTML = `
-            <img
-                src="${escapeHtml(channel.logo)}"
-                alt=""
-                onerror="this.parentElement.innerHTML='📺'"
-            >
-        `;
-
-    }else{
-
-        logoBox.innerHTML = "📺";
-
-    }
-
-
-    renderChannels();
-
-    startPlayback(channel.url);
-
-}
-
-
-function startPlayback(url){
-
-    clearRetry();
-
-    destroyPlayer();
-
-    hidePlayerError();
-
-    showLoading("جاري الاتصال بالبث...");
-
-
-    const video =
-        document.getElementById("video");
-
-
-    video.pause();
-    video.removeAttribute("src");
-    video.load();
-
-
-    /*
-       iPhone / Safari
-       يدعم HLS بشكل أصلي
-    */
-
-    if(
-        video.canPlayType(
-            "application/vnd.apple.mpegurl"
-        )
-    ){
-
-        video.src = url;
-
-        video.addEventListener(
-            "loadedmetadata",
-            function onLoaded(){
-
-                video.removeEventListener(
-                    "loadedmetadata",
-                    onLoaded
-                );
-
-                hideLoading();
-
-                video.play().catch(()=>{});
-
-            }
-        );
-
-        video.addEventListener(
-            "error",
-            handleVideoError
-        );
-
-        return;
-    }
-
-
-    /*
-       Chrome / Android / Desktop
-       HLS.js
-    */
-
-    if(
-        window.Hls &&
-        Hls.isSupported()
-    ){
-
-        hls = new Hls({
-            enableWorker:true,
-            lowLatencyMode:true,
-            backBufferLength:30,
-            maxBufferLength:30,
-            maxMaxBufferLength:60
-        });
-
-
-        hls.loadSource(url);
-
-        hls.attachMedia(video);
-
-
-        hls.on(
-            Hls.Events.MANIFEST_PARSED,
-            function(){
-
-                hideLoading();
-
-                video.play().catch(()=>{});
-
-            }
-        );
-
-
-        hls.on(
-            Hls.Events.ERROR,
-            function(event,data){
-
-                console.warn(
-                    "HLS ERROR:",
-                    data
-                );
-
-
-                if(data.fatal){
-
-                    if(
-                        data.type ===
-                        Hls.ErrorTypes.NETWORK_ERROR
-                    ){
-
-                        showLoading(
-                            "إعادة الاتصال بالبث..."
-                        );
-
-                        hls.startLoad();
-
-                    }
-
-                    else if(
-                        data.type ===
-                        Hls.ErrorTypes.MEDIA_ERROR
-                    ){
-
-                        hls.recoverMediaError();
-
-                    }
-
-                    else{
-
-                        handlePlaybackError(
-                            "تعذر تشغيل البث."
-                        );
-
-                    }
-
-                }
-
-            }
-        );
-
-
-        return;
-    }
-
-
-    handlePlaybackError(
-        "المتصفح لا يدعم تشغيل HLS."
-    );
-
-}
-
-
-function handleVideoError(){
-
-    handlePlaybackError(
-        "حدث خطأ أثناء تشغيل الفيديو."
-    );
-
-}
-
-
-function handlePlaybackError(message){
-
-    hideLoading();
-
-    const error =
-        document.getElementById("playerError");
-
-    const text =
-        document.getElementById("errorText");
-
-    text.textContent = message;
-
-    error.classList.add("show");
-
-}
-
-
-function retryPlayer(){
-
-    if(!currentChannel) return;
-
-    startPlayback(
-        currentChannel.url
-    );
-
-}
-
-
-function destroyPlayer(){
-
-    const video =
-        document.getElementById("video");
-
-
-    if(hls){
-
-        try{
-            hls.destroy();
-        }catch(e){}
-
-        hls = null;
-
-    }
-
-
-    video.pause();
-
-    video.removeAttribute("src");
-
-    video.load();
-
-}
-
-
-function closePlayer(){
-
-    clearRetry();
-
-    destroyPlayer();
-
-    currentChannel = null;
-
-    document
-        .getElementById("playerOverlay")
-        .classList.remove("open");
-
-    hideLoading();
-    hidePlayerError();
-
-    renderChannels();
-
-}
-
-
-function fullscreenPlayer(){
-
-    const video =
-        document.getElementById("video");
-
-
-    if(video.requestFullscreen){
-
-        video.requestFullscreen();
-
-    }
-
-    else if(video.webkitEnterFullscreen){
-
-        video.webkitEnterFullscreen();
-
-    }
-
-}
-
-
-/* =====================================================
-   PLAYER UI
-===================================================== */
-
-function showLoading(text){
-
-    const loading =
-        document.getElementById("playerLoading");
-
-    const loadingText =
-        document.getElementById("loadingText");
-
-    if(text){
-        loadingText.textContent = text;
-    }
-
-    loading.style.display = "flex";
-
-}
-
-
-function hideLoading(){
-
-    document
-        .getElementById("playerLoading")
-        .style.display = "none";
-
-}
-
-
-function hidePlayerError(){
-
-    document
-        .getElementById("playerError")
-        .classList.remove("show");
-
-}
-
-
-function clearRetry(){
-
-    if(retryTimer){
-
-        clearTimeout(retryTimer);
-        retryTimer = null;
-
-    }
-
-}
-
-
-/* =====================================================
+/* =========================================================
    NEWS
-===================================================== */
+========================================================= */
 
 function createNewsCard(news){
 
-    const image = news.image
-        ? `
-            <img
-                src="${escapeHtml(news.image)}"
-                alt=""
-                loading="lazy"
-                onerror="this.style.display='none'"
-            >
-          `
-        : "📰";
-
     return `
 
-        <article class="newsCard">
+        <article class="news-card">
 
-            <div class="newsImage">
-                ${image}
+            <div class="news-image">
+
+                ${
+                    news.image
+                    ? `<img src="${esc(news.image)}" alt="" loading="lazy">`
+                    : "⚽"
+                }
+
             </div>
 
-            <div class="newsBody">
+            <div class="news-body">
 
                 <h3>
-                    ${escapeHtml(news.title || "خبر رياضي")}
+                    ${esc(news.title || "خبر رياضي")}
                 </h3>
 
                 <p>
-                    ${escapeHtml(
-                        news.description ||
-                        "آخر الأخبار الرياضية."
-                    )}
+                    ${esc(news.description || "")}
                 </p>
 
             </div>
@@ -2866,227 +2230,506 @@ function createNewsCard(news){
 }
 
 
-function renderNews(){
-
-    const box =
-        document.getElementById("newsList");
-
-    if(!box) return;
-
-    if(!DATA.news.length){
-
-        box.innerHTML = `
-            <div class="empty">
-                لا توجد أخبار حالياً.
-            </div>
-        `;
-
-        return;
-    }
-
-    box.innerHTML =
-        DATA.news.map(createNewsCard).join("");
-
-}
-
-
 function renderHomeNews(){
 
-    const box =
-        document.getElementById("homeNews");
-
-    if(!box) return;
-
-    const news =
-        DATA.news.slice(0,3);
-
-    if(!news.length){
-
-        box.innerHTML = `
-            <div class="empty">
-                لا توجد أخبار حالياً.
+    document.getElementById("homeNews").innerHTML =
+        DATA.news
+            .slice(0,3)
+            .map(createNewsCard)
+            .join("") ||
+        `
+            <div class="empty" style="grid-column:1/-1">
+                <strong>لا توجد أخبار</strong>
             </div>
         `;
-
-        return;
-    }
-
-    box.innerHTML =
-        news.map(createNewsCard).join("");
 
 }
 
 
-/* =====================================================
+function renderNews(){
+
+    document.getElementById("newsPage").innerHTML =
+        DATA.news
+            .map(createNewsCard)
+            .join("") ||
+        `
+            <div class="empty" style="grid-column:1/-1">
+                <strong>لا توجد أخبار حالياً</strong>
+            </div>
+        `;
+
+}
+
+
+/* =========================================================
    GLOBAL SEARCH
-===================================================== */
+========================================================= */
 
 function globalSearch(value){
 
-    const query =
-        String(value || "").trim();
+    const query = String(value || "").trim();
 
-    if(!query) return;
+    if(!query){
+        return;
+    }
 
-    navigate("live");
+    const foundChannel = DATA.channels.some(channel=>
+        String(channel.name || "")
+            .toLowerCase()
+            .includes(query.toLowerCase())
+    );
 
-    const input =
-        document.getElementById("channelSearch");
+    const foundMatch = DATA.matches.some(match=>
+        String(match.team1 || "")
+            .toLowerCase()
+            .includes(query.toLowerCase()) ||
+        String(match.team2 || "")
+            .toLowerCase()
+            .includes(query.toLowerCase()) ||
+        String(match.league || "")
+            .toLowerCase()
+            .includes(query.toLowerCase())
+    );
 
-    if(input){
+    if(foundChannel){
 
-        input.value = query;
+        navigate("live");
 
-        currentCategory = "الكل";
+        document.getElementById("channelSearch").value = query;
 
-        document.querySelectorAll(
-            "#categories .category"
-        ).forEach(btn=>{
-            btn.classList.toggle(
-                "active",
-                btn.dataset.category === "الكل"
-            );
+        renderChannels(query);
+
+        return;
+    }
+
+    if(foundMatch){
+
+        navigate("matches");
+
+        return;
+    }
+
+}
+
+
+/* =========================================================
+   MATCH DETAIL
+========================================================= */
+
+function openMatchDetail(id){
+
+    const match = DATA.matches.find(m =>
+        Number(m.id) === Number(id)
+    );
+
+    if(!match){
+        return;
+    }
+
+    const status = getStatus(match);
+
+    document.getElementById("detailBody").innerHTML = `
+
+        <div class="detail-league">
+            ${esc(match.league || "بطولة رياضية")}
+        </div>
+
+        <div class="detail-teams">
+
+            <div class="detail-team">
+
+                ${
+                    match.team1Logo
+                    ? `<img src="${esc(match.team1Logo)}" alt="">`
+                    : ""
+                }
+
+                <strong>
+                    ${esc(match.team1 || "الفريق الأول")}
+                </strong>
+
+            </div>
+
+            <div class="detail-vs">
+                VS
+            </div>
+
+            <div class="detail-team">
+
+                ${
+                    match.team2Logo
+                    ? `<img src="${esc(match.team2Logo)}" alt="">`
+                    : ""
+                }
+
+                <strong>
+                    ${esc(match.team2 || "الفريق الثاني")}
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="detail-info">
+
+            <div class="info-box">
+                <small>الموعد</small>
+                <strong>${esc(match.time || "غير محدد")}</strong>
+            </div>
+
+            <div class="info-box">
+                <small>الحالة</small>
+                <strong>${esc(status)}</strong>
+            </div>
+
+            <div class="info-box">
+                <small>البطولة</small>
+                <strong>${esc(match.league || "-")}</strong>
+            </div>
+
+            <div class="info-box">
+                <small>البث</small>
+                <strong>${match.live ? "مباشر الآن" : "غير متوفر حالياً"}</strong>
+            </div>
+
+        </div>
+
+    `;
+
+    document.getElementById("detailOverlay")
+        .classList.add("show");
+
+}
+
+
+function closeDetail(){
+
+    document.getElementById("detailOverlay")
+        .classList.remove("show");
+
+}
+
+
+function outsideDetail(event){
+
+    if(event.target === event.currentTarget){
+        closeDetail();
+    }
+
+}
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+function playChannel(id){
+
+    const channel = DATA.channels.find(c =>
+        Number(c.id) === Number(id)
+    );
+
+    if(!channel){
+        return;
+    }
+
+    if(!channel.url){
+
+        alert("رابط البث غير مضاف لهذه القناة.");
+
+        return;
+    }
+
+    currentChannel = channel;
+    currentStreamUrl = channel.url;
+
+    document.getElementById("playerTitle").textContent =
+        channel.name || "البث المباشر";
+
+    document.getElementById("playerOverlay")
+        .classList.add("show");
+
+    startPlayback(channel.url);
+
+}
+
+
+function startPlayback(url){
+
+    const video = document.getElementById("video");
+
+    destroyPlayer();
+
+    hidePlayerError();
+
+    showPlayerLoading();
+
+    currentStreamUrl = url;
+
+    video.src = "";
+
+    /*
+       iPhone / Safari:
+       استخدام المشغل الأصلي للـ HLS
+    */
+
+    if(
+        video.canPlayType("application/vnd.apple.mpegurl")
+    ){
+
+        video.src = url;
+
+        video.addEventListener(
+            "loadedmetadata",
+            ()=>{
+                hidePlayerLoading();
+
+                video.play().catch(()=>{});
+            },
+            {once:true}
+        );
+
+        video.addEventListener(
+            "error",
+            ()=>{
+                showPlayerError(
+                    "تعذر تشغيل رابط البث."
+                );
+            },
+            {once:true}
+        );
+
+        return;
+    }
+
+
+    /*
+       الأجهزة التي تدعم HLS.js
+    */
+
+    if(
+        window.Hls &&
+        Hls.isSupported()
+    ){
+
+        globalHls = new Hls({
+            enableWorker:true,
+            lowLatencyMode:true,
+            backBufferLength:30,
+            maxBufferLength:30
         });
 
-        renderChannels();
+        globalHls.loadSource(url);
+
+        globalHls.attachMedia(video);
+
+        globalHls.on(
+            Hls.Events.MANIFEST_PARSED,
+            ()=>{
+                hidePlayerLoading();
+
+                video.play().catch(()=>{});
+            }
+        );
+
+        globalHls.on(
+            Hls.Events.ERROR,
+            function(event,data){
+
+                if(!data.fatal){
+                    return;
+                }
+
+                if(data.type === Hls.ErrorTypes.NETWORK_ERROR){
+
+                    try{
+                        globalHls.startLoad();
+                    }catch(e){
+                        showPlayerError(
+                            "حدث خطأ بالشبكة."
+                        );
+                    }
+
+                    return;
+                }
+
+                if(data.type === Hls.ErrorTypes.MEDIA_ERROR){
+
+                    try{
+                        globalHls.recoverMediaError();
+                    }catch(e){
+                        showPlayerError(
+                            "تعذر معالجة الفيديو."
+                        );
+                    }
+
+                    return;
+                }
+
+                showPlayerError(
+                    "هذا البث غير متوافق أو غير متاح حالياً."
+                );
+
+            }
+        );
+
+        return;
+    }
+
+
+    showPlayerError(
+        "جهازك لا يدعم تشغيل هذا النوع من البث."
+    );
+
+}
+
+
+function showPlayerLoading(){
+
+    document.getElementById("playerLoading")
+        .classList.add("show");
+
+}
+
+
+function hidePlayerLoading(){
+
+    document.getElementById("playerLoading")
+        .classList.remove("show");
+
+}
+
+
+function showPlayerError(message){
+
+    hidePlayerLoading();
+
+    document.getElementById("playerErrorText")
+        .textContent = message;
+
+    document.getElementById("playerError")
+        .classList.add("show");
+
+}
+
+
+function hidePlayerError(){
+
+    document.getElementById("playerError")
+        .classList.remove("show");
+
+}
+
+
+function retryPlayer(){
+
+    if(currentStreamUrl){
+        startPlayback(currentStreamUrl);
+    }
+
+}
+
+
+function destroyPlayer(){
+
+    if(globalHls){
+
+        try{
+            globalHls.destroy();
+        }catch(e){}
+
+        globalHls = null;
+
+    }
+
+    const video = document.getElementById("video");
+
+    try{
+        video.pause();
+    }catch(e){}
+
+    video.removeAttribute("src");
+
+    try{
+        video.load();
+    }catch(e){}
+
+}
+
+
+function closePlayer(){
+
+    destroyPlayer();
+
+    document.getElementById("playerOverlay")
+        .classList.remove("show");
+
+}
+
+
+function outsidePlayer(event){
+
+    if(event.target === event.currentTarget){
+        closePlayer();
+    }
+
+}
+
+
+async function fullscreenPlayer(){
+
+    const video = document.getElementById("video");
+
+    try{
+
+        if(document.fullscreenElement){
+
+            await document.exitFullscreen();
+
+            return;
+        }
+
+        if(video.requestFullscreen){
+
+            await video.requestFullscreen();
+
+            return;
+        }
+
+        if(video.webkitEnterFullscreen){
+
+            video.webkitEnterFullscreen();
+
+        }
+
+    }catch(error){
+
+        console.log(error);
 
     }
 
 }
 
 
-/* =====================================================
-   ESCAPE
-===================================================== */
+/* =========================================================
+   KEYBOARD
+========================================================= */
 
-function escapeHtml(value){
+document.addEventListener("keydown",event=>{
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    if(event.key === "Escape"){
 
-}
-
-
-function escapeJs(value){
-
-    return String(value ?? "")
-        .replace(/\\/g,"\\\\")
-        .replace(/'/g,"\\'")
-        .replace(/\n/g,"\\n")
-        .replace(/\r/g,"\\r");
-
-}
-
-
-/* =====================================================
-   DATA ERROR
-===================================================== */
-
-function showDataError(){
-
-    const boxes = [
-        "homeMatches",
-        "homeChannels",
-        "homeNews",
-        "matchesList",
-        "channelsList",
-        "newsList"
-    ];
-
-    boxes.forEach(id=>{
-
-        const box =
-            document.getElementById(id);
-
-        if(box){
-
-            box.innerHTML = `
-                <div class="empty">
-                    تعذر تحميل بيانات الموقع.<br>
-                    تأكد من وجود ملف data.json.
-                </div>
-            `;
-
-        }
-
-    });
-
-}
-
-
-/* =====================================================
-   CLOSE WITH ESC
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event){
-
-        if(event.key !== "Escape") return;
-
-        if(
-            document
-                .getElementById("playerOverlay")
-                .classList.contains("open")
-        ){
-
-            closePlayer();
-
-        }
-
-        if(
-            document
-                .getElementById("detailOverlay")
-                .classList.contains("open")
-        ){
-
-            closeMatchDetail();
-
-        }
+        closePlayer();
+        closeDetail();
 
     }
-);
+
+});
 
 
-/* =====================================================
-   CLICK OUTSIDE
-===================================================== */
-
-document
-    .getElementById("playerOverlay")
-    .addEventListener(
-        "click",
-        function(event){
-
-            if(event.target === this){
-                closePlayer();
-            }
-
-        }
-    );
-
-
-document
-    .getElementById("detailOverlay")
-    .addEventListener(
-        "click",
-        function(event){
-
-            if(event.target === this){
-                closeMatchDetail();
-            }
-
-        }
-    );
-
-
-/* =====================================================
+/* =========================================================
    START
-===================================================== */
+========================================================= */
 
 loadData();
 
