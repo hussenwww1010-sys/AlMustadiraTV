@@ -40,6 +40,42 @@
       "time": "09:30 م",
       "status": "لم تبدأ",
       "live": false
+    },
+    {
+      "id": 4,
+      "league": "الدوري العراقي",
+      "leagueLogo": "",
+      "team1": "فريق عراقي",
+      "team1Logo": "",
+      "team2": "فريق عراقي آخر",
+      "team2Logo": "",
+      "time": "07:00 م",
+      "status": "لم تبدأ",
+      "live": false
+    },
+    {
+      "id": 5,
+      "league": "كأس الخليج",
+      "leagueLogo": "",
+      "team1": "السعودية",
+      "team1Logo": "",
+      "team2": "الكويت",
+      "team2Logo": "",
+      "time": "09:00 م",
+      "status": "لم تبدأ",
+      "live": false
+    },
+    {
+      "id": 6,
+      "league": "مباراة ودية",
+      "leagueLogo": "",
+      "team1": "الفريق A",
+      "team1Logo": "",
+      "team2": "الفريق B",
+      "team2Logo": "",
+      "time": "11:00 م",
+      "status": "مباشر",
+      "live": true
     }
   ],
 
@@ -93,14 +129,56 @@
       "url": "",
       "type": "hls",
       "enabled": true
+    },
+    {
+      "id": 6,
+      "name": "قناة رياضية 3",
+      "category": "رياضية",
+      "quality": "FHD",
+      "logo": "",
+      "url": "",
+      "type": "hls",
+      "enabled": true
+    },
+    {
+      "id": 7,
+      "name": "قناة رياضية 4K",
+      "category": "رياضية",
+      "quality": "4K",
+      "logo": "",
+      "url": "",
+      "type": "hls",
+      "enabled": true
+    },
+    {
+      "id": 8,
+      "name": "قناة عراقية 2",
+      "category": "عراقية",
+      "quality": "HD",
+      "logo": "",
+      "url": "",
+      "type": "hls",
+      "enabled": true
     }
   ],
 
   "news": [
     {
       "id": 1,
-      "title": "أخبار الرياضة",
-      "description": "آخر الأخبار الرياضية تجدونها هنا.",
+      "title": "آخر الأخبار الرياضية",
+      "description": "تابع آخر المستجدات والأخبار الرياضية من مختلف البطولات.",
+      "image": ""
+    },
+    {
+      "id": 2,
+      "title": "مباريات اليوم",
+      "description": "تعرف على أهم مباريات اليوم ومواعيد انطلاقها.",
+      "image": ""
+    },
+    {
+      "id": 3,
+      "title": "البث الرياضي",
+      "description": "شاهد القنوات الرياضية والبث المباشر من مكان واحد.",
       "image": ""
     }
   ]
