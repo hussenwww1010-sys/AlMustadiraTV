@@ -8,8 +8,11 @@
     {
       "id": 1,
       "league": "الدوري الإنجليزي",
+      "leagueLogo": "",
       "team1": "الفريق الأول",
+      "team1Logo": "",
       "team2": "الفريق الثاني",
+      "team2Logo": "",
       "time": "08:00 م",
       "status": "لم تبدأ",
       "live": false
@@ -17,8 +20,11 @@
     {
       "id": 2,
       "league": "دوري أبطال أوروبا",
+      "leagueLogo": "",
       "team1": "الفريق الثالث",
+      "team1Logo": "",
       "team2": "الفريق الرابع",
+      "team2Logo": "",
       "time": "10:00 م",
       "status": "لم تبدأ",
       "live": false
@@ -26,8 +32,11 @@
     {
       "id": 3,
       "league": "الدوري السعودي",
+      "leagueLogo": "",
       "team1": "الفريق الخامس",
+      "team1Logo": "",
       "team2": "الفريق السادس",
+      "team2Logo": "",
       "time": "09:30 م",
       "status": "لم تبدأ",
       "live": false
