@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -10,9 +11,17 @@
     <meta name="theme-color"
           content="#07080d">
 
+    <meta name="description"
+          content="المستديرة - كل الرياضة بمكان واحد">
+
     <title>المستديرة</title>
 
+
     <style>
+
+        /* =========================
+           RESET
+        ========================= */
 
         * {
             margin: 0;
@@ -20,14 +29,32 @@
             box-sizing: border-box;
         }
 
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
         body {
             min-height: 100vh;
+
             background:
-                radial-gradient(circle at 80% 0%, #18254a 0%, transparent 35%),
-                radial-gradient(circle at 10% 90%, #25133d 0%, transparent 35%),
+                radial-gradient(
+                    circle at 85% 0%,
+                    #1b2850 0%,
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 5% 90%,
+                    #2a1642 0%,
+                    transparent 32%
+                ),
+
                 #07080d;
 
             color: #ffffff;
+
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
@@ -38,407 +65,889 @@
             overflow-x: hidden;
         }
 
-        .app {
-            min-height: 100vh;
-            padding: 22px;
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
         }
 
-        /* HEADER */
+
+
+        /* =========================
+           APP
+        ========================= */
+
+        .app {
+            width: 100%;
+            min-height: 100vh;
+
+            padding:
+                20px
+                20px
+                50px;
+        }
+
+
+
+        /* =========================
+           HEADER
+        ========================= */
 
         header {
+            width: 100%;
+            max-width: 1400px;
+
+            margin: 0 auto;
+
+            padding:
+                8px
+                0
+                28px;
+
             display: flex;
+
             align-items: center;
             justify-content: space-between;
-
-            max-width: 1400px;
-            margin: auto;
-
-            padding: 10px 0 35px;
         }
+
 
         .brand {
             display: flex;
+
             align-items: center;
+
             gap: 12px;
         }
 
-        .logo {
-            width: 48px;
-            height: 48px;
 
-            border-radius: 15px;
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo-mark {
+            width: 54px;
+            height: 54px;
+
+            position: relative;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
+            border-radius: 17px;
+
             background:
-                linear-gradient(135deg, #ffffff, #8ea4ff);
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.13),
+                    rgba(255,255,255,.035)
+                );
 
-            color: #08090d;
-
-            font-size: 22px;
-            font-weight: 900;
+            border:
+                1px solid
+                rgba(255,255,255,.12);
 
             box-shadow:
-                0 8px 30px rgba(120, 140, 255, .25);
+                0 10px 40px
+                rgba(100,120,255,.20);
+
+            overflow: hidden;
         }
 
-        .brand-text h1 {
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: -.5px;
+
+        .logo-ball {
+            width: 24px;
+            height: 24px;
+
+            border-radius: 50%;
+
+            position: relative;
+
+            z-index: 3;
+
+            background:
+                radial-gradient(
+                    circle at 30% 25%,
+                    #ffffff 0%,
+                    #e6eaff 38%,
+                    #8b9cff 100%
+                );
+
+            box-shadow:
+                0 0 25px
+                rgba(135,155,255,.65);
         }
+
+
+        .logo-orbit {
+            position: absolute;
+
+            width: 42px;
+            height: 18px;
+
+            left: 50%;
+            top: 50%;
+
+            border:
+                1.5px solid
+                rgba(255,255,255,.78);
+
+            border-radius: 50%;
+
+            transform:
+                translate(-50%, -50%);
+        }
+
+
+        .orbit-1 {
+            transform:
+                translate(-50%, -50%)
+                rotate(-25deg);
+        }
+
+
+        .orbit-2 {
+            transform:
+                translate(-50%, -50%)
+                rotate(65deg);
+
+            opacity: .48;
+        }
+
+
+
+        /* =========================
+           BRAND TEXT
+        ========================= */
+
+        .brand-text h1 {
+            font-size: 23px;
+
+            font-weight: 900;
+
+            letter-spacing: -.7px;
+        }
+
 
         .brand-text span {
             display: block;
 
-            margin-top: 3px;
+            margin-top: 4px;
 
             color: #8f96a8;
+
             font-size: 11px;
         }
 
+
+
+        /* =========================
+           MENU
+        ========================= */
+
         .menu-btn {
-            width: 45px;
-            height: 45px;
+            width: 47px;
+            height: 47px;
 
-            border: 1px solid rgba(255,255,255,.08);
-            border-radius: 14px;
+            border:
+                1px solid
+                rgba(255,255,255,.09);
 
-            background: rgba(255,255,255,.04);
-
-            color: white;
-            font-size: 20px;
-        }
-
-        /* HERO */
-
-        .hero {
-            max-width: 1400px;
-            margin: auto;
-
-            min-height: 390px;
-
-            border-radius: 30px;
-
-            padding: 45px;
-
-            display: flex;
-            align-items: flex-end;
-
-            position: relative;
-            overflow: hidden;
+            border-radius: 15px;
 
             background:
+                rgba(255,255,255,.045);
+
+            color: #ffffff;
+
+            font-size: 19px;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .menu-btn:hover {
+            background:
+                rgba(255,255,255,.09);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            width: 100%;
+            max-width: 1400px;
+
+            min-height: 430px;
+
+            margin: 0 auto;
+
+            padding: 55px;
+
+            position: relative;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            overflow: hidden;
+
+            border-radius: 32px;
+
+            background:
+
                 linear-gradient(
                     90deg,
                     rgba(5,7,14,.98) 0%,
-                    rgba(5,7,14,.75) 48%,
+                    rgba(5,7,14,.78) 45%,
                     rgba(5,7,14,.25) 100%
                 ),
+
                 linear-gradient(
                     135deg,
-                    #18233e,
-                    #321b42
+                    #172440,
+                    #321b43
                 );
 
-            border: 1px solid rgba(255,255,255,.07);
+            border:
+                1px solid
+                rgba(255,255,255,.07);
 
             box-shadow:
-                0 25px 80px rgba(0,0,0,.35);
+                0 30px 90px
+                rgba(0,0,0,.38);
         }
 
-        .hero::after {
+
+        .hero::before {
             content: "";
 
             position: absolute;
 
-            width: 320px;
-            height: 320px;
+            width: 500px;
+            height: 500px;
 
-            left: 45%;
-            top: -100px;
+            right: -100px;
+            top: -180px;
 
             border-radius: 50%;
 
             background:
                 radial-gradient(
                     circle,
-                    rgba(111,142,255,.35),
+                    rgba(100,130,255,.28),
                     transparent 70%
                 );
 
-            filter: blur(20px);
+            filter:
+                blur(20px);
         }
+
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 280px;
+            height: 280px;
+
+            left: 35%;
+            bottom: -180px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(190,80,255,.18),
+                    transparent 70%
+                );
+
+            filter:
+                blur(25px);
+        }
+
+
+
+        /* =========================
+           HERO CONTENT
+        ========================= */
 
         .hero-content {
             position: relative;
-            z-index: 2;
 
-            max-width: 600px;
+            z-index: 5;
+
+            max-width: 650px;
         }
 
-        .hero-label {
-            display: inline-block;
 
-            padding: 7px 13px;
+        .hero-label {
+            display: inline-flex;
+
+            align-items: center;
+
+            padding:
+                8px
+                14px;
+
+            margin-bottom: 20px;
 
             border-radius: 30px;
 
-            background: rgba(255,255,255,.08);
+            background:
+                rgba(255,255,255,.075);
 
-            color: #cdd3e3;
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            color:
+                #d7dbea;
 
             font-size: 12px;
 
-            margin-bottom: 18px;
+            backdrop-filter:
+                blur(10px);
         }
+
+
+        .hero-label::before {
+            content: "";
+
+            width: 7px;
+            height: 7px;
+
+            margin-left: 8px;
+
+            border-radius: 50%;
+
+            background: #7f9cff;
+
+            box-shadow:
+                0 0 12px
+                rgba(127,156,255,.8);
+        }
+
 
         .hero h2 {
-            font-size: clamp(34px, 6vw, 64px);
+            font-size:
+                clamp(
+                    38px,
+                    7vw,
+                    70px
+                );
 
-            line-height: 1;
+            line-height: 1.05;
 
-            margin-bottom: 18px;
+            letter-spacing: -2.8px;
 
-            letter-spacing: -2px;
+            margin-bottom: 20px;
         }
 
-        .hero p {
-            color: #aeb5c6;
 
-            line-height: 1.8;
+        .hero p {
+            max-width: 520px;
+
+            color:
+                #aeb5c6;
 
             font-size: 15px;
 
-            max-width: 500px;
+            line-height: 1.9;
         }
+
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
 
         .hero-actions {
             display: flex;
+
             gap: 10px;
 
-            margin-top: 25px;
+            margin-top: 28px;
         }
+
 
         .primary-btn,
         .secondary-btn {
-            border: 0;
+            min-height: 48px;
 
-            padding: 13px 22px;
+            padding:
+                0
+                22px;
 
-            border-radius: 14px;
+            border-radius: 15px;
 
             font-size: 14px;
+
             font-weight: 800;
+
+            transition:
+                .2s ease;
         }
+
 
         .primary-btn {
-            background: white;
-            color: #08090d;
+            border: none;
+
+            background:
+                #ffffff;
+
+            color:
+                #08090d;
         }
+
+
+        .primary-btn:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(255,255,255,.13);
+        }
+
 
         .secondary-btn {
-            background: rgba(255,255,255,.08);
-            color: white;
-            border: 1px solid rgba(255,255,255,.08);
+            border:
+                1px solid
+                rgba(255,255,255,.09);
+
+            background:
+                rgba(255,255,255,.06);
+
+            color:
+                #ffffff;
         }
 
-        /* SECTIONS */
+
+        .secondary-btn:hover {
+            background:
+                rgba(255,255,255,.1);
+        }
+
+
+
+        /* =========================
+           SECTION
+        ========================= */
 
         .section {
+            width: 100%;
             max-width: 1400px;
 
-            margin: 35px auto 0;
+            margin:
+                38px
+                auto
+                0;
         }
+
 
         .section-head {
             display: flex;
 
             align-items: center;
+
             justify-content: space-between;
 
             margin-bottom: 18px;
         }
 
+
         .section-head h3 {
             font-size: 21px;
+
+            font-weight: 900;
         }
 
+
         .section-head span {
-            color: #777f93;
+            color:
+                #777f93;
+
             font-size: 12px;
         }
+
+
+
+        /* =========================
+           CARDS
+        ========================= */
 
         .cards {
             display: grid;
 
             grid-template-columns:
-                repeat(auto-fit, minmax(180px, 1fr));
+                repeat(
+                    4,
+                    minmax(0, 1fr)
+                );
 
-            gap: 14px;
+            gap: 15px;
         }
 
+
         .card {
-            min-height: 150px;
+            min-height: 165px;
 
-            padding: 20px;
+            padding: 21px;
 
-            border-radius: 22px;
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 23px;
 
             background:
                 linear-gradient(
                     145deg,
-                    rgba(255,255,255,.07),
+                    rgba(255,255,255,.075),
                     rgba(255,255,255,.025)
                 );
 
-            border: 1px solid rgba(255,255,255,.07);
+            border:
+                1px solid
+                rgba(255,255,255,.07);
 
             transition:
                 transform .2s ease,
-                border-color .2s ease;
-
-            cursor: pointer;
+                border-color .2s ease,
+                background .2s ease;
         }
+
 
         .card:hover {
-            transform: translateY(-4px);
+            transform:
+                translateY(-5px);
 
             border-color:
-                rgba(255,255,255,.18);
+                rgba(255,255,255,.17);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.10),
+                    rgba(255,255,255,.035)
+                );
         }
 
-        .card-icon {
-            width: 48px;
-            height: 48px;
 
-            border-radius: 15px;
+        .card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+            height: 120px;
+
+            left: -55px;
+            bottom: -65px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(120,140,255,.08);
+
+            filter:
+                blur(15px);
+        }
+
+
+        .card-icon {
+            width: 49px;
+            height: 49px;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
-            background: rgba(255,255,255,.07);
+            margin-bottom: 27px;
 
-            margin-bottom: 25px;
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.065);
+
+            border:
+                1px solid
+                rgba(255,255,255,.05);
 
             font-size: 20px;
         }
 
+
         .card h4 {
             font-size: 16px;
-            margin-bottom: 6px;
+
+            margin-bottom: 7px;
         }
 
+
         .card p {
-            color: #7f8799;
+            color:
+                #7f8799;
+
             font-size: 12px;
         }
 
-        /* MOBILE */
 
-        @media (max-width: 600px) {
 
-            .app {
-                padding: 14px;
-            }
+        /* =========================
+           MOBILE
+        ========================= */
 
-            header {
-                padding-bottom: 20px;
-            }
-
-            .hero {
-                min-height: 430px;
-
-                padding: 25px;
-
-                border-radius: 25px;
-            }
-
-            .hero h2 {
-                font-size: 40px;
-            }
+        @media (max-width: 850px) {
 
             .cards {
                 grid-template-columns:
                     repeat(2, 1fr);
             }
 
-            .card {
-                min-height: 135px;
-                padding: 16px;
+            .hero {
+                min-height: 440px;
+
+                padding: 35px;
             }
         }
 
+
+
+        @media (max-width: 600px) {
+
+            .app {
+                padding:
+                    14px
+                    14px
+                    35px;
+            }
+
+
+            header {
+                padding-bottom: 20px;
+            }
+
+
+            .logo-mark {
+                width: 50px;
+                height: 50px;
+            }
+
+
+            .brand-text h1 {
+                font-size: 20px;
+            }
+
+
+            .hero {
+                min-height: 455px;
+
+                padding: 27px;
+
+                border-radius: 27px;
+            }
+
+
+            .hero h2 {
+                font-size: 41px;
+
+                letter-spacing:
+                    -1.8px;
+            }
+
+
+            .hero p {
+                font-size: 14px;
+            }
+
+
+            .hero-actions {
+                width: 100%;
+            }
+
+
+            .primary-btn,
+            .secondary-btn {
+                flex: 1;
+
+                padding:
+                    0
+                    12px;
+            }
+
+
+            .section {
+                margin-top: 30px;
+            }
+
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 10px;
+            }
+
+
+            .card {
+                min-height: 145px;
+
+                padding: 16px;
+
+                border-radius: 19px;
+            }
+
+
+            .card-icon {
+                width: 43px;
+                height: 43px;
+
+                margin-bottom: 22px;
+            }
+        }
+
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="app">
+
+
+    <!-- =====================
+         HEADER
+    ====================== -->
 
     <header>
 
         <div class="brand">
 
-            <div class="logo">
-                م
+
+            <!-- LOGO -->
+
+            <div class="logo-mark">
+
+                <div class="logo-ball"></div>
+
+                <div class="logo-orbit orbit-1"></div>
+
+                <div class="logo-orbit orbit-2"></div>
+
             </div>
 
+
             <div class="brand-text">
-                <h1>المستديرة</h1>
-                <span>كل الرياضة بمكان واحد</span>
+
+                <h1>
+                    المستديرة
+                </h1>
+
+                <span>
+                    كل الرياضة بمكان واحد
+                </span>
+
             </div>
 
         </div>
 
-        <button class="menu-btn">
+
+        <button
+            class="menu-btn"
+            aria-label="القائمة">
+
             ☰
+
         </button>
 
     </header>
 
 
+
+    <!-- =====================
+         HERO
+    ====================== -->
+
     <main>
+
 
         <section class="hero">
 
+
             <div class="hero-content">
+
 
                 <span class="hero-label">
                     المستديرة
                 </span>
 
+
                 <h2>
                     عالم الرياضة
+                    <br>
                     بين إيديك
                 </h2>
 
+
                 <p>
-                    منصة رياضية حديثة تجمع لك المباريات
-                    والأخبار والبث الرياضي في تجربة واحدة.
+                    منصة رياضية حديثة تجمع لك
+                    المباريات والبث المباشر والأخبار
+                    والبطولات في تجربة واحدة.
                 </p>
+
 
                 <div class="hero-actions">
 
-                    <button class="primary-btn">
+
+                    <button
+                        class="primary-btn">
+
                         استكشف الآن
+
                     </button>
 
-                    <button class="secondary-btn">
+
+                    <button
+                        class="secondary-btn">
+
                         المباريات
+
                     </button>
+
 
                 </div>
 
+
             </div>
+
 
         </section>
 
 
+
+        <!-- =====================
+             EXPLORE
+        ====================== -->
+
         <section class="section">
+
 
             <div class="section-head">
 
@@ -453,7 +962,9 @@
             </div>
 
 
+
             <div class="cards">
+
 
                 <div class="card">
 
@@ -470,6 +981,7 @@
                     </p>
 
                 </div>
+
 
 
                 <div class="card">
@@ -489,6 +1001,7 @@
                 </div>
 
 
+
                 <div class="card">
 
                     <div class="card-icon">
@@ -504,6 +1017,7 @@
                     </p>
 
                 </div>
+
 
 
                 <div class="card">
@@ -522,13 +1036,19 @@
 
                 </div>
 
+
             </div>
+
 
         </section>
 
+
     </main>
+
 
 </div>
 
+
 </body>
+
 </html>
