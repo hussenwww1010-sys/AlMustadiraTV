@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
@@ -9,9 +10,6 @@
 
 <meta name="theme-color"
       content="#07080d">
-
-<meta name="description"
-      content="المستديرة - منصة رياضية">
 
 <title>المستديرة</title>
 
@@ -28,9 +26,11 @@
     box-sizing: border-box;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
+
 
 body {
     min-height: 100vh;
@@ -41,11 +41,13 @@ body {
             #1b2850 0%,
             transparent 32%
         ),
+
         radial-gradient(
             circle at 5% 90%,
             #2a1642 0%,
             transparent 32%
         ),
+
         #07080d;
 
     color: #fff;
@@ -61,6 +63,12 @@ body {
 }
 
 
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+
 /* =========================
    APP
 ========================= */
@@ -71,7 +79,7 @@ body {
     padding:
         20px
         20px
-        105px;
+        110px;
 }
 
 
@@ -203,7 +211,7 @@ header {
 
 
 /* =========================
-   BRAND
+   BRAND TEXT
 ========================= */
 
 .brand-text h1 {
@@ -253,10 +261,12 @@ header {
 .page {
     display: none;
 
+    width: 100%;
     max-width: 1400px;
 
     margin: auto;
 }
+
 
 .page.active {
     display: block;
@@ -291,6 +301,7 @@ header {
             rgba(5,7,14,.72),
             rgba(5,7,14,.20)
         ),
+
         linear-gradient(
             135deg,
             #172440,
@@ -388,10 +399,6 @@ header {
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
-
 .hero-actions {
     display: flex;
 
@@ -450,9 +457,8 @@ header {
 .section-head {
     display: flex;
 
-    justify-content: space-between;
-
     align-items: center;
+    justify-content: space-between;
 
     margin-bottom: 18px;
 }
@@ -460,6 +466,8 @@ header {
 
 .section-head h3 {
     font-size: 21px;
+
+    font-weight: 900;
 }
 
 
@@ -471,7 +479,7 @@ header {
 
 
 /* =========================
-   CARDS
+   HOME CARDS
 ========================= */
 
 .cards {
@@ -553,7 +561,324 @@ header {
 
 
 /* =========================
-   INTERNAL PAGES
+   PAGE TITLE
+========================= */
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+
+.page-title h2 {
+    font-size: 34px;
+
+    font-weight: 900;
+
+    margin-bottom: 7px;
+}
+
+
+.page-title p {
+    color: #858da0;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   DATE FILTER
+========================= */
+
+.date-bar {
+    display: flex;
+
+    gap: 9px;
+
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+
+    margin-bottom: 25px;
+
+    scrollbar-width: none;
+}
+
+
+.date-bar::-webkit-scrollbar {
+    display: none;
+}
+
+
+.date-btn {
+    flex: 0 0 auto;
+
+    min-width: 85px;
+
+    padding:
+        11px
+        15px;
+
+    border-radius: 15px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(255,255,255,.035);
+
+    color: #858da0;
+
+    font-size: 12px;
+}
+
+
+.date-btn.active {
+    background:
+        #ffffff;
+
+    color:
+        #08090d;
+
+    border-color:
+        #ffffff;
+}
+
+
+/* =========================
+   MATCH LIST
+========================= */
+
+.matches {
+    display: grid;
+
+    gap: 13px;
+}
+
+
+/* =========================
+   MATCH CARD
+========================= */
+
+.match-card {
+    width: 100%;
+
+    padding: 18px;
+
+    border-radius: 23px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    transition:
+        .2s ease;
+}
+
+
+.match-card:hover {
+    border-color:
+        rgba(255,255,255,.16);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================
+   MATCH TOP
+========================= */
+
+.match-top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+
+.league {
+    color:
+        #aab1c2;
+
+    font-size: 11px;
+}
+
+
+.match-status {
+    padding:
+        6px
+        10px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color:
+        #aab1c2;
+
+    font-size: 10px;
+}
+
+
+/* =========================
+   TEAMS
+========================= */
+
+.match-main {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        100px
+        1fr;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.team {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.team.right {
+    justify-content: flex-start;
+}
+
+
+.team.left {
+    justify-content: flex-end;
+}
+
+
+.team-logo {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1c2436,
+            #0e111a
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    font-size: 20px;
+}
+
+
+.team-name {
+    font-size: 14px;
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   TIME
+========================= */
+
+.match-time {
+    text-align: center;
+}
+
+
+.time {
+    display: block;
+
+    font-size: 24px;
+
+    font-weight: 900;
+
+    letter-spacing: -.8px;
+}
+
+
+.time-label {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #747d91;
+
+    font-size: 10px;
+}
+
+
+/* =========================
+   MATCH FOOTER
+========================= */
+
+.match-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 20px;
+
+    padding-top: 13px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.055);
+
+    color: #70798c;
+
+    font-size: 10px;
+}
+
+
+.watch-btn {
+    padding:
+        7px
+        12px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(255,255,255,.05);
+
+    color: #fff;
+
+    font-size: 10px;
+}
+
+
+/* =========================
+   EMPTY / OTHER PAGES
 ========================= */
 
 .inner-page {
@@ -648,9 +973,6 @@ header {
     gap: 4px;
 
     font-size: 11px;
-
-    transition:
-        .2s ease;
 }
 
 
@@ -664,12 +986,6 @@ header {
         rgba(255,255,255,.09);
 
     color: #fff;
-}
-
-
-.nav-item:active {
-    transform:
-        scale(.95);
 }
 
 
@@ -701,9 +1017,11 @@ header {
             105px;
     }
 
+
     header {
         padding-bottom: 20px;
     }
+
 
     .hero {
         min-height: 455px;
@@ -713,25 +1031,29 @@ header {
         border-radius: 27px;
     }
 
+
     .hero h2 {
         font-size: 41px;
 
-        letter-spacing:
-            -1.8px;
+        letter-spacing: -1.8px;
     }
+
 
     .hero p {
         font-size: 14px;
     }
 
+
     .hero-actions {
         width: 100%;
     }
+
 
     .primary-btn,
     .secondary-btn {
         flex: 1;
     }
+
 
     .cards {
         grid-template-columns:
@@ -740,6 +1062,7 @@ header {
         gap: 10px;
     }
 
+
     .card {
         min-height: 145px;
 
@@ -747,6 +1070,48 @@ header {
 
         border-radius: 19px;
     }
+
+
+    .page-title h2 {
+        font-size: 29px;
+    }
+
+
+    .match-card {
+        padding: 15px;
+    }
+
+
+    .match-main {
+        grid-template-columns:
+            1fr
+            75px
+            1fr;
+    }
+
+
+    .team {
+        gap: 7px;
+    }
+
+
+    .team-logo {
+        width: 42px;
+        height: 42px;
+
+        font-size: 17px;
+    }
+
+
+    .team-name {
+        font-size: 12px;
+    }
+
+
+    .time {
+        font-size: 21px;
+    }
+
 }
 
 </style>
@@ -795,8 +1160,7 @@ header {
 
 
     <button
-        class="menu-btn"
-        aria-label="القائمة">
+        class="menu-btn">
 
         ☰
 
@@ -806,12 +1170,12 @@ header {
 
 
 
+<main>
+
+
 <!-- =========================
      HOME
 ========================= -->
-
-<main>
-
 
 <section
     id="home"
@@ -845,11 +1209,12 @@ header {
 
             <div class="hero-actions">
 
+
                 <button
                     class="primary-btn"
                     onclick="openPage('matches')">
 
-                    استكشف الآن
+                    استكشف المباريات
 
                 </button>
 
@@ -862,10 +1227,12 @@ header {
 
                 </button>
 
+
             </div>
 
 
         </div>
+
 
     </section>
 
@@ -941,7 +1308,7 @@ header {
                 </h4>
 
                 <p>
-                    آخر أخبار الرياضة
+                    آخر الأخبار الرياضية
                 </p>
 
             </div>
@@ -983,18 +1350,312 @@ header {
     class="page">
 
 
-    <div class="inner-page">
+    <div class="page-title">
 
         <h2>
             ⚽ المباريات
         </h2>
 
         <p>
-            هنا راح تظهر المباريات القادمة
-            والنتائج ومواعيد المباريات.
+            تابع مواعيد أهم المباريات الرياضية.
         </p>
 
     </div>
+
+
+    <div class="date-bar">
+
+        <button
+            class="date-btn active">
+
+            اليوم
+
+        </button>
+
+
+        <button
+            class="date-btn">
+
+            غداً
+
+        </button>
+
+
+        <button
+            class="date-btn">
+
+            السبت
+
+        </button>
+
+
+        <button
+            class="date-btn">
+
+            الأحد
+
+        </button>
+
+    </div>
+
+
+
+    <div class="matches">
+
+
+        <!-- MATCH 1 -->
+
+        <div class="match-card">
+
+
+            <div class="match-top">
+
+                <span class="league">
+                    دوري أبطال أوروبا
+                </span>
+
+                <span class="match-status">
+                    لم تبدأ
+                </span>
+
+            </div>
+
+
+            <div class="match-main">
+
+
+                <div class="team right">
+
+                    <div class="team-logo">
+                        🟦
+                    </div>
+
+                    <span class="team-name">
+                        الفريق الأول
+                    </span>
+
+                </div>
+
+
+                <div class="match-time">
+
+                    <span class="time">
+                        08:00
+                    </span>
+
+                    <span class="time-label">
+                        مساءً
+                    </span>
+
+                </div>
+
+
+                <div class="team left">
+
+                    <span class="team-name">
+                        الفريق الثاني
+                    </span>
+
+                    <div class="team-logo">
+                        🟥
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="match-footer">
+
+                <span>
+                    اليوم
+                </span>
+
+                <button
+                    class="watch-btn"
+                    onclick="openPage('live')">
+
+                    📺 مشاهدة
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- MATCH 2 -->
+
+        <div class="match-card">
+
+
+            <div class="match-top">
+
+                <span class="league">
+                    الدوري الإسباني
+                </span>
+
+                <span class="match-status">
+                    لم تبدأ
+                </span>
+
+            </div>
+
+
+            <div class="match-main">
+
+
+                <div class="team right">
+
+                    <div class="team-logo">
+                        🟨
+                    </div>
+
+                    <span class="team-name">
+                        الفريق الثالث
+                    </span>
+
+                </div>
+
+
+                <div class="match-time">
+
+                    <span class="time">
+                        10:30
+                    </span>
+
+                    <span class="time-label">
+                        مساءً
+                    </span>
+
+                </div>
+
+
+                <div class="team left">
+
+                    <span class="team-name">
+                        الفريق الرابع
+                    </span>
+
+                    <div class="team-logo">
+                        🟩
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="match-footer">
+
+                <span>
+                    اليوم
+                </span>
+
+                <button
+                    class="watch-btn"
+                    onclick="openPage('live')">
+
+                    📺 مشاهدة
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- MATCH 3 -->
+
+        <div class="match-card">
+
+
+            <div class="match-top">
+
+                <span class="league">
+                    الدوري الإنجليزي
+                </span>
+
+                <span class="match-status">
+                    لم تبدأ
+                </span>
+
+            </div>
+
+
+            <div class="match-main">
+
+
+                <div class="team right">
+
+                    <div class="team-logo">
+                        ⚪
+                    </div>
+
+                    <span class="team-name">
+                        الفريق الخامس
+                    </span>
+
+                </div>
+
+
+                <div class="match-time">
+
+                    <span class="time">
+                        11:00
+                    </span>
+
+                    <span class="time-label">
+                        مساءً
+                    </span>
+
+                </div>
+
+
+                <div class="team left">
+
+                    <span class="team-name">
+                        الفريق السادس
+                    </span>
+
+                    <div class="team-logo">
+                        🔴
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="match-footer">
+
+                <span>
+                    اليوم
+                </span>
+
+                <button
+                    class="watch-btn"
+                    onclick="openPage('live')">
+
+                    📺 مشاهدة
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
 
 </section>
 
@@ -1042,7 +1703,7 @@ header {
         </h2>
 
         <p>
-            هنا راح تظهر الأخبار الرياضية
+            هنا راح نضيف الأخبار الرياضية
             والمستجدات.
         </p>
 
@@ -1068,8 +1729,7 @@ header {
         </h2>
 
         <p>
-            هنا راح نضيف البطولات والدوريات
-            بشكل مرتب.
+            هنا راح نضيف البطولات والدوريات.
         </p>
 
     </div>
@@ -1091,68 +1751,68 @@ header {
 <nav class="bottom-nav">
 
 
-    <button
-        class="nav-item active"
-        data-page="home"
-        onclick="openPage('home')">
+<button
+    class="nav-item active"
+    data-page="home"
+    onclick="openPage('home')">
 
-        <span class="icon">
-            🏠
-        </span>
+    <span class="icon">
+        🏠
+    </span>
 
-        <span>
-            الرئيسية
-        </span>
+    <span>
+        الرئيسية
+    </span>
 
-    </button>
-
-
-    <button
-        class="nav-item"
-        data-page="matches"
-        onclick="openPage('matches')">
-
-        <span class="icon">
-            ⚽
-        </span>
-
-        <span>
-            المباريات
-        </span>
-
-    </button>
+</button>
 
 
-    <button
-        class="nav-item"
-        data-page="live"
-        onclick="openPage('live')">
+<button
+    class="nav-item"
+    data-page="matches"
+    onclick="openPage('matches')">
 
-        <span class="icon">
-            📺
-        </span>
+    <span class="icon">
+        ⚽
+    </span>
 
-        <span>
-            البث
-        </span>
+    <span>
+        المباريات
+    </span>
 
-    </button>
+</button>
 
 
-    <button
-        class="nav-item"
-        data-page="news"
-        onclick="openPage('news')">
+<button
+    class="nav-item"
+    data-page="live"
+    onclick="openPage('live')">
 
-        <span class="icon">
-            📰
-        </span>
+    <span class="icon">
+        📺
+    </span>
 
-        <span>
-            الأخبار
-        </span>
+    <span>
+        البث
+    </span>
 
-    </button>
+</button>
+
+
+<button
+    class="nav-item"
+    data-page="news"
+    onclick="openPage('news')">
+
+    <span class="icon">
+        📰
+    </span>
+
+    <span>
+        الأخبار
+    </span>
+
+</button>
 
 
 </nav>
@@ -1167,8 +1827,10 @@ header {
 
 function openPage(pageName) {
 
+
     const pages =
         document.querySelectorAll(".page");
+
 
     const navItems =
         document.querySelectorAll(".nav-item");
@@ -1214,6 +1876,38 @@ function openPage(pageName) {
     });
 
 }
+
+
+/* =========================
+   DATE BUTTONS
+========================= */
+
+document
+.querySelectorAll(".date-btn")
+.forEach(button => {
+
+
+    button.addEventListener(
+        "click",
+        function() {
+
+
+            document
+            .querySelectorAll(".date-btn")
+            .forEach(btn => {
+
+                btn.classList.remove("active");
+
+            });
+
+
+            this.classList.add("active");
+
+        }
+    );
+
+});
+
 
 </script>
 
