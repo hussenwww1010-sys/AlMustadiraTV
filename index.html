@@ -1,30 +1,534 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#07080d">
 
     <title>المستديرة</title>
 
-    <meta name="theme-color" content="#08090d">
-
     <style>
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             min-height: 100vh;
-            background: #08090d;
-            color: white;
-            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at 80% 0%, #18254a 0%, transparent 35%),
+                radial-gradient(circle at 10% 90%, #25133d 0%, transparent 35%),
+                #07080d;
+
+            color: #ffffff;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            overflow-x: hidden;
         }
+
+        .app {
+            min-height: 100vh;
+            padding: 22px;
+        }
+
+        /* HEADER */
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            max-width: 1400px;
+            margin: auto;
+
+            padding: 10px 0 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(135deg, #ffffff, #8ea4ff);
+
+            color: #08090d;
+
+            font-size: 22px;
+            font-weight: 900;
+
+            box-shadow:
+                0 8px 30px rgba(120, 140, 255, .25);
+        }
+
+        .brand-text h1 {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -.5px;
+        }
+
+        .brand-text span {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #8f96a8;
+            font-size: 11px;
+        }
+
+        .menu-btn {
+            width: 45px;
+            height: 45px;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 14px;
+
+            background: rgba(255,255,255,.04);
+
+            color: white;
+            font-size: 20px;
+        }
+
+        /* HERO */
+
+        .hero {
+            max-width: 1400px;
+            margin: auto;
+
+            min-height: 390px;
+
+            border-radius: 30px;
+
+            padding: 45px;
+
+            display: flex;
+            align-items: flex-end;
+
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(5,7,14,.98) 0%,
+                    rgba(5,7,14,.75) 48%,
+                    rgba(5,7,14,.25) 100%
+                ),
+                linear-gradient(
+                    135deg,
+                    #18233e,
+                    #321b42
+                );
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,.35);
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 320px;
+            height: 320px;
+
+            left: 45%;
+            top: -100px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(111,142,255,.35),
+                    transparent 70%
+                );
+
+            filter: blur(20px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 600px;
+        }
+
+        .hero-label {
+            display: inline-block;
+
+            padding: 7px 13px;
+
+            border-radius: 30px;
+
+            background: rgba(255,255,255,.08);
+
+            color: #cdd3e3;
+
+            font-size: 12px;
+
+            margin-bottom: 18px;
+        }
+
+        .hero h2 {
+            font-size: clamp(34px, 6vw, 64px);
+
+            line-height: 1;
+
+            margin-bottom: 18px;
+
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            color: #aeb5c6;
+
+            line-height: 1.8;
+
+            font-size: 15px;
+
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            border: 0;
+
+            padding: 13px 22px;
+
+            border-radius: 14px;
+
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .primary-btn {
+            background: white;
+            color: #08090d;
+        }
+
+        .secondary-btn {
+            background: rgba(255,255,255,.08);
+            color: white;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        /* SECTIONS */
+
+        .section {
+            max-width: 1400px;
+
+            margin: 35px auto 0;
+        }
+
+        .section-head {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .section-head h3 {
+            font-size: 21px;
+        }
+
+        .section-head span {
+            color: #777f93;
+            font-size: 12px;
+        }
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+
+            gap: 14px;
+        }
+
+        .card {
+            min-height: 150px;
+
+            padding: 20px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.07),
+                    rgba(255,255,255,.025)
+                );
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            transition:
+                transform .2s ease,
+                border-color .2s ease;
+
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(255,255,255,.18);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,.07);
+
+            margin-bottom: 25px;
+
+            font-size: 20px;
+        }
+
+        .card h4 {
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .card p {
+            color: #7f8799;
+            font-size: 12px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .app {
+                padding: 14px;
+            }
+
+            header {
+                padding-bottom: 20px;
+            }
+
+            .hero {
+                min-height: 430px;
+
+                padding: 25px;
+
+                border-radius: 25px;
+            }
+
+            .hero h2 {
+                font-size: 40px;
+            }
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .card {
+                min-height: 135px;
+                padding: 16px;
+            }
+        }
+
     </style>
 </head>
 
 <body>
+
+<div class="app">
+
+    <header>
+
+        <div class="brand">
+
+            <div class="logo">
+                م
+            </div>
+
+            <div class="brand-text">
+                <h1>المستديرة</h1>
+                <span>كل الرياضة بمكان واحد</span>
+            </div>
+
+        </div>
+
+        <button class="menu-btn">
+            ☰
+        </button>
+
+    </header>
+
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    المستديرة
+                </span>
+
+                <h2>
+                    عالم الرياضة
+                    بين إيديك
+                </h2>
+
+                <p>
+                    منصة رياضية حديثة تجمع لك المباريات
+                    والأخبار والبث الرياضي في تجربة واحدة.
+                </p>
+
+                <div class="hero-actions">
+
+                    <button class="primary-btn">
+                        استكشف الآن
+                    </button>
+
+                    <button class="secondary-btn">
+                        المباريات
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="section-head">
+
+                <h3>
+                    استكشف
+                </h3>
+
+                <span>
+                    قريباً
+                </span>
+
+            </div>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        ⚽
+                    </div>
+
+                    <h4>
+                        المباريات
+                    </h4>
+
+                    <p>
+                        تابع أهم المباريات
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        📺
+                    </div>
+
+                    <h4>
+                        البث المباشر
+                    </h4>
+
+                    <p>
+                        القنوات الرياضية
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        📰
+                    </div>
+
+                    <h4>
+                        الأخبار
+                    </h4>
+
+                    <p>
+                        آخر أخبار الرياضة
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        🏆
+                    </div>
+
+                    <h4>
+                        البطولات
+                    </h4>
+
+                    <p>
+                        أهم البطولات العالمية
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
 
 </body>
 </html>
