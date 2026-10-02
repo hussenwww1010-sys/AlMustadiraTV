@@ -29,6 +29,8 @@
     {
       "id": 1,
       "name": "قناة رياضية 1",
+      "category": "رياضية",
+      "quality": "HD",
       "logo": "",
       "url": "",
       "type": "hls",
@@ -38,6 +40,8 @@
     {
       "id": 2,
       "name": "قناة رياضية 2",
+      "category": "رياضية",
+      "quality": "FHD",
       "logo": "",
       "url": "",
       "type": "hls",
@@ -46,7 +50,9 @@
 
     {
       "id": 3,
-      "name": "قناة رياضية 3",
+      "name": "قناة خليجية 1",
+      "category": "خليجية",
+      "quality": "HD",
       "logo": "",
       "url": "",
       "type": "hls",
@@ -55,7 +61,9 @@
 
     {
       "id": 4,
-      "name": "قناة رياضية 4",
+      "name": "قناة عراقية رياضية",
+      "category": "عراقية",
+      "quality": "HD",
       "logo": "",
       "url": "",
       "type": "hls",
