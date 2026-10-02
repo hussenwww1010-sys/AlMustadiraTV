@@ -2,826 +2,754 @@
 <html lang="ar" dir="rtl">
 
 <head>
+<meta charset="UTF-8">
 
-    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="theme-color"
+      content="#07080d">
 
-    <meta name="theme-color"
-          content="#07080d">
+<meta name="description"
+      content="المستديرة - منصة رياضية">
 
-    <meta name="description"
-          content="المستديرة - كل الرياضة بمكان واحد">
+<title>المستديرة</title>
 
-    <title>المستديرة</title>
 
+<style>
 
-    <style>
+/* =========================
+   RESET
+========================= */
 
-        /* =========================
-           RESET
-        ========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
+body {
+    min-height: 100vh;
 
-        html {
-            scroll-behavior: smooth;
-        }
+    background:
+        radial-gradient(
+            circle at 85% 0%,
+            #1b2850 0%,
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 5% 90%,
+            #2a1642 0%,
+            transparent 32%
+        ),
+        #07080d;
 
+    color: #fff;
 
-        body {
-            min-height: 100vh;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
 
-            background:
-                radial-gradient(
-                    circle at 85% 0%,
-                    #1b2850 0%,
-                    transparent 32%
-                ),
+    overflow-x: hidden;
+}
 
-                radial-gradient(
-                    circle at 5% 90%,
-                    #2a1642 0%,
-                    transparent 32%
-                ),
 
-                #07080d;
+/* =========================
+   APP
+========================= */
 
-            color: #ffffff;
+.app {
+    min-height: 100vh;
 
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Arial,
-                sans-serif;
+    padding:
+        20px
+        20px
+        105px;
+}
 
-            overflow-x: hidden;
-        }
 
+/* =========================
+   HEADER
+========================= */
 
-        button {
-            font-family: inherit;
-            cursor: pointer;
-        }
+header {
+    width: 100%;
+    max-width: 1400px;
 
+    margin: auto;
 
+    padding:
+        8px
+        0
+        28px;
 
-        /* =========================
-           APP
-        ========================= */
+    display: flex;
 
-        .app {
-            width: 100%;
-            min-height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+}
 
-            padding:
-                20px
-                20px
-                50px;
-        }
 
+.brand {
+    display: flex;
 
+    align-items: center;
 
-        /* =========================
-           HEADER
-        ========================= */
+    gap: 12px;
+}
 
-        header {
-            width: 100%;
-            max-width: 1400px;
 
-            margin: 0 auto;
+/* =========================
+   LOGO
+========================= */
 
-            padding:
-                8px
-                0
-                28px;
+.logo-mark {
+    width: 54px;
+    height: 54px;
 
-            display: flex;
+    position: relative;
 
-            align-items: center;
-            justify-content: space-between;
-        }
+    display: flex;
 
+    align-items: center;
+    justify-content: center;
 
-        .brand {
-            display: flex;
+    border-radius: 17px;
 
-            align-items: center;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.13),
+            rgba(255,255,255,.035)
+        );
 
-            gap: 12px;
-        }
+    border:
+        1px solid
+        rgba(255,255,255,.12);
 
+    box-shadow:
+        0 10px 40px
+        rgba(100,120,255,.20);
 
+    overflow: hidden;
+}
 
-        /* =========================
-           LOGO
-        ========================= */
 
-        .logo-mark {
-            width: 54px;
-            height: 54px;
+.logo-ball {
+    width: 24px;
+    height: 24px;
 
-            position: relative;
+    border-radius: 50%;
 
-            display: flex;
+    position: relative;
 
-            align-items: center;
-            justify-content: center;
+    z-index: 3;
 
-            border-radius: 17px;
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #fff 0%,
+            #e6eaff 38%,
+            #8b9cff 100%
+        );
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.13),
-                    rgba(255,255,255,.035)
-                );
+    box-shadow:
+        0 0 25px
+        rgba(135,155,255,.65);
+}
 
-            border:
-                1px solid
-                rgba(255,255,255,.12);
 
-            box-shadow:
-                0 10px 40px
-                rgba(100,120,255,.20);
+.logo-orbit {
+    position: absolute;
 
-            overflow: hidden;
-        }
+    width: 42px;
+    height: 18px;
 
+    left: 50%;
+    top: 50%;
 
-        .logo-ball {
-            width: 24px;
-            height: 24px;
+    border:
+        1.5px solid
+        rgba(255,255,255,.78);
 
-            border-radius: 50%;
+    border-radius: 50%;
 
-            position: relative;
+    transform:
+        translate(-50%, -50%);
+}
 
-            z-index: 3;
 
-            background:
-                radial-gradient(
-                    circle at 30% 25%,
-                    #ffffff 0%,
-                    #e6eaff 38%,
-                    #8b9cff 100%
-                );
+.orbit-1 {
+    transform:
+        translate(-50%, -50%)
+        rotate(-25deg);
+}
 
-            box-shadow:
-                0 0 25px
-                rgba(135,155,255,.65);
-        }
 
+.orbit-2 {
+    transform:
+        translate(-50%, -50%)
+        rotate(65deg);
 
-        .logo-orbit {
-            position: absolute;
+    opacity: .48;
+}
 
-            width: 42px;
-            height: 18px;
 
-            left: 50%;
-            top: 50%;
+/* =========================
+   BRAND
+========================= */
 
-            border:
-                1.5px solid
-                rgba(255,255,255,.78);
+.brand-text h1 {
+    font-size: 23px;
+    font-weight: 900;
+}
 
-            border-radius: 50%;
 
-            transform:
-                translate(-50%, -50%);
-        }
+.brand-text span {
+    display: block;
 
+    margin-top: 4px;
 
-        .orbit-1 {
-            transform:
-                translate(-50%, -50%)
-                rotate(-25deg);
-        }
+    color: #8f96a8;
 
+    font-size: 11px;
+}
 
-        .orbit-2 {
-            transform:
-                translate(-50%, -50%)
-                rotate(65deg);
 
-            opacity: .48;
-        }
+/* =========================
+   MENU
+========================= */
 
+.menu-btn {
+    width: 47px;
+    height: 47px;
 
+    border:
+        1px solid
+        rgba(255,255,255,.09);
 
-        /* =========================
-           BRAND TEXT
-        ========================= */
+    border-radius: 15px;
 
-        .brand-text h1 {
-            font-size: 23px;
+    background:
+        rgba(255,255,255,.045);
 
-            font-weight: 900;
+    color: #fff;
 
-            letter-spacing: -.7px;
-        }
+    font-size: 19px;
+}
 
 
-        .brand-text span {
-            display: block;
+/* =========================
+   PAGES
+========================= */
 
-            margin-top: 4px;
+.page {
+    display: none;
 
-            color: #8f96a8;
+    max-width: 1400px;
 
-            font-size: 11px;
-        }
+    margin: auto;
+}
 
+.page.active {
+    display: block;
+}
 
 
-        /* =========================
-           MENU
-        ========================= */
+/* =========================
+   HERO
+========================= */
 
-        .menu-btn {
-            width: 47px;
-            height: 47px;
+.hero {
+    width: 100%;
 
-            border:
-                1px solid
-                rgba(255,255,255,.09);
+    min-height: 430px;
 
-            border-radius: 15px;
+    padding: 55px;
 
-            background:
-                rgba(255,255,255,.045);
+    position: relative;
 
-            color: #ffffff;
+    display: flex;
 
-            font-size: 19px;
+    align-items: flex-end;
 
-            transition:
-                .2s ease;
-        }
+    overflow: hidden;
 
+    border-radius: 32px;
 
-        .menu-btn:hover {
-            background:
-                rgba(255,255,255,.09);
+    background:
+        linear-gradient(
+            90deg,
+            rgba(5,7,14,.98),
+            rgba(5,7,14,.72),
+            rgba(5,7,14,.20)
+        ),
+        linear-gradient(
+            135deg,
+            #172440,
+            #321b43
+        );
 
-            transform:
-                translateY(-2px);
-        }
+    border:
+        1px solid
+        rgba(255,255,255,.07);
 
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.38);
+}
 
 
-        /* =========================
-           HERO
-        ========================= */
+.hero::before {
+    content: "";
 
-        .hero {
-            width: 100%;
-            max-width: 1400px;
+    position: absolute;
 
-            min-height: 430px;
+    width: 500px;
+    height: 500px;
 
-            margin: 0 auto;
+    right: -100px;
+    top: -180px;
 
-            padding: 55px;
+    border-radius: 50%;
 
-            position: relative;
+    background:
+        radial-gradient(
+            circle,
+            rgba(100,130,255,.28),
+            transparent 70%
+        );
 
-            display: flex;
+    filter: blur(20px);
+}
 
-            align-items: flex-end;
 
-            overflow: hidden;
+.hero-content {
+    position: relative;
 
-            border-radius: 32px;
+    z-index: 2;
 
-            background:
+    max-width: 650px;
+}
 
-                linear-gradient(
-                    90deg,
-                    rgba(5,7,14,.98) 0%,
-                    rgba(5,7,14,.78) 45%,
-                    rgba(5,7,14,.25) 100%
-                ),
 
-                linear-gradient(
-                    135deg,
-                    #172440,
-                    #321b43
-                );
+.hero-label {
+    display: inline-flex;
 
-            border:
-                1px solid
-                rgba(255,255,255,.07);
+    padding:
+        8px
+        14px;
 
-            box-shadow:
-                0 30px 90px
-                rgba(0,0,0,.38);
-        }
+    margin-bottom: 20px;
 
+    border-radius: 30px;
 
-        .hero::before {
-            content: "";
+    background:
+        rgba(255,255,255,.075);
 
-            position: absolute;
+    color:
+        #d7dbea;
 
-            width: 500px;
-            height: 500px;
+    font-size: 12px;
+}
 
-            right: -100px;
-            top: -180px;
 
-            border-radius: 50%;
+.hero h2 {
+    font-size:
+        clamp(
+            38px,
+            7vw,
+            70px
+        );
 
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(100,130,255,.28),
-                    transparent 70%
-                );
+    line-height: 1.05;
 
-            filter:
-                blur(20px);
-        }
+    letter-spacing: -2.8px;
 
+    margin-bottom: 20px;
+}
 
-        .hero::after {
-            content: "";
 
-            position: absolute;
+.hero p {
+    max-width: 520px;
 
-            width: 280px;
-            height: 280px;
+    color: #aeb5c6;
 
-            left: 35%;
-            bottom: -180px;
+    font-size: 15px;
 
-            border-radius: 50%;
+    line-height: 1.9;
+}
 
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(190,80,255,.18),
-                    transparent 70%
-                );
 
-            filter:
-                blur(25px);
-        }
+/* =========================
+   BUTTONS
+========================= */
 
+.hero-actions {
+    display: flex;
 
+    gap: 10px;
 
-        /* =========================
-           HERO CONTENT
-        ========================= */
+    margin-top: 28px;
+}
 
-        .hero-content {
-            position: relative;
 
-            z-index: 5;
+.primary-btn,
+.secondary-btn {
+    min-height: 48px;
 
-            max-width: 650px;
-        }
+    padding:
+        0
+        22px;
 
+    border-radius: 15px;
 
-        .hero-label {
-            display: inline-flex;
+    font-size: 14px;
 
-            align-items: center;
+    font-weight: 800;
 
-            padding:
-                8px
-                14px;
+    border: none;
+}
 
-            margin-bottom: 20px;
 
-            border-radius: 30px;
+.primary-btn {
+    background: #fff;
 
-            background:
-                rgba(255,255,255,.075);
+    color: #08090d;
+}
 
-            border:
-                1px solid
-                rgba(255,255,255,.07);
 
-            color:
-                #d7dbea;
+.secondary-btn {
+    background:
+        rgba(255,255,255,.07);
 
-            font-size: 12px;
+    color: #fff;
 
-            backdrop-filter:
-                blur(10px);
-        }
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+}
 
 
-        .hero-label::before {
-            content: "";
+/* =========================
+   SECTION
+========================= */
 
-            width: 7px;
-            height: 7px;
+.section {
+    margin-top: 38px;
+}
 
-            margin-left: 8px;
 
-            border-radius: 50%;
+.section-head {
+    display: flex;
 
-            background: #7f9cff;
+    justify-content: space-between;
 
-            box-shadow:
-                0 0 12px
-                rgba(127,156,255,.8);
-        }
+    align-items: center;
 
+    margin-bottom: 18px;
+}
 
-        .hero h2 {
-            font-size:
-                clamp(
-                    38px,
-                    7vw,
-                    70px
-                );
 
-            line-height: 1.05;
+.section-head h3 {
+    font-size: 21px;
+}
 
-            letter-spacing: -2.8px;
 
-            margin-bottom: 20px;
-        }
+.section-head span {
+    color: #777f93;
 
+    font-size: 12px;
+}
 
-        .hero p {
-            max-width: 520px;
 
-            color:
-                #aeb5c6;
+/* =========================
+   CARDS
+========================= */
 
-            font-size: 15px;
+.cards {
+    display: grid;
 
-            line-height: 1.9;
-        }
+    grid-template-columns:
+        repeat(4, 1fr);
 
+    gap: 15px;
+}
 
 
-        /* =========================
-           BUTTONS
-        ========================= */
+.card {
+    min-height: 165px;
 
-        .hero-actions {
-            display: flex;
+    padding: 21px;
 
-            gap: 10px;
+    border-radius: 23px;
 
-            margin-top: 28px;
-        }
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
 
+    border:
+        1px solid
+        rgba(255,255,255,.07);
 
-        .primary-btn,
-        .secondary-btn {
-            min-height: 48px;
+    cursor: pointer;
 
-            padding:
-                0
-                22px;
+    transition:
+        .2s ease;
+}
 
-            border-radius: 15px;
 
-            font-size: 14px;
+.card:hover {
+    transform:
+        translateY(-5px);
 
-            font-weight: 800;
+    border-color:
+        rgba(255,255,255,.18);
+}
 
-            transition:
-                .2s ease;
-        }
 
+.card-icon {
+    width: 49px;
+    height: 49px;
 
-        .primary-btn {
-            border: none;
+    display: flex;
 
-            background:
-                #ffffff;
+    align-items: center;
+    justify-content: center;
 
-            color:
-                #08090d;
-        }
+    margin-bottom: 27px;
 
+    border-radius: 15px;
 
-        .primary-btn:hover {
-            transform:
-                translateY(-2px);
+    background:
+        rgba(255,255,255,.065);
 
-            box-shadow:
-                0 12px 30px
-                rgba(255,255,255,.13);
-        }
+    font-size: 20px;
+}
 
 
-        .secondary-btn {
-            border:
-                1px solid
-                rgba(255,255,255,.09);
+.card h4 {
+    font-size: 16px;
 
-            background:
-                rgba(255,255,255,.06);
+    margin-bottom: 7px;
+}
 
-            color:
-                #ffffff;
-        }
 
+.card p {
+    color: #7f8799;
 
-        .secondary-btn:hover {
-            background:
-                rgba(255,255,255,.1);
-        }
+    font-size: 12px;
+}
 
 
+/* =========================
+   INTERNAL PAGES
+========================= */
 
-        /* =========================
-           SECTION
-        ========================= */
+.inner-page {
+    min-height: 70vh;
 
-        .section {
-            width: 100%;
-            max-width: 1400px;
+    padding:
+        35px
+        10px;
+}
 
-            margin:
-                38px
-                auto
-                0;
-        }
 
+.inner-page h2 {
+    font-size: 32px;
 
-        .section-head {
-            display: flex;
+    margin-bottom: 12px;
+}
 
-            align-items: center;
 
-            justify-content: space-between;
+.inner-page p {
+    color: #8f96a8;
 
-            margin-bottom: 18px;
-        }
+    line-height: 1.8;
+}
 
 
-        .section-head h3 {
-            font-size: 21px;
+/* =========================
+   BOTTOM NAV
+========================= */
 
-            font-weight: 900;
-        }
+.bottom-nav {
+    position: fixed;
 
+    left: 50%;
 
-        .section-head span {
-            color:
-                #777f93;
+    bottom: 16px;
 
-            font-size: 12px;
-        }
+    transform:
+        translateX(-50%);
 
+    width:
+        min(
+            calc(100% - 28px),
+            520px
+        );
 
+    height: 70px;
 
-        /* =========================
-           CARDS
-        ========================= */
+    display: grid;
 
-        .cards {
-            display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
 
-            grid-template-columns:
-                repeat(
-                    4,
-                    minmax(0, 1fr)
-                );
+    padding: 6px;
 
-            gap: 15px;
-        }
+    z-index: 100;
 
+    border-radius: 23px;
 
-        .card {
-            min-height: 165px;
+    background:
+        rgba(16,18,27,.88);
 
-            padding: 21px;
+    border:
+        1px solid
+        rgba(255,255,255,.09);
 
-            position: relative;
+    backdrop-filter:
+        blur(22px);
 
-            overflow: hidden;
+    box-shadow:
+        0 15px 50px
+        rgba(0,0,0,.45);
+}
 
-            border-radius: 23px;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.075),
-                    rgba(255,255,255,.025)
-                );
+.nav-item {
+    border: none;
 
-            border:
-                1px solid
-                rgba(255,255,255,.07);
+    background: transparent;
 
-            transition:
-                transform .2s ease,
-                border-color .2s ease,
-                background .2s ease;
-        }
+    color: #777f93;
 
+    border-radius: 18px;
 
-        .card:hover {
-            transform:
-                translateY(-5px);
+    display: flex;
 
-            border-color:
-                rgba(255,255,255,.17);
+    flex-direction: column;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.10),
-                    rgba(255,255,255,.035)
-                );
-        }
+    align-items: center;
 
+    justify-content: center;
 
-        .card::after {
-            content: "";
+    gap: 4px;
 
-            position: absolute;
+    font-size: 11px;
 
-            width: 120px;
-            height: 120px;
+    transition:
+        .2s ease;
+}
 
-            left: -55px;
-            bottom: -65px;
 
-            border-radius: 50%;
+.nav-item .icon {
+    font-size: 20px;
+}
 
-            background:
-                rgba(120,140,255,.08);
 
-            filter:
-                blur(15px);
-        }
+.nav-item.active {
+    background:
+        rgba(255,255,255,.09);
 
+    color: #fff;
+}
 
-        .card-icon {
-            width: 49px;
-            height: 49px;
 
-            display: flex;
+.nav-item:active {
+    transform:
+        scale(.95);
+}
 
-            align-items: center;
-            justify-content: center;
 
-            margin-bottom: 27px;
+/* =========================
+   MOBILE
+========================= */
 
-            border-radius: 15px;
+@media (max-width: 850px) {
 
-            background:
-                rgba(255,255,255,.065);
+    .cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
 
-            border:
-                1px solid
-                rgba(255,255,255,.05);
+    .hero {
+        min-height: 440px;
 
-            font-size: 20px;
-        }
+        padding: 35px;
+    }
+}
 
 
-        .card h4 {
-            font-size: 16px;
+@media (max-width: 600px) {
 
-            margin-bottom: 7px;
-        }
+    .app {
+        padding:
+            14px
+            14px
+            105px;
+    }
 
+    header {
+        padding-bottom: 20px;
+    }
 
-        .card p {
-            color:
-                #7f8799;
+    .hero {
+        min-height: 455px;
 
-            font-size: 12px;
-        }
+        padding: 27px;
 
+        border-radius: 27px;
+    }
 
+    .hero h2 {
+        font-size: 41px;
 
-        /* =========================
-           MOBILE
-        ========================= */
+        letter-spacing:
+            -1.8px;
+    }
 
-        @media (max-width: 850px) {
+    .hero p {
+        font-size: 14px;
+    }
 
-            .cards {
-                grid-template-columns:
-                    repeat(2, 1fr);
-            }
+    .hero-actions {
+        width: 100%;
+    }
 
-            .hero {
-                min-height: 440px;
+    .primary-btn,
+    .secondary-btn {
+        flex: 1;
+    }
 
-                padding: 35px;
-            }
-        }
+    .cards {
+        grid-template-columns:
+            repeat(2, 1fr);
 
+        gap: 10px;
+    }
 
+    .card {
+        min-height: 145px;
 
-        @media (max-width: 600px) {
+        padding: 16px;
 
-            .app {
-                padding:
-                    14px
-                    14px
-                    35px;
-            }
+        border-radius: 19px;
+    }
+}
 
-
-            header {
-                padding-bottom: 20px;
-            }
-
-
-            .logo-mark {
-                width: 50px;
-                height: 50px;
-            }
-
-
-            .brand-text h1 {
-                font-size: 20px;
-            }
-
-
-            .hero {
-                min-height: 455px;
-
-                padding: 27px;
-
-                border-radius: 27px;
-            }
-
-
-            .hero h2 {
-                font-size: 41px;
-
-                letter-spacing:
-                    -1.8px;
-            }
-
-
-            .hero p {
-                font-size: 14px;
-            }
-
-
-            .hero-actions {
-                width: 100%;
-            }
-
-
-            .primary-btn,
-            .secondary-btn {
-                flex: 1;
-
-                padding:
-                    0
-                    12px;
-            }
-
-
-            .section {
-                margin-top: 30px;
-            }
-
-
-            .cards {
-                grid-template-columns:
-                    repeat(2, 1fr);
-
-                gap: 10px;
-            }
-
-
-            .card {
-                min-height: 145px;
-
-                padding: 16px;
-
-                border-radius: 19px;
-            }
-
-
-            .card-icon {
-                width: 43px;
-                height: 43px;
-
-                margin-bottom: 22px;
-            }
-        }
-
-
-    </style>
+</style>
 
 </head>
 
@@ -832,221 +760,462 @@
 <div class="app">
 
 
-    <!-- =====================
-         HEADER
-    ====================== -->
+<!-- =========================
+     HEADER
+========================= -->
 
-    <header>
+<header>
 
-        <div class="brand">
+    <div class="brand">
 
+        <div class="logo-mark">
 
-            <!-- LOGO -->
+            <div class="logo-ball"></div>
 
-            <div class="logo-mark">
+            <div class="logo-orbit orbit-1"></div>
 
-                <div class="logo-ball"></div>
-
-                <div class="logo-orbit orbit-1"></div>
-
-                <div class="logo-orbit orbit-2"></div>
-
-            </div>
-
-
-            <div class="brand-text">
-
-                <h1>
-                    المستديرة
-                </h1>
-
-                <span>
-                    كل الرياضة بمكان واحد
-                </span>
-
-            </div>
+            <div class="logo-orbit orbit-2"></div>
 
         </div>
 
 
-        <button
-            class="menu-btn"
-            aria-label="القائمة">
+        <div class="brand-text">
 
-            ☰
+            <h1>
+                المستديرة
+            </h1>
 
-        </button>
+            <span>
+                كل الرياضة بمكان واحد
+            </span>
 
-    </header>
+        </div>
 
-
-
-    <!-- =====================
-         HERO
-    ====================== -->
-
-    <main>
+    </div>
 
 
-        <section class="hero">
+    <button
+        class="menu-btn"
+        aria-label="القائمة">
+
+        ☰
+
+    </button>
+
+</header>
 
 
-            <div class="hero-content">
+
+<!-- =========================
+     HOME
+========================= -->
+
+<main>
 
 
-                <span class="hero-label">
-                    المستديرة
-                </span>
+<section
+    id="home"
+    class="page active">
 
 
-                <h2>
-                    عالم الرياضة
-                    <br>
-                    بين إيديك
-                </h2>
+    <section class="hero">
 
+
+        <div class="hero-content">
+
+
+            <span class="hero-label">
+                المستديرة
+            </span>
+
+
+            <h2>
+                عالم الرياضة
+                <br>
+                بين إيديك
+            </h2>
+
+
+            <p>
+                منصة رياضية حديثة تجمع لك
+                المباريات والبث المباشر والأخبار
+                والبطولات في تجربة واحدة.
+            </p>
+
+
+            <div class="hero-actions">
+
+                <button
+                    class="primary-btn"
+                    onclick="openPage('matches')">
+
+                    استكشف الآن
+
+                </button>
+
+
+                <button
+                    class="secondary-btn"
+                    onclick="openPage('live')">
+
+                    البث المباشر
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <section class="section">
+
+
+        <div class="section-head">
+
+            <h3>
+                استكشف
+            </h3>
+
+            <span>
+                المستديرة
+            </span>
+
+        </div>
+
+
+        <div class="cards">
+
+
+            <div
+                class="card"
+                onclick="openPage('matches')">
+
+                <div class="card-icon">
+                    ⚽
+                </div>
+
+                <h4>
+                    المباريات
+                </h4>
 
                 <p>
-                    منصة رياضية حديثة تجمع لك
-                    المباريات والبث المباشر والأخبار
-                    والبطولات في تجربة واحدة.
+                    تابع أهم المباريات
                 </p>
 
-
-                <div class="hero-actions">
-
-
-                    <button
-                        class="primary-btn">
-
-                        استكشف الآن
-
-                    </button>
+            </div>
 
 
-                    <button
-                        class="secondary-btn">
+            <div
+                class="card"
+                onclick="openPage('live')">
 
-                        المباريات
-
-                    </button>
-
-
+                <div class="card-icon">
+                    📺
                 </div>
 
+                <h4>
+                    البث المباشر
+                </h4>
+
+                <p>
+                    القنوات الرياضية
+                </p>
 
             </div>
 
 
-        </section>
+            <div
+                class="card"
+                onclick="openPage('news')">
 
+                <div class="card-icon">
+                    📰
+                </div>
 
+                <h4>
+                    الأخبار
+                </h4>
 
-        <!-- =====================
-             EXPLORE
-        ====================== -->
-
-        <section class="section">
-
-
-            <div class="section-head">
-
-                <h3>
-                    استكشف
-                </h3>
-
-                <span>
-                    قريباً
-                </span>
+                <p>
+                    آخر أخبار الرياضة
+                </p>
 
             </div>
 
 
+            <div
+                class="card"
+                onclick="openPage('tournaments')">
 
-            <div class="cards">
-
-
-                <div class="card">
-
-                    <div class="card-icon">
-                        ⚽
-                    </div>
-
-                    <h4>
-                        المباريات
-                    </h4>
-
-                    <p>
-                        تابع أهم المباريات
-                    </p>
-
+                <div class="card-icon">
+                    🏆
                 </div>
 
+                <h4>
+                    البطولات
+                </h4>
 
-
-                <div class="card">
-
-                    <div class="card-icon">
-                        📺
-                    </div>
-
-                    <h4>
-                        البث المباشر
-                    </h4>
-
-                    <p>
-                        القنوات الرياضية
-                    </p>
-
-                </div>
-
-
-
-                <div class="card">
-
-                    <div class="card-icon">
-                        📰
-                    </div>
-
-                    <h4>
-                        الأخبار
-                    </h4>
-
-                    <p>
-                        آخر أخبار الرياضة
-                    </p>
-
-                </div>
-
-
-
-                <div class="card">
-
-                    <div class="card-icon">
-                        🏆
-                    </div>
-
-                    <h4>
-                        البطولات
-                    </h4>
-
-                    <p>
-                        أهم البطولات العالمية
-                    </p>
-
-                </div>
-
+                <p>
+                    أهم البطولات
+                </p>
 
             </div>
 
 
-        </section>
+        </div>
+
+    </section>
+
+</section>
 
 
-    </main>
+
+<!-- =========================
+     MATCHES
+========================= -->
+
+<section
+    id="matches"
+    class="page">
+
+
+    <div class="inner-page">
+
+        <h2>
+            ⚽ المباريات
+        </h2>
+
+        <p>
+            هنا راح تظهر المباريات القادمة
+            والنتائج ومواعيد المباريات.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     LIVE
+========================= -->
+
+<section
+    id="live"
+    class="page">
+
+
+    <div class="inner-page">
+
+        <h2>
+            📺 البث المباشر
+        </h2>
+
+        <p>
+            هنا راح نبني مشغل المستديرة
+            والقنوات الرياضية.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     NEWS
+========================= -->
+
+<section
+    id="news"
+    class="page">
+
+
+    <div class="inner-page">
+
+        <h2>
+            📰 الأخبار
+        </h2>
+
+        <p>
+            هنا راح تظهر الأخبار الرياضية
+            والمستجدات.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     TOURNAMENTS
+========================= -->
+
+<section
+    id="tournaments"
+    class="page">
+
+
+    <div class="inner-page">
+
+        <h2>
+            🏆 البطولات
+        </h2>
+
+        <p>
+            هنا راح نضيف البطولات والدوريات
+            بشكل مرتب.
+        </p>
+
+    </div>
+
+</section>
+
+
+</main>
 
 
 </div>
+
+
+
+<!-- =========================
+     BOTTOM NAV
+========================= -->
+
+<nav class="bottom-nav">
+
+
+    <button
+        class="nav-item active"
+        data-page="home"
+        onclick="openPage('home')">
+
+        <span class="icon">
+            🏠
+        </span>
+
+        <span>
+            الرئيسية
+        </span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        data-page="matches"
+        onclick="openPage('matches')">
+
+        <span class="icon">
+            ⚽
+        </span>
+
+        <span>
+            المباريات
+        </span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        data-page="live"
+        onclick="openPage('live')">
+
+        <span class="icon">
+            📺
+        </span>
+
+        <span>
+            البث
+        </span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        data-page="news"
+        onclick="openPage('news')">
+
+        <span class="icon">
+            📰
+        </span>
+
+        <span>
+            الأخبار
+        </span>
+
+    </button>
+
+
+</nav>
+
+
+
+<script>
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function openPage(pageName) {
+
+    const pages =
+        document.querySelectorAll(".page");
+
+    const navItems =
+        document.querySelectorAll(".nav-item");
+
+
+    pages.forEach(page => {
+
+        page.classList.remove("active");
+
+    });
+
+
+    const selectedPage =
+        document.getElementById(pageName);
+
+
+    if (selectedPage) {
+
+        selectedPage.classList.add("active");
+
+    }
+
+
+    navItems.forEach(item => {
+
+        item.classList.remove("active");
+
+
+        if (
+            item.dataset.page === pageName
+        ) {
+
+            item.classList.add("active");
+
+        }
+
+    });
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+</script>
 
 
 </body>
