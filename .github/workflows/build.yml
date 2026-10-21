@@ -1,6 +1,6 @@
 name: Build AlMustadira TV
 
-‘on’:
+on:
 workflow_dispatch:
 push:
 branches:
@@ -14,10 +14,10 @@ build:
 name: Build Android APK
 runs-on: ubuntu-latest
 timeout-minutes: 30
-
 steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+- name: Checkout repository
+uses: actions/checkout@v4
+
   - name: Setup Java 17
     uses: actions/setup-java@v4
     with:
