@@ -1,4 +1,3 @@
-
 package com.almustadira.tv
 
 import android.app.Activity
@@ -6,7 +5,6 @@ import android.os.Bundle
 import android.graphics.Color
 import android.view.Gravity
 import android.view.KeyEvent
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -433,15 +431,6 @@ class MainActivity : Activity() {
         }
 
         try {
-            val mediaItem = MediaItem.Builder()
-                .setUri(channel.url)
-                .apply {
-                    if (mimeType != null) {
-                        setMimeType(mimeType)
-                    }
-                }
-                .build()
-
             val headers = mutableMapOf<String, String>()
 
             if (channel.referer.isNotBlank()) {
@@ -468,13 +457,17 @@ class MainActivity : Activity() {
             val mediaSourceFactory =
                 DefaultMediaSourceFactory(dataSourceFactory)
 
+            val mediaItemBuilder = MediaItem.Builder().setUri(channel.url)
+            if (mimeType != null) {
+                mediaItemBuilder.setMimeType(mimeType)
+            }
+            val mediaItem = mediaItemBuilder.build()
+
+            val mediaSource = mediaSourceFactory.createMediaSource(mediaItem)
+
             player.stop()
             player.clearMediaItems()
-
-            player.setMediaSource(
-                mediaSourceFactory.createMediaSource(mediaItem)
-            )
-
+            player.setMediaSource(mediaSource)
             player.prepare()
             player.playWhenReady = true
 
