@@ -1,3 +1,4 @@
+
 name: Build AlMustadira TV
 
 on:
@@ -32,7 +33,7 @@ jobs:
           gradle-version: "8.11.1"
 
       - name: Build APK
-        run: ./gradlew assembleDebug --stacktrace --info
+        run: gradle --no-daemon assembleDebug --stacktrace --info
 
       - name: Upload APK
         if: success()
