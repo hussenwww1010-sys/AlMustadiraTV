@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.view.Gravity
 import android.view.KeyEvent
 import android.widget.LinearLayout
+import android.widget.LinearLayout.LayoutParams
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
@@ -131,9 +132,9 @@ class MainActivity : Activity() {
 
         root.addView(
             title,
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+            LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
             )
         )
 
@@ -147,9 +148,9 @@ class MainActivity : Activity() {
 
         root.addView(
             statusText,
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+            LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
             )
         )
 
@@ -178,26 +179,26 @@ class MainActivity : Activity() {
 
         content.addView(
             channelScroll,
-            LinearLayout.LayoutParams(
+            LayoutParams(
                 0,
-                LinearLayout.LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT,
                 1f
             )
         )
 
         content.addView(
             playerView,
-            LinearLayout.LayoutParams(
+            LayoutParams(
                 0,
-                LinearLayout.LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT,
                 2f
             )
         )
 
         root.addView(
             content,
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
+            LayoutParams(
+                LayoutParams.MATCH_PARENT,
                 0,
                 1f
             )
@@ -225,9 +226,9 @@ class MainActivity : Activity() {
 
         root.addView(
             reload,
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+            LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
             )
         )
 
@@ -403,9 +404,9 @@ class MainActivity : Activity() {
                 }
             }
 
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+            val params = LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
             ).apply {
                 bottomMargin = 8
             }
