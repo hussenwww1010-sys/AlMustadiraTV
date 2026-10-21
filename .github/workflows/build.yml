@@ -28,20 +28,11 @@ steps:
     uses: gradle/actions/setup-gradle@v6
     with:
       gradle-version: '8.11.1'
-  - name: Check project files
-    run: |
-      echo "Current directory:"
-      pwd
-      echo "Project files:"
-      ls -la
-      echo "Gradle files:"
-      find . -maxdepth 3 \( -name 'build.gradle' -o -name 'build.gradle.kts' -o -name 'settings.gradle' -o -name 'settings.gradle.kts' \) -print
   - name: Build APK
     run: gradle --no-daemon assembleDebug --stacktrace --info
   - name: Verify APK
     if: success()
     run: |
-      echo "Checking generated APK..."
       find app/build/outputs/apk/debug -maxdepth 1 -type f -name '*.apk' -print
       test -n "$(find app/build/outputs/apk/debug -maxdepth 1 -type f -name '*.apk' -print -quit)"
   - name: Upload APK
