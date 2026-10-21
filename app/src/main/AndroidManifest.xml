@@ -14,7 +14,6 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
         android:label="المستديرة TV"
         android:theme="@style/Theme.AlMustadira"
         android:usesCleartextTraffic="true"
