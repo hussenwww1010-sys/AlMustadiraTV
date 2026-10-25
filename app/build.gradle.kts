@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.almustadira.tv"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.almustadira.tv"
