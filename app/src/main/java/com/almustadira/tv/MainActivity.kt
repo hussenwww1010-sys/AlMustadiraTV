@@ -23,6 +23,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.Util
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.ui.AspectRatioFrameLayout
@@ -49,6 +50,8 @@ class MainActivity : Activity() {
     private lateinit var playerCardParams: LinearLayout.LayoutParams
     private val aspectPills = mutableListOf<TextView>()
     private var aspectIndex = 0
+    private var lastChannel: Channel? = null
+    private var retries = 0
     private var controllerVisible = false
     private val aspectModes = listOf(
         AspectRatioFrameLayout.RESIZE_MODE_FIT to "ملائم",
@@ -157,19 +160,39 @@ class MainActivity : Activity() {
         window.navigationBarColor = bgA
         buildInterface()
 
-        player = ExoPlayer.Builder(this).build()
+        val renderersFactory = DefaultRenderersFactory(this)
+            .setEnableDecoderFallback(true)
+        player = ExoPlayer.Builder(this, renderersFactory).build()
         playerView.player = player
         player.addListener(object : Player.Listener {
             override fun onPlayerError(error: PlaybackException) {
                 runOnUiThread {
-                    if (!isFinishing && !isDestroyed) {
-                        statusText.text = "تعذر تشغيل القناة"
-                        Toast.makeText(
-                            this@MainActivity,
-                            "تعذر تشغيل القناة. تحقق من رابط البث.",
-                            Toast.LENGTH_LONG
-                        ).show()
+                    if (isFinishing || isDestroyed) return@runOnUiThread
+
+                    // البث تأخر عن النافذة المباشرة: نرجع للمباشر
+                    if (error.errorCode ==
+                        PlaybackException.ERROR_CODE_BEHIND_LIVE_WINDOW
+                    ) {
+                        player.seekToDefaultPosition()
+                        player.prepare()
+                        return@runOnUiThread
                     }
+
+                    // إعادة المحاولة تلقائياً مرتين
+                    val ch = lastChannel
+                    if (ch != null && retries < 2) {
+                        retries++
+                        statusText.text = "إعادة المحاولة ($retries/2)..."
+                        playChannel(ch, isRetry = true)
+                        return@runOnUiThread
+                    }
+
+                    statusText.text = "تعذر التشغيل (${error.errorCodeName})"
+                    Toast.makeText(
+                        this@MainActivity,
+                        "تعذر تشغيل القناة: ${error.errorCodeName}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
 
@@ -585,7 +608,7 @@ class MainActivity : Activity() {
                         Channel(
                             name = item.optString("name", "قناة ${i + 1}"),
                             url = url,
-                            type = item.optString("type", "hls")
+                            type = item.optString("type", "auto")
                                 .trim().lowercase(),
                             category = item.optString("category", "رياضية"),
                             quality = item.optString("quality", ""),
@@ -764,16 +787,25 @@ class MainActivity : Activity() {
 
     // ───────────────────────── التشغيل ─────────────────────────
 
-    private fun playChannel(channel: Channel) {
+    private fun playChannel(channel: Channel, isRetry: Boolean = false) {
+        if (!isRetry) retries = 0
+        lastChannel = channel
         if (channel.url.isBlank()) {
             Toast.makeText(this, "رابط القناة غير موجود", Toast.LENGTH_SHORT).show()
             return
         }
 
+        // إذا النوع auto أو غير معروف نخمّنه من الرابط، وإلا نترك المشغل يكتشفه
+        val lowerUrl = channel.url.lowercase().substringBefore("?")
         val mimeType = when (channel.type) {
             "hls", "m3u8" -> MimeTypes.APPLICATION_M3U8
             "dash", "mpd" -> MimeTypes.APPLICATION_MPD
-            else -> null
+            "ts", "mp4", "progressive" -> null
+            else -> when {
+                lowerUrl.endsWith(".m3u8") -> MimeTypes.APPLICATION_M3U8
+                lowerUrl.endsWith(".mpd") -> MimeTypes.APPLICATION_MPD
+                else -> null
+            }
         }
 
         try {
