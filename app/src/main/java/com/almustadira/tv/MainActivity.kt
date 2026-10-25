@@ -1,14 +1,18 @@
 package com.almustadira.tv
 
 import android.app.Activity
-import android.os.Bundle
 import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
+import android.os.Bundle
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
-import android.widget.ScrollView
+import android.widget.TextClock
 import android.widget.TextView
 import android.widget.Toast
 import androidx.media3.common.MediaItem
@@ -29,391 +33,690 @@ import java.util.concurrent.Executors
 
 class MainActivity : Activity() {
 
-private lateinit var player: ExoPlayer
-private lateinit var playerView: PlayerView
-private lateinit var channelList: LinearLayout
-private lateinit var statusText: TextView
-private val executor = Executors.newSingleThreadExecutor()
-private val bg = Color.rgb(6, 9, 24)
-private val cyan = Color.rgb(0, 229, 255)
-private val purple = Color.rgb(168, 85, 247)
-private val panel = Color.rgb(17, 10, 44)
-private var channels: List<Channel> = emptyList()
-@Volatile private var isLoading = false
-private val dataUrl =
-    "https://hussenwww1010-sys.github.io/AlMustadiraTV/data.json"
-data class Channel(
-    val name: String,
-    val url: String,
-    val type: String,
-    val category: String,
-    val quality: String,
-    val userAgent: String,
-    val referer: String
-)
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    window.statusBarColor = bg
-    window.navigationBarColor = bg
-    buildInterface()
-    player = ExoPlayer.Builder(this).build()
-    playerView.player = player
-    player.addListener(object : Player.Listener {
-        override fun onPlayerError(error: PlaybackException) {
-            runOnUiThread {
-                if (!isFinishing && !isDestroyed) {
-                    statusText.text = "تعذر تشغيل القناة"
-                    Toast.makeText(
-                        this@MainActivity,
-                        "تعذر تشغيل القناة. تحقق من رابط البث.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+    private lateinit var player: ExoPlayer
+    private lateinit var playerView: PlayerView
+    private lateinit var channelRow: LinearLayout
+    private lateinit var categoryRow: LinearLayout
+    private lateinit var statusText: TextView
+    private lateinit var nowTitle: TextView
+    private lateinit var nowSub: TextView
+    private lateinit var topBar: View
+    private lateinit var infoPanel: View
+    private lateinit var bottomArea: View
+
+    private val executor = Executors.newSingleThreadExecutor()
+
+    // الألوان
+    private val bgA = Color.rgb(6, 9, 24)
+    private val bgB = Color.rgb(38, 10, 68)
+    private val bgC = Color.rgb(125, 18, 72)
+    private val cyan = Color.rgb(0, 229, 255)
+    private val purple = Color.rgb(168, 85, 247)
+    private val pink = Color.rgb(236, 72, 153)
+    private val glass = Color.argb(46, 255, 255, 255)
+    private val glassDark = Color.argb(90, 10, 5, 30)
+
+    private var channels: List<Channel> = emptyList()
+    private var selectedCategory = ALL
+    private var currentUrl = ""
+    private var isFullscreen = false
+    @Volatile private var isLoading = false
+
+    private val dataUrl =
+        "https://hussenwww1010-sys.github.io/AlMustadiraTV/data.json"
+
+    companion object {
+        private const val ALL = "الكل"
+    }
+
+    data class Channel(
+        val name: String,
+        val url: String,
+        val type: String,
+        val category: String,
+        val quality: String,
+        val userAgent: String,
+        val referer: String
+    )
+
+    // ───────────────────────── أدوات مساعدة ─────────────────────────
+
+    private fun dp(v: Int) = (v * resources.displayMetrics.density).toInt()
+
+    private fun shape(
+        color: Int,
+        radius: Int,
+        stroke: Int = 0,
+        strokeW: Int = 0
+    ) = GradientDrawable().apply {
+        setColor(color)
+        cornerRadius = dp(radius).toFloat()
+        if (strokeW > 0) setStroke(dp(strokeW), stroke)
+    }
+
+    private fun cardBg(focused: Boolean, selected: Boolean) = when {
+        focused -> GradientDrawable(
+            GradientDrawable.Orientation.TL_BR,
+            intArrayOf(purple, pink)
+        ).apply {
+            cornerRadius = dp(20).toFloat()
+            setStroke(dp(2), cyan)
+        }
+        selected -> shape(glass, 20, cyan, 2)
+        else -> shape(glass, 20, Color.argb(40, 255, 255, 255), 1)
+    }
+
+    private fun chipBg(focused: Boolean, selected: Boolean) = when {
+        focused -> shape(purple, 22, cyan, 2)
+        selected -> shape(pink, 22)
+        else -> shape(glass, 22)
+    }
+
+    private fun makePill(label: String, onClick: () -> Unit) =
+        TextView(this).apply {
+            text = label
+            textSize = 15f
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            setPadding(dp(18), dp(8), dp(18), dp(8))
+            isFocusable = true
+            isClickable = true
+            background = shape(glass, 22)
+            setOnClickListener { onClick() }
+            setOnFocusChangeListener { v, f ->
+                v.background =
+                    if (f) shape(purple, 22, cyan, 2) else shape(glass, 22)
             }
         }
-        override fun onPlaybackStateChanged(playbackState: Int) {
-            if (isFinishing || isDestroyed) return
-            statusText.text = when (playbackState) {
-                Player.STATE_BUFFERING -> "جاري تحميل البث..."
-                Player.STATE_READY -> "البث جاهز"
-                Player.STATE_ENDED -> "انتهى البث"
-                else -> {
-                    if (channels.isEmpty()) {
-                        "بانتظار القنوات..."
-                    } else {
-                        "المستديرة TV"
+
+    private fun hScroll(row: LinearLayout) = HorizontalScrollView(this).apply {
+        isHorizontalScrollBarEnabled = false
+        clipChildren = false
+        clipToPadding = false
+        setPadding(dp(4), dp(10), dp(4), dp(10))
+        addView(row)
+    }
+
+    // ───────────────────────── دورة الحياة ─────────────────────────
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.statusBarColor = bgA
+        window.navigationBarColor = bgA
+        buildInterface()
+
+        player = ExoPlayer.Builder(this).build()
+        playerView.player = player
+        player.addListener(object : Player.Listener {
+            override fun onPlayerError(error: PlaybackException) {
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) {
+                        statusText.text = "تعذر تشغيل القناة"
+                        Toast.makeText(
+                            this@MainActivity,
+                            "تعذر تشغيل القناة. تحقق من رابط البث.",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }
-        }
-    })
-    loadChannels()
-}
-private fun buildInterface() {
-    val root = LinearLayout(this).apply {
-        orientation = LinearLayout.VERTICAL
-        setBackgroundColor(bg)
-        setPadding(16, 12, 16, 12)
-    }
-    val title = TextView(this).apply {
-        text = "المستديرة TV"
-        textSize = 25f
-        setTextColor(cyan)
-        gravity = Gravity.CENTER
-        setPadding(8, 12, 8, 10)
-    }
-    root.addView(
-        title,
-        LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-    )
-    statusText = TextView(this).apply {
-        text = "جاري تحميل القنوات..."
-        textSize = 14f
-        setTextColor(Color.LTGRAY)
-        gravity = Gravity.CENTER
-        setPadding(4, 4, 4, 10)
-    }
-    root.addView(
-        statusText,
-        LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-    )
-    val content = LinearLayout(this).apply {
-        orientation = LinearLayout.HORIZONTAL
-        setBackgroundColor(bg)
-    }
-    channelList = LinearLayout(this).apply {
-        orientation = LinearLayout.VERTICAL
-        setBackgroundColor(bg)
-        setPadding(2, 2, 8, 2)
-    }
-    val channelScroll = ScrollView(this).apply {
-        isFillViewport = true
-        isFocusable = false
-        addView(
-            channelList,
-            FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT
-            )
-        )
-    }
-    content.addView(
-        channelScroll,
-        LinearLayout.LayoutParams(
-            0,
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            1f
-        )
-    )
-    playerView = PlayerView(this).apply {
-        useController = true
-        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-        setShowBuffering(PlayerView.SHOW_BUFFERING_WHEN_PLAYING)
-        setBackgroundColor(Color.BLACK)
-        keepScreenOn = true
-    }
-    content.addView(
-        playerView,
-        LinearLayout.LayoutParams(
-            0,
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            2f
-        )
-    )
-    root.addView(
-        content,
-        LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            0,
-            1f
-        )
-    )
-    val reload = TextView(this).apply {
-        text = "↻ تحديث القنوات"
-        textSize = 16f
-        gravity = Gravity.CENTER
-        setTextColor(cyan)
-        setPadding(12, 12, 12, 12)
-        isFocusable = true
-        isClickable = true
-        setOnClickListener {
-            loadChannels()
-        }
-        setOnFocusChangeListener { view, focused ->
-            view.setBackgroundColor(
-                if (focused) purple else Color.TRANSPARENT
-            )
-        }
-    }
-    root.addView(
-        reload,
-        LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-    )
-    setContentView(root)
-}
-private fun loadChannels() {
-    if (isLoading || isFinishing || isDestroyed) return
-    isLoading = true
-    statusText.text = "جاري تحميل القنوات..."
-    executor.execute {
-        var connection: HttpURLConnection? = null
-        try {
-            connection = URL(dataUrl).openConnection()
-                as HttpURLConnection
-            connection.requestMethod = "GET"
-            connection.connectTimeout = 15000
-            connection.readTimeout = 15000
-            connection.setRequestProperty("Cache-Control", "no-cache")
-            connection.setRequestProperty("Accept", "application/json")
-            val responseCode = connection.responseCode
-            if (responseCode !in 200..299) {
-                throw IllegalStateException("HTTP $responseCode")
-            }
-            val jsonText = connection.inputStream
-                .bufferedReader(Charsets.UTF_8)
-                .use { it.readText() }
-            val array = JSONObject(jsonText)
-                .optJSONArray("channels")
-                ?: throw IllegalStateException(
-                    "ملف data.json لا يحتوي على channels"
-                )
-            val loaded = mutableListOf<Channel>()
-            for (i in 0 until array.length()) {
-                val item = array.optJSONObject(i) ?: continue
-                if (!item.optBoolean("enabled", true)) continue
-                val url = item.optString("url", "").trim()
-                if (
-                    !url.startsWith("https://", true) &&
-                    !url.startsWith("http://", true)
-                ) {
-                    continue
-                }
-                loaded.add(
-                    Channel(
-                        name = item.optString(
-                            "name",
-                            "قناة ${i + 1}"
-                        ),
-                        url = url,
-                        type = item.optString(
-                            "type",
-                            "hls"
-                        ).trim().lowercase(),
-                        category = item.optString(
-                            "category",
-                            "رياضية"
-                        ),
-                        quality = item.optString("quality", ""),
-                        userAgent = item.optString("userAgent", ""),
-                        referer = item.optString("referer", "")
-                    )
-                )
-            }
-            runOnUiThread {
-                if (isFinishing || isDestroyed) return@runOnUiThread
-                channels = loaded
-                isLoading = false
-                showChannels()
-                statusText.text = if (loaded.isEmpty()) {
-                    "لا توجد قنوات بروابط صالحة"
-                } else {
-                    "تم تحميل ${loaded.size} قناة"
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                if (isFinishing || isDestroyed) return
+                statusText.text = when (playbackState) {
+                    Player.STATE_BUFFERING -> "⏳ جاري تحميل البث..."
+                    Player.STATE_READY -> "🟢 البث جاهز"
+                    Player.STATE_ENDED -> "انتهى البث"
+                    else ->
+                        if (channels.isEmpty()) "بانتظار القنوات..."
+                        else "اختر قناة للمشاهدة"
                 }
             }
-        } catch (e: Exception) {
-            runOnUiThread {
-                if (isFinishing || isDestroyed) return@runOnUiThread
-                isLoading = false
-                statusText.text = "تعذر تحميل القنوات"
-                Toast.makeText(
-                    this@MainActivity,
-                    "تعذر تحميل data.json. تحقق من الإنترنت والملف.",
-                    Toast.LENGTH_LONG
-                ).show()
-                showChannels()
-            }
-        } finally {
-            connection?.disconnect()
-        }
+        })
+        loadChannels()
     }
-}
-private fun showChannels() {
-    channelList.removeAllViews()
-    if (channels.isEmpty()) {
-        channelList.addView(
-            TextView(this).apply {
-                text = "لا توجد قنوات متاحة"
-                textSize = 15f
-                setTextColor(Color.LTGRAY)
-                gravity = Gravity.CENTER
-                setPadding(8, 20, 8, 20)
-            },
+
+    // ───────────────────────── بناء الواجهة ─────────────────────────
+
+    private fun buildInterface() {
+        val root = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = GradientDrawable(
+                GradientDrawable.Orientation.TL_BR,
+                intArrayOf(bgA, bgB, bgC)
+            )
+            setPadding(dp(32), dp(18), dp(32), dp(14))
+            layoutDirection = View.LAYOUT_DIRECTION_RTL
+            clipChildren = false
+        }
+
+        // ── الشريط العلوي ──
+        val top = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+        topBar = top
+
+        val logo = TextView(this).apply {
+            text = "▶"
+            textSize = 20f
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            background = GradientDrawable(
+                GradientDrawable.Orientation.TL_BR,
+                intArrayOf(cyan, purple)
+            ).apply { cornerRadius = dp(14).toFloat() }
+        }
+        top.addView(logo, LinearLayout.LayoutParams(dp(44), dp(44)))
+
+        val title = TextView(this).apply {
+            text = "المستديرة TV"
+            textSize = 26f
+            setTypeface(Typeface.DEFAULT, Typeface.BOLD)
+            setTextColor(Color.WHITE)
+            setPadding(dp(12), 0, dp(12), 0)
+        }
+        top.addView(title)
+
+        top.addView(
+            View(this),
+            LinearLayout.LayoutParams(0, 1, 1f)
+        )
+
+        val reload = makePill("↻  تحديث القنوات") { loadChannels() }
+        top.addView(reload)
+
+        val clockCol = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            setPadding(dp(24), 0, 0, 0)
+        }
+        val clock = TextClock(this).apply {
+            format12Hour = "HH:mm"
+            format24Hour = "HH:mm"
+            textSize = 28f
+            setTypeface(Typeface.DEFAULT, Typeface.BOLD)
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+        }
+        val date = TextClock(this).apply {
+            format12Hour = "EEEE d MMMM"
+            format24Hour = "EEEE d MMMM"
+            textSize = 12f
+            setTextColor(Color.LTGRAY)
+            gravity = Gravity.CENTER
+        }
+        clockCol.addView(clock)
+        clockCol.addView(date)
+        top.addView(clockCol)
+
+        root.addView(
+            top,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
         )
-        return
-    }
-    channels.forEach { channel ->
-        val button = TextView(this).apply {
-            text = buildString {
-                append(channel.name)
-                if (channel.quality.isNotBlank()) {
-                    append("\n")
-                    append(channel.quality)
-                }
-            }
-            textSize = 16f
-            gravity = Gravity.CENTER
-            setTextColor(Color.WHITE)
-            setBackgroundColor(panel)
-            setPadding(10, 14, 10, 14)
-            isFocusable = true
-            isClickable = true
-            setOnClickListener {
-                playChannel(channel)
-            }
-            setOnFocusChangeListener { view, focused ->
-                view.setBackgroundColor(
-                    if (focused) purple else panel
-                )
-            }
-        }
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            bottomMargin = 8
-        }
-        channelList.addView(button, params)
-    }
-}
-private fun playChannel(channel: Channel) {
-    if (channel.url.isBlank()) {
-        Toast.makeText(
-            this,
-            "رابط القناة غير موجود",
-            Toast.LENGTH_SHORT
-        ).show()
-        return
-    }
-    val mimeType = when (channel.type) {
-        "hls", "m3u8" -> MimeTypes.APPLICATION_M3U8
-        "dash", "mpd" -> MimeTypes.APPLICATION_MPD
-        else -> null
-    }
-    try {
-        val headers = mutableMapOf<String, String>()
-        if (channel.referer.isNotBlank()) {
-            headers["Referer"] = channel.referer
-        }
-        val httpFactory = DefaultHttpDataSource.Factory()
-            .setUserAgent(
-                channel.userAgent.ifBlank {
-                    Util.getUserAgent(this, "AlMustadiraTV")
-                }
-            )
-            .setConnectTimeoutMs(15000)
-            .setReadTimeoutMs(20000)
-            .setAllowCrossProtocolRedirects(true)
-            .setDefaultRequestProperties(headers)
-        val dataSourceFactory =
-            DefaultDataSource.Factory(this, httpFactory)
-        val mediaSourceFactory =
-            DefaultMediaSourceFactory(dataSourceFactory)
-        val mediaItemBuilder = MediaItem.Builder()
-            .setUri(channel.url)
-        if (mimeType != null) {
-            mediaItemBuilder.setMimeType(mimeType)
-        }
-        val mediaItem = mediaItemBuilder.build()
-        val mediaSource =
-            mediaSourceFactory.createMediaSource(mediaItem)
-        player.stop()
-        player.clearMediaItems()
-        player.setMediaSource(mediaSource)
-        player.prepare()
-        player.playWhenReady = true
-        statusText.text = "جاري تشغيل ${channel.name}"
-    } catch (e: Exception) {
-        statusText.text = "تعذر تشغيل القناة"
-        Toast.makeText(
-            this,
-            "تعذر تشغيل القناة: تحقق من رابط البث",
-            Toast.LENGTH_LONG
-        ).show()
-    }
-}
-override fun onKeyDown(
-    keyCode: Int,
-    event: KeyEvent
-): Boolean {
-    if (
-        keyCode == KeyEvent.KEYCODE_BACK &&
-        ::playerView.isInitialized &&
-        playerView.isControllerFullyVisible
-    ) {
-        playerView.hideController()
-        return true
-    }
-    return super.onKeyDown(keyCode, event)
-}
-override fun onDestroy() {
-    if (::player.isInitialized) {
-        player.release()
-    }
-    executor.shutdownNow()
-    super.onDestroy()
-}
 
+        // ── القسم الرئيسي: معلومات + المشغل ──
+        val hero = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            clipChildren = false
+        }
+
+        val info = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER_VERTICAL
+            background = shape(glassDark, 28, Color.argb(40, 255, 255, 255), 1)
+            setPadding(dp(24), dp(20), dp(24), dp(20))
+        }
+        infoPanel = info
+
+        info.addView(TextView(this).apply {
+            text = "● يُشاهد الآن"
+            textSize = 13f
+            setTextColor(cyan)
+        })
+        nowTitle = TextView(this).apply {
+            text = "المستديرة TV"
+            textSize = 30f
+            setTypeface(Typeface.DEFAULT, Typeface.BOLD)
+            setTextColor(Color.WHITE)
+            setPadding(0, dp(8), 0, dp(4))
+        }
+        info.addView(nowTitle)
+        nowSub = TextView(this).apply {
+            text = "اختر قناة من القائمة بالأسفل"
+            textSize = 15f
+            setTextColor(Color.LTGRAY)
+        }
+        info.addView(nowSub)
+        statusText = TextView(this).apply {
+            text = "جاري تحميل القنوات..."
+            textSize = 14f
+            setTextColor(Color.rgb(200, 180, 255))
+            setPadding(0, dp(14), 0, dp(14))
+        }
+        info.addView(statusText)
+        info.addView(makePill("⛶  ملء الشاشة") { setFullscreen(true) })
+
+        hero.addView(
+            info,
+            LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)
+        )
+
+        playerView = PlayerView(this).apply {
+            useController = true
+            resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+            setShowBuffering(PlayerView.SHOW_BUFFERING_WHEN_PLAYING)
+            setBackgroundColor(Color.BLACK)
+            keepScreenOn = true
+        }
+        val playerCard = FrameLayout(this).apply {
+            background = shape(Color.BLACK, 28, Color.argb(70, 0, 229, 255), 2)
+            outlineProvider = ViewOutlineProvider.BACKGROUND
+            clipToOutline = true
+            addView(
+                playerView,
+                FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+            )
+        }
+        hero.addView(
+            playerCard,
+            LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                2f
+            ).apply { marginStart = dp(20) }
+        )
+
+        root.addView(
+            hero,
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                0,
+                1f
+            ).apply { topMargin = dp(14) }
+        )
+
+        // ── الجزء السفلي: التصنيفات + القنوات ──
+        val bottom = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            clipChildren = false
+        }
+        bottomArea = bottom
+
+        categoryRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            clipChildren = false
+        }
+        bottom.addView(
+            hScroll(categoryRow),
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        )
+
+        bottom.addView(TextView(this).apply {
+            text = "قنواتك"
+            textSize = 18f
+            setTypeface(Typeface.DEFAULT, Typeface.BOLD)
+            setTextColor(Color.WHITE)
+            setPadding(dp(6), dp(2), 0, 0)
+        })
+
+        channelRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            clipChildren = false
+        }
+        bottom.addView(
+            hScroll(channelRow),
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        )
+
+        root.addView(
+            bottom,
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = dp(8) }
+        )
+
+        setContentView(root)
+    }
+
+    private fun setFullscreen(on: Boolean) {
+        isFullscreen = on
+        val vis = if (on) View.GONE else View.VISIBLE
+        topBar.visibility = vis
+        infoPanel.visibility = vis
+        bottomArea.visibility = vis
+        if (on) playerView.requestFocus() else refocusSelected()
+    }
+
+    private fun refocusSelected() {
+        for (i in 0 until channelRow.childCount) {
+            val v = channelRow.getChildAt(i)
+            if ((v.tag as? Channel)?.url == currentUrl) {
+                v.requestFocus()
+                return
+            }
+        }
+        channelRow.getChildAt(0)?.requestFocus()
+    }
+
+    // ───────────────────────── تحميل القنوات ─────────────────────────
+
+    private fun loadChannels() {
+        if (isLoading || isFinishing || isDestroyed) return
+        isLoading = true
+        statusText.text = "جاري تحميل القنوات..."
+        executor.execute {
+            var connection: HttpURLConnection? = null
+            try {
+                connection = URL(dataUrl).openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.connectTimeout = 15000
+                connection.readTimeout = 15000
+                connection.setRequestProperty("Cache-Control", "no-cache")
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                if (responseCode !in 200..299) {
+                    throw IllegalStateException("HTTP $responseCode")
+                }
+
+                val jsonText = connection.inputStream
+                    .bufferedReader(Charsets.UTF_8)
+                    .use { it.readText() }
+
+                val array = JSONObject(jsonText).optJSONArray("channels")
+                    ?: throw IllegalStateException(
+                        "ملف data.json لا يحتوي على channels"
+                    )
+
+                val loaded = mutableListOf<Channel>()
+                for (i in 0 until array.length()) {
+                    val item = array.optJSONObject(i) ?: continue
+                    if (!item.optBoolean("enabled", true)) continue
+                    val url = item.optString("url", "").trim()
+                    if (!url.startsWith("https://", true) &&
+                        !url.startsWith("http://", true)
+                    ) continue
+
+                    loaded.add(
+                        Channel(
+                            name = item.optString("name", "قناة ${i + 1}"),
+                            url = url,
+                            type = item.optString("type", "hls")
+                                .trim().lowercase(),
+                            category = item.optString("category", "رياضية"),
+                            quality = item.optString("quality", ""),
+                            userAgent = item.optString("userAgent", ""),
+                            referer = item.optString("referer", "")
+                        )
+                    )
+                }
+
+                runOnUiThread {
+                    if (isFinishing || isDestroyed) return@runOnUiThread
+                    channels = loaded
+                    isLoading = false
+                    selectedCategory = ALL
+                    showCategories()
+                    showChannels(focusFirst = true)
+                    statusText.text =
+                        if (loaded.isEmpty()) "لا توجد قنوات بروابط صالحة"
+                        else "تم تحميل ${loaded.size} قناة"
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    if (isFinishing || isDestroyed) return@runOnUiThread
+                    isLoading = false
+                    statusText.text = "تعذر تحميل القنوات"
+                    Toast.makeText(
+                        this@MainActivity,
+                        "تعذر تحميل data.json. تحقق من الإنترنت والملف.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    showCategories()
+                    showChannels(focusFirst = false)
+                }
+            } finally {
+                connection?.disconnect()
+            }
+        }
+    }
+
+    // ───────────────────────── التصنيفات ─────────────────────────
+
+    private fun showCategories() {
+        categoryRow.removeAllViews()
+        val cats = listOf(ALL) +
+            channels.map { it.category }.filter { it.isNotBlank() }.distinct()
+        cats.forEach { cat ->
+            val chip = TextView(this).apply {
+                text = cat
+                textSize = 15f
+                setTextColor(Color.WHITE)
+                gravity = Gravity.CENTER
+                setPadding(dp(20), dp(8), dp(20), dp(8))
+                tag = cat
+                isFocusable = true
+                isClickable = true
+                background = chipBg(false, cat == selectedCategory)
+                setOnClickListener {
+                    selectedCategory = cat
+                    refreshCategoryStyles()
+                    showChannels(focusFirst = false)
+                }
+                setOnFocusChangeListener { v, f ->
+                    v.background = chipBg(f, (v.tag as String) == selectedCategory)
+                }
+            }
+            categoryRow.addView(
+                chip,
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply { marginEnd = dp(10) }
+            )
+        }
+    }
+
+    private fun refreshCategoryStyles() {
+        for (i in 0 until categoryRow.childCount) {
+            val v = categoryRow.getChildAt(i)
+            v.background = chipBg(v.isFocused, (v.tag as String) == selectedCategory)
+        }
+    }
+
+    // ───────────────────────── بطاقات القنوات ─────────────────────────
+
+    private fun showChannels(focusFirst: Boolean) {
+        channelRow.removeAllViews()
+
+        val list = if (selectedCategory == ALL) channels
+        else channels.filter { it.category == selectedCategory }
+
+        if (list.isEmpty()) {
+            channelRow.addView(TextView(this).apply {
+                text = "لا توجد قنوات متاحة"
+                textSize = 15f
+                setTextColor(Color.LTGRAY)
+                setPadding(dp(8), dp(30), dp(8), dp(30))
+            })
+            return
+        }
+
+        list.forEach { channel ->
+            val card = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                gravity = Gravity.CENTER
+                tag = channel
+                setPadding(dp(10), dp(12), dp(10), dp(12))
+                isFocusable = true
+                isClickable = true
+                background = cardBg(false, channel.url == currentUrl)
+                setOnClickListener { playChannel(channel) }
+                setOnFocusChangeListener { v, f ->
+                    v.animate()
+                        .scaleX(if (f) 1.08f else 1f)
+                        .scaleY(if (f) 1.08f else 1f)
+                        .setDuration(150)
+                        .start()
+                    v.background = cardBg(f, channel.url == currentUrl)
+                    v.elevation = if (f) dp(8).toFloat() else 0f
+                }
+            }
+
+            val icon = TextView(this).apply {
+                text = channel.name.trim().take(1)
+                textSize = 20f
+                setTypeface(Typeface.DEFAULT, Typeface.BOLD)
+                setTextColor(Color.WHITE)
+                gravity = Gravity.CENTER
+                background = GradientDrawable(
+                    GradientDrawable.Orientation.TL_BR,
+                    intArrayOf(cyan, purple)
+                ).apply { shape = GradientDrawable.OVAL }
+            }
+            card.addView(icon, LinearLayout.LayoutParams(dp(44), dp(44)))
+
+            card.addView(TextView(this).apply {
+                text = channel.name
+                textSize = 15f
+                setTypeface(Typeface.DEFAULT, Typeface.BOLD)
+                setTextColor(Color.WHITE)
+                gravity = Gravity.CENTER
+                maxLines = 1
+                setPadding(0, dp(8), 0, 0)
+            })
+
+            if (channel.quality.isNotBlank()) {
+                card.addView(TextView(this).apply {
+                    text = channel.quality
+                    textSize = 11f
+                    setTextColor(cyan)
+                    gravity = Gravity.CENTER
+                    background = shape(Color.argb(60, 0, 229, 255), 10)
+                    setPadding(dp(8), dp(1), dp(8), dp(1))
+                }, LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply { topMargin = dp(4) })
+            }
+
+            channelRow.addView(
+                card,
+                LinearLayout.LayoutParams(dp(150), dp(112))
+                    .apply { marginEnd = dp(14) }
+            )
+        }
+
+        if (focusFirst) channelRow.getChildAt(0)?.requestFocus()
+    }
+
+    private fun refreshSelection() {
+        for (i in 0 until channelRow.childCount) {
+            val v = channelRow.getChildAt(i)
+            val ch = v.tag as? Channel ?: continue
+            v.background = cardBg(v.isFocused, ch.url == currentUrl)
+        }
+    }
+
+    // ───────────────────────── التشغيل ─────────────────────────
+
+    private fun playChannel(channel: Channel) {
+        if (channel.url.isBlank()) {
+            Toast.makeText(this, "رابط القناة غير موجود", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val mimeType = when (channel.type) {
+            "hls", "m3u8" -> MimeTypes.APPLICATION_M3U8
+            "dash", "mpd" -> MimeTypes.APPLICATION_MPD
+            else -> null
+        }
+
+        try {
+            val headers = mutableMapOf<String, String>()
+            if (channel.referer.isNotBlank()) {
+                headers["Referer"] = channel.referer
+            }
+
+            val httpFactory = DefaultHttpDataSource.Factory()
+                .setUserAgent(
+                    channel.userAgent.ifBlank {
+                        Util.getUserAgent(this, "AlMustadiraTV")
+                    }
+                )
+                .setConnectTimeoutMs(15000)
+                .setReadTimeoutMs(20000)
+                .setAllowCrossProtocolRedirects(true)
+                .setDefaultRequestProperties(headers)
+
+            val dataSourceFactory = DefaultDataSource.Factory(this, httpFactory)
+            val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+
+            val mediaItemBuilder = MediaItem.Builder().setUri(channel.url)
+            if (mimeType != null) mediaItemBuilder.setMimeType(mimeType)
+
+            val mediaSource =
+                mediaSourceFactory.createMediaSource(mediaItemBuilder.build())
+
+            player.stop()
+            player.clearMediaItems()
+            player.setMediaSource(mediaSource)
+            player.prepare()
+            player.playWhenReady = true
+
+            currentUrl = channel.url
+            nowTitle.text = channel.name
+            nowSub.text = buildString {
+                append(channel.category)
+                if (channel.quality.isNotBlank()) append("  •  ${channel.quality}")
+            }
+            statusText.text = "جاري تشغيل ${channel.name}"
+            refreshSelection()
+        } catch (e: Exception) {
+            statusText.text = "تعذر تشغيل القناة"
+            Toast.makeText(
+                this,
+                "تعذر تشغيل القناة: تحقق من رابط البث",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    // ───────────────────────── الأزرار والإغلاق ─────────────────────────
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (isFullscreen) {
+                setFullscreen(false)
+                return true
+            }
+            if (::playerView.isInitialized && playerView.isControllerFullyVisible) {
+                playerView.hideController()
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onDestroy() {
+        if (::player.isInitialized) {
+            player.release()
+        }
+        executor.shutdownNow()
+        super.onDestroy()
+    }
 }
