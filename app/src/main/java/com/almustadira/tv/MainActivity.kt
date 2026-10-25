@@ -12,6 +12,7 @@ import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextClock
 import android.widget.TextView
 import android.widget.Toast
@@ -40,9 +41,20 @@ class MainActivity : Activity() {
     private lateinit var statusText: TextView
     private lateinit var nowTitle: TextView
     private lateinit var nowSub: TextView
-    private lateinit var topBar: View
-    private lateinit var infoPanel: View
-    private lateinit var bottomArea: View
+    private lateinit var hero: LinearLayout
+    private lateinit var playerCard: FrameLayout
+    private lateinit var playerOverlay: LinearLayout
+    private lateinit var scrollRoot: ScrollView
+    private lateinit var fsContainer: FrameLayout
+    private lateinit var playerCardParams: LinearLayout.LayoutParams
+    private val aspectPills = mutableListOf<TextView>()
+    private var aspectIndex = 0
+    private var controllerVisible = false
+    private val aspectModes = listOf(
+        AspectRatioFrameLayout.RESIZE_MODE_FIT to "ملائم",
+        AspectRatioFrameLayout.RESIZE_MODE_FILL to "تمديد",
+        AspectRatioFrameLayout.RESIZE_MODE_ZOOM to "تكبير"
+    )
 
     private val executor = Executors.newSingleThreadExecutor()
 
@@ -195,7 +207,6 @@ class MainActivity : Activity() {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
         }
-        topBar = top
 
         val logo = TextView(this).apply {
             text = "▶"
@@ -259,7 +270,7 @@ class MainActivity : Activity() {
         )
 
         // ── القسم الرئيسي: معلومات + المشغل ──
-        val hero = LinearLayout(this).apply {
+        hero = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             clipChildren = false
         }
@@ -270,7 +281,6 @@ class MainActivity : Activity() {
             background = shape(glassDark, 28, Color.argb(40, 255, 255, 255), 1)
             setPadding(dp(24), dp(20), dp(24), dp(20))
         }
-        infoPanel = info
 
         info.addView(TextView(this).apply {
             text = "● يُشاهد الآن"
@@ -298,7 +308,21 @@ class MainActivity : Activity() {
             setPadding(0, dp(14), 0, dp(14))
         }
         info.addView(statusText)
-        info.addView(makePill("⛶  ملء الشاشة") { setFullscreen(true) })
+        val btnRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+        }
+        btnRow.addView(makePill("⛶  ملء الشاشة") { setFullscreen(true) })
+        val aspectPill = makePill("") { cycleAspect() }
+        aspectPills.add(aspectPill)
+        btnRow.addView(
+            aspectPill,
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { marginStart = dp(10) }
+        )
+        info.addView(btnRow)
+        updateAspectLabels()
 
         hero.addView(
             info,
@@ -312,7 +336,7 @@ class MainActivity : Activity() {
             setBackgroundColor(Color.BLACK)
             keepScreenOn = true
         }
-        val playerCard = FrameLayout(this).apply {
+        playerCard = FrameLayout(this).apply {
             background = shape(Color.BLACK, 28, Color.argb(70, 0, 229, 255), 2)
             outlineProvider = ViewOutlineProvider.BACKGROUND
             clipToOutline = true
@@ -324,21 +348,55 @@ class MainActivity : Activity() {
                 )
             )
         }
-        hero.addView(
-            playerCard,
+        // أزرار فوق المشغل: ملء الشاشة + شكل الصورة
+        playerOverlay = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(dp(10), dp(10), dp(10), dp(10))
+        }
+        val fsBtn = makePill("⛶") { setFullscreen(!isFullscreen) }
+        val overlayAspect = makePill("") { cycleAspect() }
+        aspectPills.add(overlayAspect)
+        playerOverlay.addView(fsBtn)
+        playerOverlay.addView(
+            overlayAspect,
             LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                2f
-            ).apply { marginStart = dp(20) }
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { marginStart = dp(8) }
         )
+        playerCard.addView(
+            playerOverlay,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.TOP or Gravity.START
+            )
+        )
+        updateAspectLabels()
+
+        playerView.setControllerVisibilityListener(
+            PlayerView.ControllerVisibilityListener { v ->
+                controllerVisible = v == View.VISIBLE
+                updateOverlayVisibility()
+            }
+        )
+
+        // ارتفاع ثابت للمشغل حتى لا ينضغط على الشاشات الصغيرة
+        val heroHeight = (resources.displayMetrics.heightPixels * 0.45f)
+            .toInt().coerceAtLeast(dp(210))
+
+        playerCardParams = LinearLayout.LayoutParams(
+            0,
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            2f
+        ).apply { marginStart = dp(20) }
+        hero.addView(playerCard, playerCardParams)
 
         root.addView(
             hero,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                0,
-                1f
+                heroHeight
             ).apply { topMargin = dp(14) }
         )
 
@@ -347,7 +405,6 @@ class MainActivity : Activity() {
             orientation = LinearLayout.VERTICAL
             clipChildren = false
         }
-        bottomArea = bottom
 
         categoryRow = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
@@ -389,16 +446,89 @@ class MainActivity : Activity() {
             ).apply { topMargin = dp(8) }
         )
 
-        setContentView(root)
+        scrollRoot = ScrollView(this).apply {
+            isFillViewport = true
+            isVerticalScrollBarEnabled = false
+            overScrollMode = View.OVER_SCROLL_NEVER
+            addView(
+                root,
+                FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+                )
+            )
+        }
+        fsContainer = FrameLayout(this).apply {
+            setBackgroundColor(Color.BLACK)
+            visibility = View.GONE
+        }
+        val outer = FrameLayout(this).apply {
+            setBackgroundColor(bgA)
+            addView(
+                scrollRoot,
+                FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+            )
+            addView(
+                fsContainer,
+                FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+            )
+        }
+        setContentView(outer)
+    }
+
+    private fun cycleAspect() {
+        aspectIndex = (aspectIndex + 1) % aspectModes.size
+        playerView.resizeMode = aspectModes[aspectIndex].first
+        updateAspectLabels()
+    }
+
+    private fun updateAspectLabels() {
+        val label = "⤢ " + aspectModes[aspectIndex].second
+        aspectPills.forEach { it.text = label }
+    }
+
+    private fun updateOverlayVisibility() {
+        playerOverlay.visibility =
+            if (!isFullscreen || controllerVisible) View.VISIBLE else View.GONE
     }
 
     private fun setFullscreen(on: Boolean) {
+        if (on == isFullscreen) return
         isFullscreen = on
-        val vis = if (on) View.GONE else View.VISIBLE
-        topBar.visibility = vis
-        infoPanel.visibility = vis
-        bottomArea.visibility = vis
-        if (on) playerView.requestFocus() else refocusSelected()
+        if (on) {
+            hero.removeView(playerCard)
+            fsContainer.addView(
+                playerCard,
+                FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+            )
+            fsContainer.visibility = View.VISIBLE
+            scrollRoot.visibility = View.GONE
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            playerView.requestFocus()
+        } else {
+            fsContainer.removeView(playerCard)
+            fsContainer.visibility = View.GONE
+            hero.addView(playerCard, playerCardParams)
+            scrollRoot.visibility = View.VISIBLE
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+            refocusSelected()
+        }
+        updateOverlayVisibility()
     }
 
     private fun refocusSelected() {
