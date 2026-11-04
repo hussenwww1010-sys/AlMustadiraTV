@@ -610,3 +610,228 @@ async function loadChannelsData() {
         const json = await res.json();
         
         DATA.channels = Array.isArray(json.channels) 
+            ? json.channels.filter(c => c.enabled !== false) 
+            : [];
+
+        renderCategories();
+        renderChannels();
+    } catch (err) {
+        console.error("Data loading error:", err);
+        document.getElementById("channelGrid").innerHTML = `
+            <div class="empty-box">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <h3>تعذر تحميل القنوات</h3>
+                <p>يرجى التأكد من وجود ملف data.json بشكل صحيح في الخادم.</p>
+            </div>
+        `;
+    }
+}
+
+/* Categories Bar */
+function renderCategories() {
+    const box = document.getElementById("categoryFilters");
+    const categories = ["الكل", ...new Set(DATA.channels.map(c => c.category).filter(Boolean))];
+
+    box.innerHTML = categories.map(cat => `
+        <button class="cat-btn ${cat === activeCategory ? 'active' : ''}" 
+                onclick="selectCategory('${escapeHtml(cat)}', this)">
+            ${escapeHtml(cat)}
+        </button>
+    `).join("");
+}
+
+function selectCategory(cat, btn) {
+    activeCategory = cat;
+    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderChannels();
+}
+
+function onSearchInput(val) {
+    currentSearchQuery = val.trim().toLowerCase();
+    renderChannels();
+}
+
+/* Render Channels Grid */
+function renderChannels() {
+    const grid = document.getElementById("channelGrid");
+    
+    const filtered = DATA.channels.filter(c => {
+        const matchesCategory = activeCategory === "الكل" || c.category === activeCategory;
+        const matchesSearch = !currentSearchQuery || 
+            (c.name && c.name.toLowerCase().includes(currentSearchQuery)) ||
+            (c.category && c.category.toLowerCase().includes(currentSearchQuery));
+        return matchesCategory && matchesSearch;
+    });
+
+    if (!filtered.length) {
+        grid.innerHTML = `
+            <div class="empty-box">
+                <i class="fa-solid fa-tv"></i>
+                <h3>لم يتم العثور على أي قنوات</h3>
+                <p>جرّب البحث باسم آخر أو اختيار تصنيف مختلف.</p>
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = filtered.map(ch => `
+        <article class="channel-card" onclick="openPlayer(${ch.id})">
+            <div class="logo-wrapper">
+                ${ch.logo ? `
+                    <img class="channel-logo" src="${escapeHtml(ch.logo)}" alt="${escapeHtml(ch.name)}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'logo-fallback\\'><i class=\\'fa-solid fa-play\\'></i></div>';">
+                ` : `
+                    <div class="logo-fallback"><i class="fa-solid fa-play"></i></div>
+                `}
+            </div>
+            <div class="channel-info">
+                <div class="channel-name" title="${escapeHtml(ch.name)}">${escapeHtml(ch.name || "قناة رياضية")}</div>
+                <div class="channel-meta">
+                    <span class="channel-cat">${escapeHtml(ch.category || "عامة")}</span>
+                    <div class="badge-wrap">
+                        <span class="badge-live">مباشر</span>
+                        <span class="quality-badge">${escapeHtml(ch.quality || "HD")}</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+    `).join("");
+}
+
+/* Video Player Handlers */
+function openPlayer(id) {
+    const channel = DATA.channels.find(c => Number(c.id) === Number(id));
+    if (!channel || !channel.url) {
+        alert("رابط البث غير متوفر حالياً لهذه القناة.");
+        return;
+    }
+
+    currentStreamUrl = channel.url;
+    document.getElementById("playerTitleText").textContent = channel.name || "البث المباشر";
+    
+    const modal = document.getElementById("playerModal");
+    modal.classList.add("show");
+    
+    startStream(channel.url);
+}
+
+function startStream(url) {
+    const video = document.getElementById("videoPlayer");
+    destroyHls();
+    showLoading();
+    hideError();
+
+    video.src = "";
+
+    // Apple Native HLS Support
+    if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = url;
+        video.addEventListener("loadedmetadata", () => {
+            hideLoading();
+            video.play().catch(() => {});
+        }, { once: true });
+        video.addEventListener("error", () => {
+            showError("تعذر تشغيل هذا الرابط عبر المشغل الأصلي.");
+        }, { once: true });
+        return;
+    }
+
+    // HLS.js Support
+    if (window.Hls && Hls.isSupported()) {
+        hlsInstance = new Hls({
+            enableWorker: true,
+            lowLatencyMode: true,
+            backBufferLength: 30
+        });
+
+        hlsInstance.loadSource(url);
+        hlsInstance.attachMedia(video);
+
+        hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+            hideLoading();
+            video.play().catch(() => {});
+        });
+
+        hlsInstance.on(Hls.Events.ERROR, (event, data) => {
+            if (!data.fatal) return;
+            if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                try { hlsInstance.startLoad(); } catch (e) { showError("خطأ في الاتصال بالشبكة."); }
+            } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+                try { hlsInstance.recoverMediaError(); } catch (e) { showError("فشل في معالجة الفيديو."); }
+            } else {
+                showError("تعذر تشغيل هذا البث، قد تكون القناة غير متاحة الآن.");
+            }
+        });
+        return;
+    }
+
+    showError("متصفحك لا يدعم تقنية تشغيل هذا البث.");
+}
+
+function closePlayer() {
+    destroyHls();
+    document.getElementById("playerModal").classList.remove("show");
+}
+
+function destroyHls() {
+    if (hlsInstance) {
+        try { hlsInstance.destroy(); } catch (e) {}
+        hlsInstance = null;
+    }
+    const video = document.getElementById("videoPlayer");
+    try { video.pause(); } catch (e) {}
+    video.removeAttribute("src");
+    try { video.load(); } catch (e) {}
+}
+
+function showLoading() {
+    document.getElementById("playerLoading").classList.add("active");
+}
+function hideLoading() {
+    document.getElementById("playerLoading").classList.remove("active");
+}
+function showError(msg) {
+    hideLoading();
+    document.getElementById("playerErrorText").textContent = msg;
+    document.getElementById("playerError").classList.add("active");
+}
+function hideError() {
+    document.getElementById("playerError").classList.remove("active");
+}
+function retryStream() {
+    if (currentStreamUrl) startStream(currentStreamUrl);
+}
+
+function toggleFullscreen() {
+    const video = document.getElementById("videoPlayer");
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else if (video.requestFullscreen) {
+        video.requestFullscreen();
+    } else if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
+    }
+}
+
+function onModalClick(e) {
+    if (e.target === e.currentTarget) closePlayer();
+}
+
+function escapeHtml(str) {
+    return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closePlayer();
+});
+
+// Run Init
+loadChannelsData();
+</script>
+</body>
+</html>
